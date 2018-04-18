@@ -1,0 +1,15 @@
+<?php 
+
+function sentius_inline_entity_form_table_fields_alter(&$fields, $context) {
+  
+
+  //add any fields you need to the $fields array
+  /*
+  $fields['field_art_preview_image'] = array(
+    'type' => 'field',
+    'label' => t('Image'),
+    'weight' => 2
+  );
+  */
+
+}

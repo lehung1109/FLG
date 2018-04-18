@@ -1,0 +1,2040 @@
+/* Css */
+@import url(libs/font-awesome/css/font-awesome.min.css);
+.pager {
+  float: right;
+  width: 664px;
+}
+.search-cta {
+  display: block;
+  width: 100%;
+  clear: both;
+}
+.search-cta a {
+  float: right;
+  margin-left: 30px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+.controls {
+  margin-top: 10px;
+  text-align: center;
+  margin-bottom: -15px;
+}
+.controls a {
+  font-size: 30px;
+  margin: 0 60px;
+}
+.controls a.disabled {
+  pointer-events: none;
+  cursor: default;
+  color: rgba(0, 0, 0, 0.2);
+}
+#views-exposed-form-better-search-search-block .views-widget-per-page {
+  display: none;
+}
+#views-exposed-form-better-search-search-block .hidden {
+  display: none;
+}
+#views-exposed-form-better-search-search-block .inches,
+#views-exposed-form-better-search-search-block #edit-height-wrapper {
+  overflow: hidden;
+  width: 200px;
+}
+#views-exposed-form-better-search-search-block .form-item.form-item-width-min label,
+#views-exposed-form-better-search-search-block .form-item.form-item-width-max label,
+#views-exposed-form-better-search-search-block .form-item.form-item-height-min label,
+#views-exposed-form-better-search-search-block .form-item.form-item-height-max label,
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-min label,
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-max label {
+  font-weight: normal;
+}
+#views-exposed-form-better-search-search-block .form-item.form-item-width-min input[type='text'],
+#views-exposed-form-better-search-search-block .form-item.form-item-width-max input[type='text'],
+#views-exposed-form-better-search-search-block .form-item.form-item-height-min input[type='text'],
+#views-exposed-form-better-search-search-block .form-item.form-item-height-max input[type='text'],
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-min input[type='text'],
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-max input[type='text'] {
+  width: 32px;
+  text-align: center;
+  position: relative;
+  left: 114px;
+}
+#views-exposed-form-better-search-search-block .form-item.form-item-width-min,
+#views-exposed-form-better-search-search-block .form-item.form-item-width-max,
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-min,
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-max {
+  float: left;
+}
+#views-exposed-form-better-search-search-block .form-item.form-item-height-min {
+  clear: both;
+}
+#views-exposed-form-better-search-search-block .form-item.form-item-height-min,
+#views-exposed-form-better-search-search-block .form-item.form-item-height-max {
+  float: left;
+}
+#views-exposed-form-better-search-search-block .form-item.form-item-width-min,
+#views-exposed-form-better-search-search-block .form-item.form-item-height-min,
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-min {
+  margin-right: 6px;
+}
+#views-exposed-form-better-search-search-block .form-item.form-item-width-min label,
+#views-exposed-form-better-search-search-block .form-item.form-item-height-min label,
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-min label {
+  position: absolute;
+}
+#views-exposed-form-better-search-search-block .inputs {
+  margin: 5px 0;
+}
+#views-exposed-form-better-search-search-block .inputs label {
+  font-weight: normal;
+  margin-right: 10px;
+}
+#views-exposed-form-better-search-search-block #edit-artist-wrapper {
+  margin-top: 25px;
+  padding-top: 5px;
+  border-top: 1px solid #F5F2F2;
+  border-bottom: 1px solid #F5F2F2;
+  height: 60px;
+}
+#views-exposed-form-better-search-search-block #edit-artist-wrapper label {
+  font-weight: normal;
+  margin-bottom: 3px;
+  display: block;
+}
+#views-exposed-form-better-search-search-block #edit-artist-wrapper #edit-artist {
+  width: 212px;
+}
+#views-exposed-form-better-search-search-block .views-exposed-form .views-exposed-widget {
+  /*float: none;*/
+  clear: both;
+  padding: 0;
+}
+#views-exposed-form-better-search-search-block #edit-art-price-wrapper {
+  border-top: 1px solid #F5F2F2;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+#views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-medium'],
+#views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-genre'],
+#views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-orientation'] {
+  font-size: 14px;
+  padding: 15px 0;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: #30A5B9;
+}
+#views-exposed-form-better-search-search-block #edit-medium-wrapper,
+#views-exposed-form-better-search-search-block #edit-genre-wrapper,
+#views-exposed-form-better-search-search-block #edit-orientation-wrapper {
+  border-top: 1px solid #F5F2F2;
+  padding-top: 10px;
+}
+#views-exposed-form-better-search-search-block .bef-checkboxes {
+  margin-bottom: 10px;
+}
+#views-exposed-form-better-search-search-block #edit-orientation-wrapper {
+  border-bottom: 1px solid #F5F2F2;
+}
+#views-exposed-form-better-search-search-block #edit-category-wrapper {
+  margin-bottom: 10px;
+}
+#views-exposed-form-better-search-search-block div.select-to-radio {
+  margin-bottom: 10px;
+}
+#views-exposed-form-better-search-search-block div.select-to-radio input {
+  margin-right: 6px;
+}
+#views-exposed-form-better-search-search-block input.form-submit {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 #ECEAE9;
+  border-color: -moz-use-text-color -moz-use-text-color #b6c0c6 #b6c0c6;
+  border-image: none;
+  border-style: none none solid solid;
+  border-width: medium medium 1px 1px;
+  padding: 10px 0px;
+  width: 225px;
+  text-transform: uppercase;
+}
+#views-exposed-form-better-search-search-block .bef-checkboxes {
+  margin: 0;
+}
+.section-search #sales_status-alt {
+  margin-right: 6px;
+}
+.section-search .results {
+  padding: 15px 10px;
+  background-color: #30A5B9;
+  color: white;
+  position: relative;
+  margin-bottom: 10px;
+  margin-top: -15px;
+}
+.section-search .results a.close {
+  top: 5px;
+  right: 6px;
+  font-size: 15px;
+  position: absolute;
+  color: white;
+}
+.section-search .view-content .views-row {
+  width: 135px;
+  float: left;
+  margin-left: 7px;
+  margin-bottom: 20px;
+}
+#cboxLoadedContent {
+  position: relative;
+}
+#cboxLoadedContent #extra-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000;
+  color: #fff;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  padding: 10px;
+}
+#cboxLoadedContent #extra-info p {
+  margin: 0;
+}
+span.sold,
+.price27 {
+  background-image: url('../images/sold.png');
+  width: 9px;
+  height: 9px;
+  background-repeat: no-repeat;
+  text-indent: -99999px;
+  display: block;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+}
+.price27 {
+  left: 0 !important;
+}
+a.lightbox-gallery,
+a.lightbox-gallery-individual {
+  position: relative;
+  display: inline-block;
+  outline: 0;
+}
+.art-detail {
+  font-size: 15px;
+}
+.art-detail span.sold {
+  position: relative;
+  top: 4px;
+  left: 0;
+  display: inline-block;
+}
+.art-detail a:hover {
+  text-decoration: underline;
+  color: #30A5B9;
+}
+.art-detail a.title {
+  color: white;
+  font-style: italic;
+}
+.art-detail a.title:hover {
+  color: white;
+}
+.art-detail .strike {
+  text-decoration: line-through;
+}
+h3 {
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+.heading {
+  border-bottom: 3px solid black;
+}
+.heading h1 {
+  margin: 0;
+  margin-bottom: 3px;
+  margin-left: 5px;
+  font-size: 22px;
+  line-height: 30px;
+  position: relative;
+  top: -6px;
+  font-weight: normal;
+}
+.heading h1 a {
+  color: #30a5b9;
+  text-transform: uppercase;
+}
+.heading h1 .title {
+  font-style: italic;
+  color: #30A5B9;
+  text-transform: none;
+  margin-right: 8px;
+  margin-left: 8px;
+}
+.heading h1 .date {
+  text-transform: none;
+}
+.sidebar h2 {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+.sidebar .media {
+  border-top: 2px solid black;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.sidebar .media .item {
+  float: left;
+  margin-right: 5px;
+	width: 60px;
+}
+.sidebar .list {
+  margin-top: 20px;
+}
+.sidebar .list ul {
+  margin: 0;
+  padding: 0;
+}
+.sidebar .list ul li {
+  list-style: none;
+}
+.exhibition .sidebar h2 {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-top: 20px;
+}
+.exhibition .extra-content {
+  clear: both;
+}
+.exhibition section.sidebar {
+  float: none;
+  margin: 0;
+  padding: 0;
+  clear: both;
+  width: 100%;
+}
+.sidebar {
+  width: 300px;
+  float: left;
+}
+.sidebar .artists .artist {
+  display: block;
+  padding: 5px 0;
+  border-bottom: 1px solid #ccc;
+}
+.sidebar .artists .artist:last-child {
+  border: none;
+}
+.main-content {
+  width: 610px;
+  float: left;
+  margin-left: 40px;
+}
+.page-search .sidebar {
+  width: 270px;
+  margin-right: 20px;
+}
+.page-search #content {
+  margin-left: 0 !important;
+  padding: 0 !important;
+}
+.art-showcase {
+  margin-top: 28px;
+}
+.art-showcase .art {
+  margin-bottom: 30px;
+  max-width:100%;
+}
+
+.page-node-contemporary .art-showcase .art {
+  height: auto;
+      min-height: 0;
+	  margin-bottom: 10px;
+}
+.art-showcase .art .art-detail {
+  font-size: 12px;
+}
+.art-showcase .art .art-detail a.title {
+  color: black !important;
+}
+.center-text {
+  text-align: center !important;
+  width: 100%;
+}
+.artwork {
+  position: relative;
+}
+.artwork a.back-link {
+  position: absolute;
+  top: -25px;
+}
+.artwork div.links {
+  clear: both;
+}
+.artwork div.links a.link-title {
+  float: right;
+  margin-left: 20px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.artwork .art-image {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.artwork .art-image .art-detail {
+  float: left;
+  font-size: 12px;
+  text-align: left;
+}
+.artwork .art-image .art-detail a {
+  color: black;
+  display: inline-block;
+  margin: 0;
+}
+.artwork .art-image a.link-button {
+  float: right;
+  margin: 0 !important;
+}
+.artwork .art-image a {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: block;
+}
+.artwork .art-image a.vertical-align {
+  margin-left: auto;
+  margin-right: auto;
+}
+.artwork .art-in-situ {
+  margin-top: -17px;
+  width: 280px;
+  float: left;
+  clear: both;
+}
+.artwork .art-in-situ img {
+  margin-bottom: 5px;
+}
+.artwork .art-in-situ a {
+  display: block;
+}
+.artwork .art-in-situ p {
+  margin: 0;
+}
+.artwork .preview-art-container {
+  position: relative;
+  width: 636px;
+  float: right;
+}
+.artwork .preview-art-container.preview-art-full-width {
+  clear: both;
+  width: 100%;
+  border-top: 3px solid black;
+}
+.artwork .preview-art-container h3 {
+  position: relative;
+  top: 5px;
+  font-size: 16px;
+}
+.artwork .preview-art-container.no-link h3 {
+  top: 10px;
+}
+.artwork .preview-art-container .more {
+  display: block;
+  position: absolute;
+  top: 40px;
+}
+.artwork .preview-art-container a.link-button {
+  position: absolute;
+  right: 0;
+  top: 15px;
+}
+.artwork .preview-art-container .preview-art {
+  display: block;
+}
+.artwork .preview-art-container .als-wrapper {
+  margin: 0;
+}
+.artwork .preview-art-container .als-prev,
+.artwork .preview-art-container .als-next {
+  position: absolute;
+  cursor: pointer;
+  clear: both;
+  display: block;
+  top: 150px;
+}
+
+.exhibition-preview .scroll-pane{
+	margin-top: 34px;
+}
+
+.artwork .preview-art-container .als-prev {
+  left: -32px;
+}
+.artwork .preview-art-container .als-next {
+  right: -32px;
+}
+.artwork .preview-art-container .art {
+  margin: 0 2px;
+}
+.artwork .preview-art-container ul {
+  margin-top: 34px !important;
+}
+.artwork .preview-art-container ul.list {
+  margin: 0;
+  padding: 0;
+}
+.artwork .preview-art-container ul.list li {
+  list-style: none;
+  float: left;
+  position: relative;
+}
+.artwork .preview-art-container ul.list li .art {
+  position: relative;
+}
+.artwork .preview-art-container ul.list li .art .sold {
+  top: -148px;
+}
+#page-title {
+  color: black;
+}
+a.link-button {
+  font-size: 13px;
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 #ECEAE9;
+  border-color: #B6C0C6 !important;
+  border-image: none;
+  border-style: none none solid solid;
+  border-width: medium medium 1px 1px;
+  padding: 10px 10px;
+  text-transform: uppercase;
+  color: #000000;
+}
+.exhibitions .sidebar {
+  width: 238px;
+  padding: 0;
+  padding-top: 20px;
+  margin-right: 20px;
+}
+.exhibitions .sidebar h2 {
+  font-size: 16px;
+}
+.exhibitions .column {
+  float: left;
+  width: 695px;
+  padding-top: 20px;
+}
+.exhibitions h2 {
+  font-size: 22px;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+.exhibitions .exhibition-list.large {
+  border-bottom: 3px solid black;
+  margin-bottom: 24px;
+}
+.exhibitions .exhibition-list.large .row .image-link {
+  width: 253px;
+}
+.exhibitions .exhibition-list.large .row .info {
+  width: 422px;
+}
+.exhibitions .exhibition-list.large.large:last-child {
+  border: none;
+}
+.exhibitions .exhibition-list h2 {
+  margin-left: 0;
+  font-size: 22px;
+}
+.exhibitions .exhibition-list .row {
+  clear: both;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.exhibitions .exhibition-list .row .image-link {
+  width: 180px;
+  float: left;
+  margin-right: 20px;
+}
+.exhibitions .exhibition-list .row .info {
+  float: left;
+  width: 495px;
+}
+.exhibitions .exhibition-list .row .info a {
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-bottom: 5px;
+  display: block;
+}
+.exhibitions .past-exhibitions-block {
+  margin: 0;
+  padding: 0;
+}
+.exhibitions .past-exhibitions-block h2 {
+  margin-bottom: 20px;
+  margin-left: 0;
+  font-weight: normal;
+}
+.exhibitions .past-exhibitions-block h2.active a {
+  color: black;
+}
+.exhibitions .past-exhibitions-block ul {
+  margin: 0;
+  padding: 0;
+}
+.exhibitions .past-exhibitions-block ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.exhibitions .past-exhibitions-block ul li.active a {
+  color: black;
+}
+.exhibitions .past-exhibitions-block ul li a {
+  font-size: 14px;
+}
+.exhibitions   .past-exhibition {
+  float: left;
+  margin-bottom: 20px;
+  margin-left: 4px;
+  width: 110px;
+  height: 160px;
+}
+.exhibitions   .past-exhibition .title {
+  display: block;
+}
+.exhibitions   .past-exhibition span.date {
+  display: block;
+  font-style: italic;
+}
+.contemporary .sidebar {
+  width: 238px;
+  padding: 0;
+  padding-top: 20px;
+  margin-right: 20px;
+  overflow: hidden;
+}
+.contemporary .sidebar h2 {
+  font-size: 16px;
+}
+.contemporary .sidebar .exhibition-list h2 {
+  margin-bottom: 18px;
+  margin-left: 0;
+}
+.contemporary .sidebar .exhibition-list.small {
+  margin-bottom: 20px;
+}
+.contemporary .sidebar .exhibition-list.small .row {
+  margin-bottom: 10px;
+}
+.contemporary .column {
+  float: left;
+  width: 695px;
+  padding-top: 20px;
+  overflow: hidden;
+}
+.contemporary h2 {
+  font-size: 22px;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+.contemporary .art-listing .art-list {
+  float: left;
+  margin-bottom: 20px;
+  margin-left: 4px;
+  min-height: 110px;
+}
+.contemporary .art-listing .art-list a.title {
+  display: block;
+}
+.contemporary .art-listing .art-list span.date {
+  display: block;
+  font-style: italic;
+}
+.simplenews-subscribe input[type="submit"] {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 #ECEAE9;
+  border-color: -moz-use-text-color -moz-use-text-color #b6c0c6 #b6c0c6;
+  border-image: none;
+  border-style: none none solid solid;
+  border-width: medium medium 1px 1px;
+  padding: 10px 54px;
+  text-transform: uppercase;
+}
+.artist .sidebar .list ul.current-exhibitions li a {
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+.page-taxonomy-term .panel-pane.pane-views.pane-community-artists h3 {
+  padding-top: 10px;
+}
+/*****************************************************
+ * generic styling for ALS elements: outer container
+ ******************************************************/
+.als-container {
+  position: relative;
+  z-index: 0;
+}
+.als-container .als-viewport {
+  position: relative;
+  overflow: hidden;
+  margin: 0px auto;
+  height: auto !important;
+}
+.als-container .als-viewport .als-wrapper {
+  position: relative;
+  list-style: none;
+  padding: 0;
+}
+.als-container .als-viewport .als-wrapper .als-item {
+  position: relative;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+.channel-selector,
+.modules .module {
+  position: relative;
+  overflow: hidden;
+}
+.channel-selector ul,
+.modules .module ul {
+  margin: 0;
+  padding: 0;
+}
+.channel-selector ul li,
+.modules .module ul li {
+  list-style: none;
+  float: left;
+}
+.channel-selector .image-container {
+  position: relative;
+  width: 954px;
+  height: 465px;
+}
+.channel-selector .image-container a.image-link-container {
+  display: block;
+  position: absolute;
+  z-index: 0;
+}
+.channel-selector .image-container .text {
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #231f20;
+  padding: 13px 0 13px 12px;
+  color: white;
+  min-width: 650px;
+  font-size: 20px;
+}
+.channel-selector .image-container .text a {
+  text-transform: uppercase;
+}
+.channel-selector .image-container .title {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  font-size: 20px;
+  text-transform: uppercase;
+  background-image: url('../images/homepage-main-detail.png');
+  width: 245px;
+  height: 373px;
+  display: block;
+  padding-left: 35px;
+  padding-top: 10px;
+  right: 0;
+  color: black;
+}
+.dots {
+  position: absolute;
+  bottom: 8px;
+  right: 20px;
+  z-index: 1;
+}
+.dots li {
+  display: block;
+  float: left;
+  text-indent: -99999px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+.dots li:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+.dots li.active {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.modules {
+  margin-top: 40px;
+}
+.modules .module {
+  width: 300px;
+  display: block;
+  float: left;
+  position: relative;
+  margin-right: 27px;
+}
+.modules .module:last-child {
+  margin: 0;
+}
+.modules .module .dots {
+  position: absolute;
+  top: 160px;
+  right: 20px;
+}
+.modules .module ul li {
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+.modules .module ul li a.image-container {
+  position: absolute;
+}
+.modules .module ul li a.image-container .title {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  font-size: 20px;
+  text-transform: uppercase;
+  background-image: url('../images/homepage-module-detail.png');
+  width: 265px;
+  height: 200px;
+  display: block;
+  padding-left: 35px;
+  padding-top: 10px;
+}
+.modules .module ul li a.image-container img {
+  /*position: absolute;*/
+  z-index: 0;
+}
+.modules .module ul li .description {
+  position: absolute;
+  top: 210px;
+}
+.press-list ul {
+  list-style: none;
+  padding: 0;
+}
+.press-list ul li {
+  display: inline-block;
+  margin-right: 10px;
+  float: left;
+}
+.press-list ul li .press-title {
+  font-style: italic;
+  font-size: 10px;
+}
+.press-list ul li.views-row {
+  height: 260px;
+  width: 125px;
+}
+.view-news .item-list ul {
+  list-style: none;
+}
+.view-news .item-list ul li {
+  float: left;
+  display: block;
+  height: 565px;
+  width: 285px;
+  margin-left: 0;
+  margin-right: 19px;
+  margin-bottom: 20px;
+}
+.pager li {
+  float: left !important;
+  width: auto !important;
+  height: auto !important;
+}
+.page-press .view-news .item-list {
+  /*width: auto !important;
+  float: right;
+  position: relative;
+  left: -20%;
+  text-align: left;*/
+}
+.page-press .view-news ul.pager {
+  list-style: none;
+  position: relative;
+  left: 45%;
+}
+.page-press .view-news ul.pager li {
+  float: left;
+  position: relative;
+  margin: 0 !important;
+  font-weight: normal !important;
+}
+.basic-2-col .column {
+  float: left;
+  width: 586px;
+}
+.basic-2-col .column.first {
+  width: 330px;
+  margin-right: 38px;
+}
+.sf-menu.sf-style-simple a,
+.sf-menu.sf-style-simple a:visited {
+  padding: 1.4em 23px;
+}
+.aborginal-panel .panel-pane.pane-views.pane-aboriginal-communities {
+  height: auto !important;
+  overflow: hidden !important;
+}
+.field-content {
+  position: relative;
+}
+.search-item .art-image {
+  overflow: visible;
+}
+.search-item .hidden {
+  display: none;
+}
+.search-item .art-in-situ-link {
+  position: relative;
+}
+.search-item .art-in-situ-link img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid black;
+}
+.search-item .page-link {
+  position: relative;
+}
+.search-item .page-link span {
+  position: absolute;
+  top: 34px;
+}
+.search-item .page-link.disabled {
+  display: none;
+}
+.search-item .scroll-pane {
+  width: 100%;
+  height: 116px;
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  /* IE 5-7 */
+  filter: alpha(opacity=0);
+  /* Netscape */
+  -moz-opacity: 0;
+  /* Safari 1.x */
+  -khtml-opacity: 0;
+  /* Good browsers */
+  opacity: 0;
+}
+.search-item .scroll-pane:focus {
+  outline: none;
+}
+.search-item a.search-item {
+  width: 94px;
+  height: 100px;
+  float: left;
+  margin-right: 2px;
+  border: 2px solid transparent !important;
+}
+.search-item a.search-item.active {
+  border-color: black !important;
+  border: 2px solid black !important;
+}
+img {
+  text-decoration: none;
+  border: 0px;
+}
+/*
+ * CSS Styles that are needed by jScrollPane for it to operate correctly.
+ *
+ * Include this stylesheet in your site or copy and paste the styles below into your stylesheet - jScrollPane
+ * may not operate correctly without them.
+ */
+.jspContainer {
+  overflow: hidden;
+  position: relative;
+}
+.jspPane {
+  position: absolute;
+}
+.jspVerticalBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 100%;
+  background: red;
+}
+.jspHorizontalBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: red;
+}
+.jspCap {
+  display: none;
+}
+.jspHorizontalBar .jspCap {
+  float: left;
+}
+.jspTrack {
+  background: #eee;
+  position: relative;
+}
+.jspDrag {
+  background: #696969;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag {
+  float: left;
+  height: 100%;
+}
+.jspArrow {
+  background: #50506d;
+  text-indent: -20000px;
+  display: block;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+.jspArrow.jspDisabled {
+  cursor: default;
+  background: #80808d;
+}
+.jspVerticalBar .jspArrow {
+  height: 16px;
+}
+.jspHorizontalBar .jspArrow {
+  width: 16px;
+  float: left;
+  height: 100%;
+}
+.jspVerticalBar .jspArrow:focus {
+  outline: none;
+}
+.jspCorner {
+  background: #eeeef4;
+  float: left;
+  height: 100%;
+}
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+* html .jspCorner {
+  margin: 0 -3px 0 0;
+}
+.jspHorizontalBar,
+.jspVerticalBar,
+.jspTrack {
+  background: #eee;
+}
+.jspDrag {
+  background: #a9a9a9;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+.jspTrack .jspActive,
+.jspTrack .jspHover,
+.jspDrag:hover {
+  background: #8B8B9F;
+}
+.jspArrow {
+  background: url(../images/ui-icons_222222_256x240.png) no-repeat;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+.jspVerticalBar > .jspActive,
+.jspArrow:hover {
+  background-image: url('../images/ui-icons_888888_256x240.png');
+}
+.jspVerticalBar > .jspDisabled,
+.jspVerticalBar > .jspDisabled:hover,
+.jspHorizontalBar > .jspDisabled,
+.jspHorizontalBar > .jspDisabled:hover {
+  background-color: transparent;
+  background-image: url('../images/ui-icons_888888_256x240.png');
+}
+.jspVerticalBar .jspArrow {
+  height: 15px;
+}
+.jspHorizontalBar .jspArrow {
+  width: 15px;
+}
+.jspArrowUp {
+  background-position: 0 0;
+}
+.jspArrowDown {
+  background-position: -64px 0 !important;
+}
+.jspArrowLeft {
+  background-position: -96px -4px !important;
+}
+.jspArrowRight {
+  background-position: -32px -4px !important;
+}
+img{
+	max-width: 100%;
+	height: auto;
+}
+.mean-container .mean-nav ul li a.mean-expand{
+	height: 16px;
+}
+.title-moble{
+	background: #7f7f7f;
+	display: block;
+	width: 97%;
+	font-size: 20px;
+	color: #fff;
+	float: left;
+	width: 100%;
+	display: none;
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+.title-moble h3{
+	margin: 0px;
+}
+.title-moble h3 a{
+	color: #fff;
+	display: block;
+	width: 100%:
+}
+.title-moble h3{
+	
+	padding: 15px 10px;
+	
+}
+.show-mobile{
+	display: none;
+}
+
+.not-logged-in #block-block-2 .contextual-links-wrapper{
+	display: none;
+}
+.mean-container a.meanmenu-reveal{
+	width: 100px;
+	color: #fff;
+	text-indent: 0;
+	font-size: 20px;
+}
+.mean-container a.meanmenu-reveal .text{
+	width: 70px;
+	float: left;
+	color: #fff;
+}
+.mean-container a.meanmenu-reveal span{
+	float: left;
+	width: 22px;
+}
+
+#block-block-2 .hd2{
+	padding-right: 10px;
+}
+
+@media screen and (min-width: 0px) and (max-width: 1199px) {
+	body{
+		overflow-x: hidden;
+	}
+	.art-showcase .art{
+		float: left;
+		width: 235px;
+		height: 480px;
+		margin-right: 10px;
+	}
+	
+}
+
+@media screen and (min-width: 0px) and (max-width: 1069px) {
+	.channel-selector .dots{
+		display: none;
+	}
+	#block-block-1 strong{
+		display: block;
+		width: 100%;
+		text-align: center;
+	}
+	.channel-selector .image-container .text a{
+		display: block;
+		width: 100%;
+		clear: both;
+		margin-bottom: 10px;
+		color: #FFF;
+	}
+	
+	.modules .module{
+		display: none;
+	}
+	
+	.title-moble{
+		display: block;
+		width: 100%;
+		margin: auto;
+		float: none;
+		z-index: 9;
+		position: relative;
+	}
+	
+	.modules .title-moble{
+		margin-bottom: -38px;
+		    background: rgba(0, 0, 0, 0.5);
+		    max-width: 300px;
+	}
+	
+	.page-aboriginal .title-moble{
+	    background: none;
+	    max-width: 115px;
+	}
+	
+	.modules .title-moble:not(:first-child){
+	    margin-top: 65px;
+	}
+	
+	.title-moble h3{
+		font-size: 20px;
+		padding: 10px 0 10px 35px;
+	}
+	
+	.channel-selector .image-container .text{
+		background: #7f7f7f;
+	}
+	.view-news .item-list ul li{
+		margin: 0 auto 20px;
+		float: none;
+		clear: both;
+		height: auto;
+	}
+	
+	.page-news .view-news .item-list ul li{
+		width: 33%;
+		float: left;
+		    clear: none;
+	}
+	
+	.view-news .item-list ul{
+		margin: 0px;
+		padding: 0px;
+	}
+	.view-news .item-list ul.pager li{
+		float: left;
+		width: auto;
+		margin-right: 5px;
+		clear: none;
+	}
+	.modules .module{
+		float: none;
+		margin: 0 auto;
+		margin-bottom: -65px;
+	    width: 100% !important;
+	    max-width: 300px;
+	}
+	.sidebars{
+		width: 100%;
+		clear: both;
+	}
+	.main-content{
+		width: 100%;
+		margin: 0px;
+		clear: both;
+	}
+	
+	.page-node-contemporary .main-content{
+	    width: 64%;
+	    clear: none;
+	}
+	
+	.sidebar{
+		width: 100%;
+	}
+	
+	.page-node-contemporary .sidebar{
+		width: 280px;
+		    margin-right: 50px;
+	}
+	
+	#content{
+		width: 100%;
+		clear: both;
+	}
+	
+	.node-type-exhibitions #content,
+	.node-type-past-exhibitions #content{
+		width: 70%;
+		    clear: none;
+	}
+	
+	.page-node-267 #content{
+		width: 69%;
+		clear: none;
+	}
+	
+	.page-search .sidebar{
+		width: 100%;
+		margin: 0px;
+	}
+	.pager{
+		width: 100%;
+	}
+	
+	.panels-flexible-region-9-center{
+		width: 60%;
+	}
+
+	#header, #main{
+		padding: 0px 20px;
+	}
+	.basic-2-col .column{
+		width: auto;
+	}
+	
+	.page-node-1140 .basic-2-col .column{
+		width: 50%;
+	}
+	
+	.basic-2-col .column.first{
+		width: 100%;
+	}
+	
+	.page-node-1140 .basic-2-col .column.first{
+		width: auto;
+	}
+	
+	.channel-selector .image-container{
+		width: 100%;
+	}
+	.channel-selector .image-container .text{
+		min-width: 100%;
+		line-height: 25px;
+	}
+	.modules .module ul li a.image-container{
+		width: 100%;
+	}
+	.modules .module:last-child{
+		margin: 0 auto;
+	}
+	#edit-sale-status-wrapper,#edit-category-wrapper,#edit-medium-wrapper .views-widget,#edit-genre-wrapper .views-widget,
+	#edit-orientation-wrapper .views-widget,#edit-width-wrapper , #edit-height-wrapper,#edit-art-price-wrapper{
+		display: none;
+		
+	}
+	#block-block-2 .text-blue{
+		margin: 0px;
+		padding-bottom: 0px;
+		cursor: pointer;
+		position: relative;
+	}
+	#block-block-2 {
+		margin-bottom: 0px;
+	}
+	#edit-medium-wrapper label,#edit-medium-wrapper label,#edit-genre-wrapper label,#edit-orientation-wrapper label{
+		cursor: pointer;
+		width: 100%;
+		clear: both;
+		
+	}
+	#views-exposed-form-better-search-search-block #edit-artist-wrapper{
+		margin: 0px;
+		display: block !important;
+	}
+	#views-exposed-form-better-search-search-block #edit-artist-wrapper label[for='edit-artist']{
+		 color: #30a5b9;
+	    font-size: 14px;
+	    font-weight: normal;
+	    
+	    text-transform: uppercase;
+	}
+	#views-exposed-form-better-search-search-block .views-submit-button,
+	#views-exposed-form-better-search-search-block .views-reset-button{
+		float: left !important;
+		width: 50% !important;
+		clear: none !important;
+	}
+	.search-form{
+		margin-bottom: 20px
+	}
+	.contemporary .sidebar{
+		width: 100%;
+	}
+	
+	.page-node-267 .contemporary .sidebar{
+		width: 238px;
+	}
+	
+	.contemporary .sidebar .exhibition-list.small{
+		width: 100%;
+	}
+	.contemporary .sidebar .exhibition-list.small .row{
+		/*display: none;*/
+	}
+	
+	#block-block-2 .text-blue:after{
+	    content: "\f067";
+	    font-family: FontAwesome;
+	    font-weight: normal;
+	    top: 10px;
+	    right: 0;
+	    -webkit-transform: translate(0, -50%);
+	    -moz-transform: translate(0, -50%);
+	    -ms-transform: translate(0, -50%);
+	    -o-transform: translate(0, -50%);
+	    transform: translate(0, -50%);
+	    font-size: 14px;
+	}
+	#block-block-2 .text-blue.showplus:after{
+		content: "\f068";
+		font-family: FontAwesome;
+	}
+	.showplus:after{
+		content: "\f068";
+		font-family: FontAwesome;
+	}
+	label[for='edit-medium']:after{
+		content: "\f067";
+		font-family: FontAwesome;
+	}
+	label[for='edit-medium'].showplus:after{
+		content: "\f068";
+		font-family: FontAwesome;
+	}
+	label[for='edit-genre']:after{
+		content: "\f067";
+		font-family: FontAwesome;
+	}
+	label[for='edit-genre'].showplus:after{
+		content: "\f068";
+		font-family: FontAwesome;
+	}
+	label[for='edit-orientation']:after{
+		content: "\f067";
+		font-family: FontAwesome;
+	}
+	label[for='edit-orientation'].showplus:after{
+		content: "\f068";
+		font-family: FontAwesome;
+	}
+	
+	.channel-selector .image-container a.image-link-container{
+		position: relative;
+	}
+	
+	.channel-selector .image-container .title{
+	    color: #FFF;
+	    background: rgba(0, 0, 0, 0.5);
+	    height: auto;
+	    padding-bottom: 10px;
+	    width: 100%;
+	    text-align: right;
+	    padding-right: 30px;
+	    padding-top: 20px;
+	    padding-bottom: 20px;
+	}
+	
+	.modules .module ul li a.image-container .title{
+		display: none;
+	}
+	
+	.modules .module ul li{
+		height: 265px;
+	}
+	
+	#page-title{
+		text-align: center;
+	    line-height: normal;
+	}
+	
+	.view-news{
+	    width: 945px;
+	    margin: auto;
+	}
+	
+	.heading h1{
+		text-align: center;
+	}
+	
+	.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms table {
+		width: 100%;
+	    max-width: 225px;
+	    margin: 20px auto !important;
+	    display: block;
+	}
+
+	#views-exposed-form-better-search-search-block .views-reset-button input.form-submit{
+		float: right;
+	}
+	
+	.artwork .art-image a img{
+		height: auto !important;
+	}
+	
+	.artwork div.links a.link-title,
+	.artwork .art-image .art-detail{
+		float: none;
+		margin-left: 0;
+	}
+	
+	.gallery-asset-container{
+		display: none;
+	}
+	
+	.page-node-2249 iframe, .fb_iframe_widget{
+	    overflow-x: scroll;
+	    width: 100%;
+	}
+	
+	.panels-flexible-region-9-left{
+		width: 330px;
+	}
+	
+	.node-type-exhibition #content{
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-flow: column;
+		flex-flow: column;
+	}
+	
+	.node-type-exhibition #content .sidebar{
+	-webkit-box-ordinal-group: 2;  
+	 -moz-box-ordinal-group: 2; 
+	 -ms-flex-order: 2;
+	 -webkit-order: 2;  
+	 order: 2; 
+	}
+	
+	.node-type-exhibition #content .main-content{
+	-webkit-box-ordinal-group: 1;
+	 -moz-box-ordinal-group: 1; 
+	 -ms-flex-order: 1;            
+	 -webkit-order: 1;    
+	 order: 1;
+	}
+	
+	.node-type-exhibition #content #main-content{
+		-webkit-box-ordinal-group: 3;
+		 -moz-box-ordinal-group: 3; 
+		 -ms-flex-order: 3;            
+		 -webkit-order: 3;    
+		 order: 3;
+	}
+	
+	.art-showcase{
+		height: none;
+	}
+	
+	.page-news .view-content .item-list ul li{
+		min-height: 500px;
+	}
+}
+
+@media screen and (min-width: 0px) and (max-width: 991px) {
+	.exhibitions .exhibition-list .row .info{
+		width: auto;
+	}
+	
+	.aborginal-panel .pane-aboriginal-communities .view-content h3{
+		position: relative;
+		margin-bottom: 10px;
+	}
+	
+	.panels-flexible-region-9-center {
+	    width: 53%;
+	}
+	
+	.sf-menu.sf-style-simple a, .sf-menu.sf-style-simple a:visited {
+	    padding: 1.4em 10px;
+	}
+	
+	.sf-menu.sf-style-simple{
+	    width: 720px;
+	    margin: auto;
+	    float: none;
+	}
+	
+	.view-news {
+	    width: 675px;
+	    margin: auto;
+	}
+	
+	.page-node-1140 .basic-2-col .column {
+	    width: 45%;
+	}
+	
+	.page-node-267 #content {
+	    width: 63%;
+	}
+	
+	.page-node-contemporary .main-content {
+	    width: 53%;
+	    clear: none;
+	}
+	
+	.art-showcase .art {
+	    position: relative !important;
+	    left: auto !important;
+	    top: auto !important;
+	    float: left;
+		width: 42%;
+		    margin: 0 10px;
+			    min-height: 280px;
+			text-align: center;
+	}
+	
+	.node-type-exhibition .art-showcase .art{
+		text-align: left;
+	}
+	.art-showcase .art .art-detail{
+		width: 100% !important;
+	}
+	
+	.node-type-exhibitions #content,
+	.node-type-past-exhibitions #content{
+		width: 63%;
+	}
+	
+	.page-search #content {
+	    width: 665px;
+	    margin: auto !important;
+	}
+	
+	.artwork .preview-art-container{
+		width: 100%;
+	}
+	
+	.artwork .art-in-situ {
+	    clear: both;
+	    float: none;
+	    text-align: center;
+	    margin: auto;
+	}
+	
+	.page-news .view-news .item-list ul li{
+		width: 50%;
+	}
+	
+
+}
+
+@media screen and (min-width: 768px){
+	#block-block-1 br{
+		display: none;
+	}
+}
+
+@media screen and (min-width: 0px) and (max-width: 767px) {
+	.press-list ul li.views-row {
+	    height: 280px;
+	}
+	.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms td{
+		display: block;
+	}
+	.page-news .view-content .item-list ul li{
+		min-height: 0px;
+	}
+	
+	.page-node-contemporary .art-showcase .art{
+		height: auto;
+	}
+	
+	.section-artists-talks iframe{
+		width: 100% !important;
+	}
+	
+	.aborginal-panel .pane-aboriginal-communities .view-content div{
+		width: 100%;
+	}
+	
+	.panels-flexible-9-inside{
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-flow: column;
+		flex-flow: column;
+	}
+	
+	.panels-flexible-region-9-left{
+	-webkit-box-ordinal-group: 2;  
+	 -moz-box-ordinal-group: 2; 
+	 -ms-flex-order: 2;
+	 -webkit-order: 2;  
+	 order: 2;  
+		 width: 300px;
+	     margin: auto;
+	}
+	
+	.panels-flexible-region-9-center{
+	-webkit-box-ordinal-group: 1;
+	 -moz-box-ordinal-group: 1; 
+	 -ms-flex-order: 1;            
+	 -webkit-order: 1;    
+	 order: 1;
+	 width: 100%;
+	}
+	
+	.page-node-1140 .basic-2-col{
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-flow: column;
+		flex-flow: column;
+	}
+	
+	.page-node-1140 .basic-2-col .column:nth-child(1){
+		-webkit-box-ordinal-group: 2;  
+		 -moz-box-ordinal-group: 2; 
+		 -ms-flex-order: 2;
+		 -webkit-order: 2;  
+		 order: 2; 
+	}
+	
+	.page-node-1140 .basic-2-col .column:nth-child(2){
+		-webkit-box-ordinal-group: 1;
+		 -moz-box-ordinal-group: 1; 
+		 -ms-flex-order: 1;            
+		 -webkit-order: 1;    
+		 order: 1;
+	}
+	
+	#block-simplenews-1{
+		margin: auto;
+	}
+	
+	.read-more-mobile{
+	    -moz-border-bottom-colors: none;
+	    -moz-border-left-colors: none;
+	    -moz-border-right-colors: none;
+	    -moz-border-top-colors: none;
+	    background: none repeat scroll 0 0 #ECEAE9;
+	    border-color: -moz-use-text-color -moz-use-text-color #b6c0c6 #b6c0c6;
+	    padding: 10px 0;
+	    text-transform: uppercase;
+		width: 100%;
+	    max-width: 265px;
+	    margin: auto;
+	}
+	
+	.exhibitions h2{
+		text-align: center;
+	}
+	
+	.page-news .view-news .item-list ul li{
+		width: 100%;
+	}
+	
+	.page-news .field-content{
+		width: 100%
+	}
+	
+	.page-news .views-field-field-news-image{
+		text-align: center;
+	}
+	
+	 {
+	    max-width: 460px;
+	    margin: auto;
+	}
+	
+	.sidebar, .main-content {
+	    width: 100% !important;
+	}
+	
+	.page-node-267 #content{
+		width: 100%;
+	}
+	.show-mobile{
+		display: block;
+	}
+	.hidden-mobile{
+		display: none;
+	}
+	
+	.page-node-267 .contemporary .sidebar{
+		display: none;
+	}
+	
+	.desktop-hide{
+		display: none;
+	}
+
+	.page-node-1140 .basic-2-col .column.first{
+		text-align: center;
+	}
+	
+	.page-node-1140 .basic-2-col .column.first img{
+		/*width: 100% !important;*/
+		height: auto !important;
+	}
+	
+	.page-node-1140 .basic-2-col .column{
+		width: 100% !important;
+	}
+	
+	.channel-selector .image-container{
+		max-height: 370px;	
+	}
+	
+	.contemporary .sidebar .exhibition-list.small{
+		width: 100%;
+	}
+	
+	.header__region{
+		padding: 0 !important;
+	}
+	
+	.header__logo{
+	    margin-top: 15px;
+	    margin-bottom: 20px;
+	}
+	
+	body{
+		padding: 0;
+	}
+	
+	.view-news {
+	    width: 405px;
+	    margin: auto;
+	}
+	
+	.page-node-267 .art-listing{
+		width: 460px;
+		margin: auto;
+	}
+	
+	.contemporary-artist > #content{
+		display: -webkit-flex;
+		display: flex;
+		-webkit-flex-flow: column;
+		flex-flow: column;
+	}
+	.contemporary-artist > #content > .sidebar{
+	-webkit-box-ordinal-group: 2;  
+	 -moz-box-ordinal-group: 2; 
+	 -ms-flex-order: 2;
+	 -webkit-order: 2;  
+	 order: 2;  
+	}
+	.contemporary-artist > #content > .main-content{
+	-webkit-box-ordinal-group: 1;
+	 -moz-box-ordinal-group: 1; 
+	 -ms-flex-order: 1;            
+	 -webkit-order: 1;    
+	 order: 1;  
+	}
+	
+	.art-showcase{
+		    height: auto !important;
+	}
+	
+	.contemporary-artist .heading h1 a,
+	.page-node-contemporary .heading h1 a{
+		display: block;
+	}
+	
+	.node-type-exhibitions #block-simplenews-1,
+	.node-type-past-exhibitions #block-simplenews-1{
+		display: none;
+	}
+	
+	.exhibitions .sidebar{
+		text-align: center;
+	}
+	
+	.node-type-exhibitions #content, .node-type-past-exhibitions #content{
+		width: 100%;
+	}
+	
+	.exhibitions .exhibition-list.large .row .info{
+		width: 51%;
+	}
+	
+	.exhibitions .exhibition-list .row .info{
+		width: 64%;
+	}
+	
+	.contemporary-artist .description{
+	    height: 295px;
+	    overflow-y: hidden;
+	}
+	.contemporary-artist .description.maxheight{
+		height: auto;
+	}
+	
+	.sidebar .media .item {
+	    width: 32%;
+	}
+	
+	.page-search #content {
+	    width: 400px;
+	}
+
+	.artwork .preview-art-container .more {
+	    margin-top: 20px;
+	    margin-bottom: -30px;
+	}
+
+	.art-showcase .art{
+		    min-height: 420px;
+	}
+}
+
+@media screen and (min-width: 623px) {
+	#views-exposed-form-better-search-search-block .views-exposed-form .views-exposed-widget {
+  		float: none;
+	}
+}
+
+@media screen and (min-width: 0px) and (max-width: 622px) {
+	.node-type-exhibition .art-showcase .art{
+		height: auto;
+	}
+	
+	.channel-selector .image-container{
+		max-height: 300px;	
+	}
+	
+	.page-node-267 .art-listing {
+	    width: 345px;
+	}
+	
+	.exhibitions .exhibition-list.large .row .info{
+		width: 35%;
+	}
+	
+	.exhibitions .exhibition-list .row .info{
+		width: 52%;
+	}
+	
+	#views-exposed-form-better-search-search-block .views-exposed-widget,
+	#views-exposed-form-better-search-search-block input.form-submit{
+		width: 100%;
+	}
+	
+	 {
+	    max-width: 345px;
+	}
+}
+
+@media screen and (min-width: 0px) and (max-width: 480px) {
+	.aborginal-panel .pane-aboriginal-communities .view-content h3 img{
+		max-width: 230px;
+	}
+	
+	.page-taxonomy-term .view-aboriginal-communities.view-id-aboriginal_communities{
+		padding-left: 15px;
+	}
+	
+	.page-taxonomy-term .view-communities-region-data.view-id-communities_region_data td{
+		padding: 0;
+	}
+	
+	.node-type-exhibition .art-showcase .art{
+		width: 100%;
+		min-height: 0;
+		margin-bottom: 10px;
+	}
+	
+	.exhibitions .exhibition-list.large .row .info, .exhibitions .exhibition-list .row .info{
+		width: 100%;
+	}
+	
+	.exhibition-list .image-link{
+	    margin: auto !important;
+	    display: block;
+		    float: none !important;
+			
+	}
+	
+	.channel-selector .image-container{
+		max-height: 247px;
+	}
+
+	.modules .module .dots {	
+		top: 145px;
+	}
+	
+	.view-news{
+		width: 100%;
+	}
+	
+	.press-list ul li.views-row {
+	    height: 340px;
+	    width: 46%;
+	}
+	
+	.page-node-267 .art-listing {
+	    width: 100%;
+	}
+	
+	.page-node-267 .contemporary .art-listing .art-list{
+	    width: 49%;
+	    text-align: center;
+		    margin-left: 0;
+	}
+	
+	.sidebar .media .item {
+	    width: 31%;
+	}
+	
+	.page-node-contemporary .sidebar .media .item{
+		width: 48%;
+	}
+	
+	.page-search #content {
+	    width: 100%;
+	}
+	
+	.page-search #content > a {
+	    width: 49%;
+	    display: block;
+	    float: left;
+	    text-align: center;
+	    margin-right: 5px;
+	}
+	
+	.page-search #content > a:nth-child(2n){
+		margin-right: 0;
+	}
+	
+	.page-search #content a img{
+		width: 100% !important;
+		height: auto !important;
+	}
+	
+	.exhibitions   .past-exhibition{
+	    width: 46%;
+	    margin-left: 0;
+	    text-align: center;
+	    padding: 0 5px;
+		height: 140px;
+	}
+	
+	.art-showcase .art{
+		    min-height: 320px;
+	}	
+}
+
+@media screen and (max-width: 375px){
+	.press-list ul li.views-row {
+    	height: 300px;
+    	width: 46%;
+	}
+}

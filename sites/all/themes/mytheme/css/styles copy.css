@@ -1,0 +1,1542 @@
+/**
+ * @file
+ * Styles are organized using the SMACSS technique. @see http://smacss.com/book/
+ *
+ * When you turn on CSS aggregation at admin/config/development/performance, all
+ * of these @include files will be combined into a single file.
+ */
+
+/* HTML element (SMACSS base) rules */
+/*@import "normalize.css";*/
+
+/* Layout rules */
+@import "layouts/responsive.css";
+
+/* Component (SMACSS module) rules */
+@import "components/misc.css";
+/* Optionally, add your own components here. */
+@import "print.css";
+
+/* SMACSS theme rules */
+/* @import "theme-A.css"; */
+/* @import "theme-B.css"; */
+h2 {
+    margin-top: 0;
+}
+a:link, a:visited{
+	text-decoration:none;
+	color:#30A5B9;
+}
+a:hover{
+	
+	color:#000000;
+}
+
+html {
+    font-family: arial;
+    font-size: 100%;
+    line-height: 1.5em;
+}
+body {
+    background-color: #F5F2F2;
+    margin: 0;
+    padding: 20px 0 0;
+	font-size:12px;
+	line-height:1.5em;
+	color:#000000;
+}
+
+.clearnew{
+	clear:both;
+	margin:0px;
+	padding:0px;
+}
+.pull-right{
+	float:right;
+}
+.pull-left{
+	float:left;
+}
+.text-black{
+	color:#000000;
+}
+.text-black{
+	color:#000000;
+}
+.text-black a{
+	color:#000000;
+}
+.text-italic{
+	font-style:italic;
+}
+.text-case{
+	text-transform:none;
+}
+.text-uppercase{
+	text-transform:uppercase;
+}
+.text-bold h2{
+	font-weight:bold;
+}
+
+.breadcrumb a {
+    color: #000000;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.breadcrumb li {
+    
+    font-size: 10px;
+	text-transform: uppercase;
+}
+.bread-crumb {
+    float: right;
+}
+.menu li.active-trail a.menuparent {
+    color: #30A5B9 !important;
+}
+
+.sf-menu.sf-style-simple  a.active{
+	color:#30A5B9 !important;
+}
+#header{
+	margin-bottom:10px;
+}
+#page, .region-bottom {
+    width: 1052px;
+}
+#page {
+    background-color: #FFFFFF;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+#header, #main {
+    padding-left: 49px;
+    padding-right: 49px;
+}
+#main{
+	padding-top:0;
+}
+
+.sf-menu.sf-style-simple li {
+    background: none;
+}
+.sf-menu.sf-style-simple.sf-horizontal li, .sf-menu.sf-style-simple.sf-navbar li {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+	border: none;
+  
+}
+.sf-menu.sf-style-simple li:hover, .sf-menu.sf-style-simple li.sfHover {
+    background: none;
+	
+}
+.sf-menu.sf-style-simple a:focus, .sf-menu.sf-style-simple a:hover, .sf-menu.sf-style-simple a:active, .sf-menu.sf-style-simple li:hover > a, .sf-menu.sf-style-simple li.sfHover > a {
+    color: #30a5b9;
+}
+
+.sf-menu.sf-style-simple .menuparent li{
+	background-color:#000000;
+	min-width:245px;
+}
+.sf-menu.sf-style-simple .menuparent li a{
+	background-color:#000000;
+	color:#ffffff;
+	
+}
+.sf-menu.sf-style-simple .menuparent li a:hover{
+	color: #30a5b9;
+}
+#navigation{
+	padding-left:0px;
+	padding-right:0px;
+}
+
+
+.sf-menu.sf-style-simple a, .sf-menu.sf-style-simple a:visited {
+    
+    padding: 1.4em 25px;
+	font-size: 0.97em;
+   
+	color:#000000;
+    
+    
+}
+#menu-218-1 a {
+    padding-left: 0;
+}
+#menu-410-1 a {
+    padding-right: 0;
+}
+.sf-menu.sf-style-simple a, .sf-menu.sf-style-simple a:visited {
+    
+    text-shadow: none;
+}
+
+.sf-menu.sf-style-simple.sf-vertical li, .sf-menu.sf-style-simple.sf-horizontal li li, .sf-menu.sf-style-simple.sf-navbar li li li {
+	border: none;
+}
+
+.sf-menu.sf-style-simple ul {
+    
+    margin-left: 20px;
+    
+}
+.footer-main{
+	width:1052px;
+	margin:0 auto;
+	background:none;
+}
+#block-block-1{
+    font-size: 11px;
+    line-height: 1.5em;
+    text-align: right;
+}
+
+#navigation .links li, #navigation .menu li {
+
+    padding:0;
+}
+
+
+#content, .region-sidebar-first, .region-sidebar-second, #footer {
+    
+    padding-left: 0px;
+    padding-right: 0px;
+    word-wrap: break-word;
+}
+
+
+.panels-flexible-region-1-center {
+    float: left;
+    width: 100%;
+}
+.home-bottom .panels-flexible-region{
+	position: relative;
+}
+
+.pane-home-slider {
+    position: relative;
+}
+#content, .region-sidebar-first, .region-sidebar-second, #footer {
+    word-wrap: break-word;
+}
+#header, #content, #navigation, .region-sidebar-first, .region-sidebar-second, #footer {
+    word-wrap: break-word;
+}
+.slider-heading {
+    background-image: url("../images/slider-title-overlay-top.png");
+    background-position: right top;
+    color: #30A5B9;
+    font-size: 1.7em;
+    font-weight: normal;
+    height: 39px;
+    line-height: 1.6;
+    margin-top: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 256px;
+    z-index: 1;
+}
+.slider-bottom-bg{
+	background-image: url("../images/slider-title-overlay-bottom.png");
+	width:39px;
+	height:288px;
+	position: absolute;
+	right:0;
+	top:39px;
+	z-index:1;
+	
+}
+
+.home-bottom .pane-title {
+    background-image: url("../images/sub-image-overlay-top.png");
+    color: #30A5B9;
+    font-size: 1.7em;
+    font-weight: normal;
+    height: 37px;
+    margin: 0;
+    padding-left: 35px;
+    position: absolute;
+    text-transform: uppercase;
+    width: 205px;
+    z-index: 1;
+	line-height: 1.7em;
+}
+
+
+.home-btm-img-overlay {
+    background: url("../images/sub-image-overlay-bottom.png") repeat scroll 0 0 transparent;
+    height: 155px;
+    position: absolute;
+    width: 37px;
+	top:37px;
+	z-index:1;
+}
+#page-title {
+    border-bottom: 3px solid #000000;
+    color: #30A5B9;
+    font-size: 22px;
+    font-weight: normal;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    text-transform: uppercase;
+	padding-bottom:15px;
+	margin-bottom:30px;
+
+}
+
+.header__region {
+    padding-bottom: 50px;
+    padding-top: 10px;
+	margin-left: 0px;
+	
+}
+
+.blue-title h2{
+	color: #30A5B9;
+	
+}
+.sub-title h2{
+	font-size:15px;
+	font-weight: normal;
+	text-transform: uppercase;
+	
+}
+.sub-title-big h2{
+	font-size:22px;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+.text-blue{
+	color: #30A5B9;
+}
+.weight-14{
+	font-size:14px;
+}
+.page-exhibitions .view-display-id-block_3 {
+    border-bottom: 3px solid #000000;
+    padding-bottom: 12px;
+	
+}
+
+
+
+
+.pane-simplenews-1 {
+    border: 1px solid #DBDBDB;
+    margin-top: 30px;
+    padding: 10px 0 15px;
+    position: relative;
+    text-align: center;
+    width: 235px;
+}
+ #block-simplenews-1 {
+    border: 1px solid #DBDBDB;
+    margin-top: 30px;
+    padding: 10px 0 15px;
+    position: relative;
+    text-align: center;
+    width: 224px;
+}
+ #webform-client-form-3740{
+     border: 1px solid #DBDBDB;
+     margin-top: 30px;
+     padding: 10px 0 15px;
+     position: relative;
+     text-align: center;
+     width: 224px;
+}
+#block-simplenews-1  #webform-client-form-3740{
+	border:none;
+	padding:0px;
+	margin:0px;
+}
+
+ #webform-client-form-3740 #edit-submitted-email{
+    border: 1px solid #000000;
+    height: 40px;
+    width: 180px;
+	position:relative;
+	padding-left:10px;
+}
+ #webform-client-form-3740 .webform-submit{
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #ECEAE9;
+    border-color: -moz-use-text-color -moz-use-text-color #B6C0C6 #B6C0C6;
+    border-image: none;
+    border-style: none none solid solid;
+    border-width: medium medium 1px 1px;
+    padding: 10px 54px;
+    text-transform: uppercase;
+}
+ #webform-client-form-3740 .form-item-mail{
+	margin:0 0 12px 0;
+}
+
+ #webform-client-form-3740 p {
+    color: #6D6E71;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+}
+
+
+
+
+
+.pane-simplenews-1 #edit-mail, #block-simplenews-1 #edit-mail{
+    border: 1px solid #000000;
+    height: 40px;
+    width: 180px;
+	position:relative;
+	
+}
+
+
+
+.pane-simplenews-1 #edit-submit, #block-simplenews-1 #edit-submit {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #ECEAE9;
+    border-color: -moz-use-text-color -moz-use-text-color #B6C0C6 #B6C0C6;
+    border-image: none;
+    border-style: none none solid solid;
+    border-width: medium medium 1px 1px;
+    padding: 10px 54px;
+    text-transform: uppercase;
+}
+.pane-simplenews-1 .form-item-mail, #block-simplenews-1 .form-item-mail{
+	margin:0 0 12px 0;
+}
+
+.pane-simplenews-1 p, #block-simplenews-1 p {
+    color: #6D6E71;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+}
+.pane-simplenews-1 .form-item-mail label, #block-simplenews-1 .form-item-mail label{
+	z-index:1;
+	cursor: text;
+	color: #919396;
+    font-size: 11px;
+    font-weight: normal;
+    left: 89px;
+    position: absolute;
+    top: 50px;
+	display:none;
+}
+.pane-simplenews #edit-mail, .block-simplenews #edit-mail{
+	text-align:center;
+	color: #919396;
+	font-size: 11px;
+}
+
+.pane-simplenews-1 .form-item-mail .form-required, #block-simplenews-1 .form-item-mail .form-required{
+	display:none;
+}
+.pane-simplenews-1 #edit-mail:focus, .pane-simplenews-1 #edit-mail:active, #block-simplenews-1 #edit-mail:focus, #block-simplenews-1 #edit-mail:active{
+	z-index:2;
+}
+.page-exhibitions .view-display-id-block_1 .views-field-title a{
+	color:#000000;
+	
+	font-weight:bold;
+	text-transform:uppercase;
+	
+
+}
+
+.page-exhibitions .view-id-exibitions  .views-field-title a {
+    color: #000000;
+    font-weight: bold;
+    text-transform: uppercase;
+	font-size:14px;
+}
+.page-exhibitions .view-exibitions.view-id-exibitions.view-display-id-block_3  .views-field-title a {
+    color: #000000;
+    font-weight: bold;
+    text-transform: uppercase;
+	font-size:16px;
+}
+
+
+.view-display-id-block_3 .views-field-title a {
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.view-display-id-block_1 .views-field-title p{
+	margin-top:5px;
+	
+
+}
+.view-display-id-block_1 .views-field-field-description p{
+	margin-top:5px;
+}
+
+.page-exhibitions .views-field.views-field-field-ex-image {
+    float: left;
+    margin-right: 20px;
+}
+
+.view-display-id-block_3 .views-field.views-field-title > p {
+    margin-bottom: 0;
+}
+.view-display-id-block_3 td {
+	vertical-align:bottom;
+	
+	padding-bottom:10px;
+}
+.view-display-id-block_4 td{
+	padding-bottom:10px;
+	vertical-align:top;
+	
+}
+.view-exibitions.view-display-id-block .view-content div.views-row{
+	display:none;
+}
+.view-exibitions.view-id-exibitions h3 a{
+	font-weight:normal;
+	font-size:12px;
+}
+.view-exibitions.view-id-exibitions h3 a.active{
+	font-weight:bold;
+	font-size:12px;
+}
+/*-----------------------------flex sldier---------------------------------------*/
+.flexslider {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0 0 32px;
+    position: relative;
+}
+
+
+
+
+.pane-home-slider{
+	position:relative;
+}
+
+
+.view-home-slider.view-id-home_slider .views-field.views-field-title {
+    background: none repeat scroll 0 0 #000000;
+    bottom: 0;
+    color: #30A5B9;
+    font-size: 1.7em;
+    padding: 10px 0 10px 12px;
+    position: absolute;
+    text-transform: uppercase;
+    width: 450px;
+    z-index: 1;
+}
+.pane-home-slider .views-field.views-field-title span span{
+	color:#ffffff;
+	text-transform:none;
+	font-size:16px;
+}
+
+.home-slider-region {
+    position: relative;
+}
+.flex-control-nav {
+    bottom: 9px;
+    right: 0;
+    position: absolute;
+    text-align: center;
+    width: auto;
+}
+
+.flex-control-paging li a {
+    background: none repeat scroll 0 0 transparent;
+    border: 1px solid #FFFFFF;
+    border-radius: 0;
+    box-shadow: none;
+    height: 18px;
+    width: 18px;
+}
+.flex-control-paging li a.flex-active {
+    background: #ffffff;
+    cursor: default;
+	opacity:0.7;
+}
+.home-bottom .flex-control-nav{
+	top:175px;
+	z-index:20;
+}
+
+/*-----------------------------flex sldier---------------------------------------*/
+
+
+
+/*-----------------------------news---------------------------------------*/
+
+
+.page-news .field-content {
+    width: 287px;
+}
+
+.page-news tr {
+    vertical-align: top;
+}
+.page-news tr td{
+	width:313px;
+	padding-right: 43px;
+}
+.page-news .views-field.views-field-body p {
+    margin-top: 0;
+}
+/*-----------------------------news---------------------------------------*/
+.node-type-exhibition .panels-flexible-row-4-main-row{
+	
+    border-bottom: 3px solid #000000;
+    color: #30A5B9;
+    font-size: 22px;
+    font-weight: normal;
+    padding-bottom: 0;
+    text-transform: uppercase;
+	line-height:1.4;
+	padding-bottom:10px;
+	margin-bottom:25px;
+
+}
+.view-exibition-artist.view-display-id-attachment_1 td{
+    padding-bottom: 20px;
+    padding-right: 68px;
+	vertical-align: top;
+}/*-------------------------------news---------------------------*/
+
+.node-type-artist .views-slideshow-pager-field-item {
+    float: left;
+    margin-right: 6px;
+}
+
+.page-press .view-id-press.view-display-id-page td {
+    max-width: 138px;
+    padding-bottom: 50px;
+    padding-right: 24px;
+	vertical-align:top;
+}
+.page-press .view-id-press.view-display-id-page .views-field-title, .page-press .view-id-press.view-display-id-page .views-field-field-press-date{
+	font-style:italic;
+	font-size:10px;
+}
+
+.pane-exibitions {
+    margin-bottom: 30px;
+}
+
+.view-contemporary-artists.view-id-contemporary_artists td {
+    padding-bottom: 20px;
+    padding-right: 5px;
+    vertical-align: top;
+}
+.view-contemporary-artists.view-id-contemporary_artists .views-field-title{
+	text-transform:uppercase;
+}
+.page-contemporary .pane-contemporary-exibitions{
+	position:relative;
+	
+}
+
+
+.page-contemporary .pane-contemporary-exibitions .hd-disp {
+    background-image: url("../images/contp-btm-ovrly.png");
+    background-position: left bottom;
+    color: #30A5B9;
+    font-size: 14px;
+    font-weight: bold;
+    height: 28px;
+    left: 0;
+    letter-spacing: 0;
+    padding-left: 15px;
+    padding-top: 4px;
+    position: absolute;
+    top: 112px;
+    width: 181px;
+}
+.hd-top {
+    background-image: url("../images/contp-left-ovrly.png");
+    background-position: left bottom;
+    height: 108px;
+    left: 0;
+    letter-spacing: 0;
+    padding-left: 0;
+    padding-top: 4px;
+    position: absolute;
+    top: 0;
+    width: 28px;
+}
+.page-contemporary .view-display-id-block_1 .views-field-title a , .page-contemporary .view-display-id-block_3 .views-field-title a{
+    color: #000000;
+    font-weight: normal;
+    text-transform: uppercase;
+	font-size:11px;
+}
+
+.page-contemporary .views-field-field-artist-exhibition a{
+    color: #000000;
+    text-transform: uppercase;
+}
+.view-contemporary-exibitions.view-id-contemporary_exibitions.view-display-id-block_3{
+	margin-bottom:30px;
+}
+
+.page-exhibitions .view-id-exibitions.view-display-id-block_1 .views-row {
+    clear: both;
+    margin-bottom: 22px;
+    min-height: 100px;
+}
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms tr {
+    text-align: center;
+    vertical-align: top;
+}
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms td {
+    width:220px;
+}
+
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms table {
+    background-color: #F5F2F2;
+    padding: 25px;
+}
+
+
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms .views-field.views-field-name a {
+    color: #000000;
+    text-transform: uppercase;
+	font-size:16px;
+}
+
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms .views-field.views-field-name {
+    margin-bottom: 20px;
+}
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms .views-field-nothing{
+	text-transform: uppercase;
+	color:#30A5B9;
+}
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms .views-field-view .views-field-title a{
+	color: #000000;
+}
+.node-type-art .view-art-list-exibition.view-id-art_list_exibition.view-display-id-block  .view-content {
+	overflow:auto;
+}
+.node-type-art .view-art-list-exibition.view-id-art_list_exibition.view-display-id-block  .view-content td{
+	padding-left:10px;
+}
+.node-type-art .view-artist-art-list-.view-id-artist_art_list_ td {
+    padding-left: 0;
+    padding-right: 9px;
+    vertical-align: top;
+    width: 125px;
+}
+.node-type-art .view-art-list-exibition.view-id-art_list_exibition.view-display-id-block .views-field-field-art-image-1, .node-type-art .view-art-list-exibition.view-id-art_list_exibition.view-display-id-block .views-field-field-art-image-2{
+	display:none;
+}
+.node-type-art .pane-views.pane-artist-art-list h2 {
+    border-top: 3px solid #000000;
+    font-weight: normal;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.node-type-art.page-node-search .pane-views.pane-art-big-image{
+	margin-bottom: 40px;
+	position:relative;
+}
+.node-type-art.page-node-community .pane-views.pane-art-big-image{
+	margin-bottom: 40px;
+	position:relative;
+}
+.pane-views.pane-art-big-image{
+	margin-bottom: 18px;
+	position:relative;
+}
+
+.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-1, .node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-2  {
+  
+	margin-top:10px;
+	font-size:14px;
+	left: 500px;
+	bottom:-42px;
+    position: absolute;
+}
+.page-node-search.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-1{
+	display:none;
+}
+
+.page-node-search.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-3 {
+    bottom: -40px;
+    display: block;
+    float: left;
+    font-size: 14px;
+    left: 210px;
+    margin-top: 10px;
+    position: absolute;
+}
+
+.page-node-search.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-2{
+	display:block;
+	font-size:14px;
+	margin-left:0px;
+	margin-right: 27px;
+	left:480px;
+	bottom:-40px;
+}
+.page-node-search.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-php{
+	display:block;
+	bottom:-40px;
+	
+}
+
+.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-php {
+	margin-top:10px;
+	font-size:14px;
+	right: 0px;
+    position: absolute;
+	bottom: -42px;
+}
+.node-type-artist .view-artist-page-art-list-.view-id-artist_page_art_list_ td {
+    padding-bottom: 25px;
+    padding-right: 28px;
+    vertical-align: top;
+	font-size:11px;
+}
+.node-type-artist .view-artist-page-art-list-.view-id-artist_page_art_list_ td .views-field-title{
+	font-style:italic;
+}
+.node-type-art .panel-pane.pane-custom.pane-1 {
+    
+	font-weight:bold;
+	font-size:16px;
+}
+
+.panels-flexible-region-13-more_items{
+	margin-top:33px;
+}
+
+.page-node-search.node-type-art .pane-views.pane-faceted-block .pane-title {
+    border-top: 3px solid #000000;
+    font-weight: normal;
+    margin-top: 10px;
+    padding-top: 6px;
+    text-transform: uppercase;
+}
+
+.loader_img {
+    background: url("../images/loading.gif") repeat scroll 0 0 transparent;
+    height: 64px;
+    left: 464px;
+    position: absolute;
+    top: 423px;
+    width: 64px;
+    z-index: 1;
+	display:none;
+}	
+.node-type-art .panels-flexible-row.panels-flexible-row-13-main-row.panels-flexible-row-first {
+    position: relative;
+}
+.big-img-dsc{
+	display:none;
+}
+.node-type-art .pane-art-list-exibition .views-field-title{
+	display:none;
+}
+
+.page-taxonomy-term .pane-aboriginal-communities .pane-title{
+	background-color: #F5F2F2;
+	margin-bottom:10px;
+	padding: 10px;
+	
+
+}
+
+.page-taxonomy-term .view-aboriginal-communities.view-id-aboriginal_communities {
+    background-color: #F5F2F2;
+    margin-top: 0;
+    
+    padding-left: 35px;
+    
+}
+.page-taxonomy-term .view-aboriginal-communities.view-id-aboriginal_communities h3{
+	margin:0;
+}
+
+.page-taxonomy-term .view-communities-region-data.view-id-communities_region_data {
+    background-color: #F5F2F2;
+    padding: 20px 10px;
+}
+
+.page-taxonomy-term .panel-pane.pane-views.pane-communities-region-data {
+    border-top: 3px solid #000000;
+    margin: 20px 0 0;
+    padding: 20px 0;
+}
+
+
+.page-taxonomy-term .panel-pane.pane-views.pane-community-artists .views-view-grid {
+    
+    margin: 20px 0 0 0;
+    padding-bottom: 20px;
+    
+}
+
+.page-taxonomy-term .panel-pane.pane-views.pane-community-artists .views-view-grid  tr{
+    vertical-align:top;
+}
+
+.page-taxonomy-term .panel-pane.pane-views.pane-community-artists .views-view-grid td {
+    padding-right: 9px;
+	font-size:11px;
+	
+}
+.page-taxonomy-term .panel-pane.pane-views.pane-community-artists h3{
+	text-transform:uppercase;
+	font-size:14px;
+	font-weight:normal;
+	margin-top:0px;
+	border-top: 3px solid #000000;
+}
+.pane-views.pane-community-footer-images{
+	border-top: 3px solid #000000;
+	padding-top:10px;
+}
+.pane-community-footer-images .view-community-footer-images.view-id-community_footer_images{
+    float: right;
+}
+.page-taxonomy-term .view-communities-region-data.view-id-communities_region_data tr{
+    vertical-align:top;
+}
+.page-taxonomy-term .view-communities-region-data.view-id-communities_region_data td{
+    padding-right:40px;
+}
+.page-taxonomy-term .view-communities-region-data.view-id-communities_region_data p{
+    margin:0px
+	
+}
+
+.panels-flexible-region-15-center {
+    float: left;
+    width: 954px;
+}
+
+.page-taxonomy-term .view-aboriginal-communities.view-id-aboriginal_communities a {
+    color: #000000;
+}
+
+.page-taxonomy-term .view-aboriginal-communities.view-id-aboriginal_communities .views-row {
+    float: left;
+    margin-right: 120px;
+    
+}
+.page-taxonomy-term .view-aboriginal-communities.view-id-aboriginal_communities .view-content {
+    @overflow:auto;
+    
+}
+
+.node-type-art #previous {
+    left: 385px;
+    
+    position: relative;
+}
+#next {
+    left: 533px;
+    position: relative;
+}
+.node-type-art .pane-artist-exibition-title {
+    border-bottom: 3px solid #000000;
+    color: #30A5B9;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+	
+}
+.node-type-artist .panels-flexible-row.panels-flexible-row-16-1 {
+    border-bottom: 3px solid #000000;
+    color: #30A5B9;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.node-type-artist .panel-pane.pane-views.pane-biography .pane-title {
+    background-image: url("../images/artist-side-top-head-bg.png");
+    height: 215px;
+    line-height: 39px;
+    margin-top: -1px;
+    padding-left: 10px;
+    position: absolute;
+    width: 339px;
+}
+.node-type-artist .panel-pane.pane-views.pane-biography{
+	position:relative;
+}
+
+.node-type-artist .views-field.views-field-field-about-the-artist {
+    background-color: #F5F2F2;
+    background-image: url("../images/artist-side-bottom-head-bg.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    padding: 40px 44px 42px 15px;
+}
+.view-media-artist.view-id-media_artist.view-display-id-block td {
+    padding-bottom: 5px;
+    padding-right: 11px;
+}
+.pane-media-artist h2.pane-title {
+    border-top: 3px solid #000000;
+    color: #000000;
+    margin-bottom: 23px;
+    padding-top: 15px;
+}
+
+.node-type-artist h2 {
+    margin-bottom: 17px;
+    margin-top: 18px;
+}
+
+.node-type-artist .view-artist-exibition-list .views-field-title a{
+	font-style:italic;
+
+}
+
+.view-biography .views-field-field-cv-resume {
+    font-size: 16px;
+    margin-top: 40px;
+    text-transform: uppercase;
+}
+
+
+.bottomscroll .view-content {
+    overflow: auto;
+}
+
+.bottomscroll .views-field-field-art-image-2, .bottomscroll .views-field-field-art-image-1 {
+    display: none;
+}
+.panels-flexible-region-18-more_items {
+    margin-top: 33px;
+}
+.panels-flexible-region-17-more_items {
+    margin-top: 53px;
+}
+.node-type-art .panels-flexible-region-13-more_items {
+    margin-top: 53px;
+}
+.page-exhibitions .view-id-exibitions.view-display-id-block div .views-field-field-exibition-date{
+	display:none;
+	
+}
+
+.menustyle.block-facetapi .item-list {
+    background-color: #2A2628;
+    left: 191px;
+    min-width: 180px;
+    padding: 5px 15px;
+    position: absolute;
+    top: 5px;
+	z-index:2;
+}
+.block-facetapi .item-list li {
+    list-style: none outside none;
+}
+
+.block-facetapi .item-list ul {
+    margin: 0;
+    padding: 0;
+}
+.menustyle.block-facetapi .item-list li a{
+	color:#ffffff;
+}
+.block-facetapi .item-list li a{
+	color:#000000;
+}
+.block-facetapi .item-list li a:hover{
+	color:#30A5B9;
+}
+
+.menustyle.block-facetapi .item-list li {
+    line-height: 2.5;
+    list-style: none outside none;
+    margin: 0;
+	color:#ffffff;
+}
+.menustyle.block-facetapi .block-title {
+    border-bottom: 1px solid #F5F2F2;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 10px 0;
+}
+.menustyle.block-facetapi .block-title:last-child {
+    border-bottom: 1px solid #000000;
+   
+}
+.menustyle.block-facetapi .block-title:hover{
+	color:#30A5B9;
+}
+
+.page-search .block-facetapi.showmenu .item-list{
+	
+}
+.block-facetapi {
+    margin-bottom: 0;
+    position: relative;
+}
+.view-faceted2 td {
+    padding-bottom: 20px;
+    padding-right: 5px;
+    vertical-align: top;
+}
+.page-search.sidebar-first #content {
+    float: left;
+    margin-left: 20%;
+    margin-right: -100%;
+    padding-left: 53px;
+    width: 80%;
+}
+
+.page-search .tabs-primary, .page-search .tabs-secondary {
+    
+    margin: 0 0 1.5em ;
+
+}
+.hd1 {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    font-size: 14px;
+    padding: 15px 0;
+}
+.hd2 {
+    
+    font-size: 14px;
+    padding: 15px 0;
+}
+#block-current-search-standard {
+    background: none repeat scroll 0 0 #27A5BC;
+    color: #FFFFFF;
+    font-size: 12px;
+    padding: 4px 7px;
+	position:relative;
+}
+#block-current-search-standard .block-title {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+#block-current-search-standard h3 {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+}
+
+#block-current-search-standard li {
+    display: inline;
+    list-style: none outside none;
+}
+#block-current-search-standard li  a{
+    display:none;
+}
+#block-current-search-standard ul {
+    list-style: none outside none;
+    padding: 0;
+}
+a.reset {
+    color: #FFFFFF;
+    font-size: 14px;
+    left: 175px;
+    position: absolute;
+    top: 0;
+}
+
+#block-current-search-standard li {
+    background-image: url("../images/backslash.png");
+    background-repeat: no-repeat;
+    display: inline;
+    list-style: none outside none;
+    padding-left: 10px;
+}
+#block-current-search-standard li:first-child{
+    background-image: none;
+	padding:0;
+}
+.artst-menu.block-facetapi .block-title {
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    margin-top: 25px;#views-exposed-form-faceted2-page .form-text
+}
+.type-menustyle.block-facetapi .block-title{
+	font-size:14px;
+	margin:14px 0;
+	font-weight:normal;
+}
+#views-exposed-form-faceted2-page .form-submit {
+    background: none repeat scroll 0 0 #30A5B9;
+    border: 0 none;
+    color: #FFFFFF;
+    font-size: 13px;
+    padding: 10px 5px;
+    text-transform: uppercase;
+	margin-left: 0;
+	height:38px;
+}
+
+#views-exposed-form-faceted2-page .form-text {
+    border: 1px solid #000000;
+    color: #6D6E71;
+    padding: 10px 5px 11px;
+    text-align: center;
+    width: 140px;
+	font-size:12px;
+	margin-top:0px;
+	
+}
+#views-exposed-form-faceted2-page #edit-field-artist-title-wrapper label{
+    display:none;
+}
+#views-exposed-form-faceted2-page #edit-field-artist-title-wrapper {
+    float: left;
+    width: 153px;
+}
+
+
+#views-exposed-form-faceted2-page .views-exposed-form .views-exposed-widget {
+    float: left;
+    padding:0;
+}
+
+#block-views-exp-faceted2-page > form {
+    margin-top: 20px;
+    width: 225px;
+}
+#views-exposed-form-faceted2-page  .views-exposed-form .views-exposed-widget .form-submit {
+    margin-top: 0;
+}
+.node-type-exhibition .pane-views.pane-exibitions-artist-view{
+    position: relative;
+}
+
+.node-type-exhibition .views-field-field-about-the-artist  {
+    background-color: #F5F2F2;
+    background-image: url("../images/artist-side-bottom-head-bg.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    padding: 40px 44px 42px 15px;
+}
+
+.node-type-exhibition .pane-views.pane-exibitions-artist-view .pane-title {
+    background-image: url("../images/artist-side-top-head-bg.png");
+    height: 215px;
+    line-height: 39px;
+    margin-top: -1px;
+    padding-left: 10px;
+    position: absolute;
+    width: 339px;
+}
+
+.bread-crumb {
+    
+    font-size: 10px;
+    text-transform: uppercase;
+}
+.view-faceted-block.view-id-faceted_block.view-display-id-block_1 .views-field-nothing{
+
+	display:none;
+}
+.artistswitch .views-field-field-artist-image{
+	display:none;
+}
+.node-type-art .views-field-nothing-3, .node-type-art .views-field-nothing-2{
+	display:none;
+}
+
+.page-node-stockroom-contemporary.node-type-art .views-field-nothing-1{
+	display:none;
+}
+
+.page-node-stockroom-contemporary.node-type-art .views-field-nothing-2{
+	display:block;
+}
+
+
+.node-news .field.field-name-field-news-image.field-type-image {
+    float: left;
+    margin-right: 25px;
+}
+.node-news .field-name-field-news-headline {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+.page-node-stockroom.page-node-stockroom-contemporary .panels-flexible-17 .view-contemporary-art-title  {
+    color: #000000;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 1.4;
+    text-transform: uppercase;
+} 
+.page-node-stockroom.page-node-stockroom-contemporary  .pane-contemporary-art-title {
+    border-bottom: 3px solid #000000;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+}
+.node-type-artist .panels-flexible-region-21-title-inside{
+    border-bottom: 3px solid #000000;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    text-transform: uppercase;
+	font-size: 22px;
+    font-weight: normal;
+    line-height: 1.4;
+}
+
+.aborginal-panel .panel-pane.pane-views.pane-aboriginal-communities {
+    background: none repeat scroll 0 0 #F5F2F2;
+    height: 178px;
+    position: relative;
+}
+.aborginal-panel .pane-aboriginal-communities .view-content h3 {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.aborginal-panel .pane-aboriginal-communities .view-content div {
+    float: left;
+    margin-bottom: 5px;
+    margin-right: 23px;
+    width: 159px;
+}
+.aborginal-panel .pane-aboriginal-communities .view-content {
+    width: 547px;
+}
+.page-contemporary .views-field-field-artist-exhibition a:hover{
+	color:#30A5B9
+}
+.contemp-panel a{
+	color:#000000;
+}
+.contemp-panel a:hover{
+	color:#30A5B9
+}
+ a.hd-disp:hover{
+	color:#000000 !important;
+}
+.community-panel .view-contemporary-art-title.view-id-contemporary_art_title {
+    color: #30A5B9;
+    font-size: 22px;
+    font-weight: normal;
+    line-height: 1.4;
+    text-transform: uppercase;
+	border-bottom: 3px solid #000000;
+	margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+.view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-4{
+	display:none;
+}
+.page-node-community.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-1 {
+
+	display:none;
+}
+.page-node-community.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-4{
+
+	bottom: -40px;
+    display: block;
+    font-size: 14px;
+    left: 211px;
+    margin-top: 10px;
+    position: absolute;
+	display:block;
+
+}
+ .page-node-community.node-type-art .view-art-big-image.view-id-art_big_image .views-field.views-field-nothing-2{
+	display:block;
+	margin-left:40px;
+	left:425px;
+ }
+.page-node-community.node-type-art .pane-views.pane-art-list-artst .pane-title {
+    border-top: 3px solid #000000;
+    font-weight: normal;
+    margin-top: 10px;
+    padding-top: 6px;
+    text-transform: uppercase;
+	
+}
+.node-type-artist .pane-views.pane-artist-page-art-list .views-row{
+	float:left;
+	padding-right: 35px;
+	margin-bottom: 15px;
+}
+
+.node-type-artist .pane-views.pane-artist-page-art-list .view-content {
+    width: 620px;
+}
+
+.node-type-artist .sub-title .pane-artist-exibition-list.text-bold h2 {
+    font-weight: bold;
+}
+.view-art-list-exibition.view-id-art_list_exibition .views-field-nothing-1, .view-art-list-exibition.view-id-art_list_exibition .views-field-php{
+	display:none;
+}
+.view-faceted-block.view-id-faceted_block .views-field-nothing-1, .view-faceted-block.view-id-faceted_block .views-field-php{
+	display:none;
+}
+.view-art-list-artst.view-id-art_list_artst .views-field-php{
+	display:none;
+}
+.page-node-community .view-art-list-artst.view-id-art_list_artst {
+    float: right;
+    width: 670px;
+}
+.page-node-search.node-type-art .view-id-faceted_block.view-display-id-block_1 {
+    float: right;
+    width: 670px;
+}
+.view-home-slider .views-field-title a:hover{
+	color:#AFAFAF;
+}
+#imageData #imageDetails{
+	display:none;
+}
+.draggableviews-processed li.views-row {
+    height: 435px;
+    width: 285px;
+	 margin-left: 0;
+    margin-right: 21px;
+}
+
+.draggableviews-processed {
+    float: left;
+    padding-left: 0;
+}
+
+/*
+    Colorbox Core Style:
+    The following CSS is consistent between example themes and should not be altered.
+*/
+#colorbox, #cboxOverlay, #cboxWrapper{position:absolute; top:0; left:0; z-index:9999; overflow:hidden;}
+#cboxWrapper {max-width:none;}
+#cboxOverlay{position:fixed; width:100%; height:100%;}
+#cboxMiddleLeft, #cboxBottomLeft{clear:left;}
+#cboxContent{position:relative;}
+#cboxLoadedContent{overflow:auto; -webkit-overflow-scrolling: touch;}
+#cboxTitle{margin:0;}
+#cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
+#cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
+.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxIframe{width:100%; height:100%; display:block; border:0;}
+#colorbox, #cboxContent, #cboxLoadedContent{box-sizing:content-box; -moz-box-sizing:content-box; -webkit-box-sizing:content-box;}
+
+/*
+    User Style:
+    Change the following styles to modify the appearance of Colorbox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#cboxOverlay{background:#fff;}
+#colorbox{outline:0;}
+#cboxContent{margin-top:32px; overflow:visible; background:#000;}
+.cboxIframe{background:#fff;}
+#cboxError{padding:50px; border:1px solid #ccc;}
+#cboxLoadedContent{background:#000; padding:1px;}
+#cboxLoadingGraphic{background:url(../images/colorbox/loading.gif) no-repeat center center;}
+#cboxLoadingOverlay{background:#000;}
+#cboxTitle{position:absolute; top:-22px; left:0; color:#000;}
+#cboxCurrent{position:absolute; top:-22px; right:205px; text-indent:-9999px;}
+
+/* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+#cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; text-indent:-9999px; width:20px; height:20px; position:absolute; top:-20px; background:url(../images/colorbox/controls.png) no-repeat 0 0;}
+
+/* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+#cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
+
+#cboxPrevious{background-position:0px 0px; right:44px;}
+#cboxPrevious:hover{background-position:0px -25px;}
+#cboxNext{background-position:-25px 0px; right:22px;}
+#cboxNext:hover{background-position:-25px -25px;}
+#cboxClose{background-position:-50px 0px; right:0;}
+#cboxClose:hover{background-position:-50px -25px;}
+.cboxSlideshow_on #cboxPrevious, .cboxSlideshow_off #cboxPrevious{right:66px;}
+.cboxSlideshow_on #cboxSlideshow{background-position:-75px -25px; right:44px;}
+.cboxSlideshow_on #cboxSlideshow:hover{background-position:-100px -25px;}
+.cboxSlideshow_off #cboxSlideshow{background-position:-100px 0px; right:44px;}
+.cboxSlideshow_off #cboxSlideshow:hover{background-position:-75px -25px;}
+
+.read-more-mobile{
+	display: none;	
+}
+
+
+@media screen and (max-width: 1069px) {	
+	#page, .region-bottom{
+		width: 100%;
+		
+	}
+	.footer-main{
+		width: 100%;
+	}
+	#block-block-1{
+		text-align: center;
+	}
+	.channel-selector{
+		width: 100% !important;	
+	}
+	.channel-selector img{
+		width: 100% !important;	
+		height: auto;
+	}
+	
+	.channel-selector .image-container .title{
+		/*display: none !important;*/
+	}
+	.footer-main #block-block-1 p{
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+	.header__logo{
+		display: block;
+		margin: 0 auto;
+		float: none;
+		text-align: center;
+	}
+	.view-news .item-list ul li{
+		margin: 0 auto;
+		float: none;
+		clear: both;
+	}
+}
+@media screen and (min-width: 0px) and (max-width: 767px) {
+	.read-more-mobile{
+		display: block;	
+		cursor: pointer;
+		    text-align: center;
+	}
+	.show-on-mobile{
+		display: none;
+	}
+	
+}
+
+@media screen and (max-width: 1069px) and (min-width: 0px)
+.art-showcase {
+    height: none !important;
+}
+

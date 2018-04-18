@@ -1,0 +1,12 @@
+name = Currency tests
+description = "Supports Currency's automated tests."
+core = 7.x
+dependencies[] = currency
+hidden = TRUE
+
+; Information added by drupal.org packaging script on 2013-04-26
+version = "7.x-2.1"
+core = "7.x"
+project = "currency"
+datestamp = "1366968019"
+

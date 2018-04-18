@@ -1,0 +1,57 @@
+/*==========admin style=======================*/
+#flexslider-2 p {margin-top:5px;}
+.footer-main #block-block-1 p
+{margin-top:29px;
+line-height:20px;}
+.home-bottom .panels-flexible-region-1-column_3 
+{width:33.9309%;}
+.view-home-slider.view-id-home_slider .views-field.views-field-title 
+{background:#231f20;
+font-size: 24px;
+padding: 13px 0 13px 12px;
+width:687px;}
+.pane-home-slider .views-field.views-field-title span span 
+{font-size:21px;}
+.sf-menu.sf-style-simple ul {
+margin-left: 20px;
+border: 1px solid #4bbecd;
+}
+.sf-menu.sf-style-simple .menuparent li
+ {background-color: #423f40; }
+ .sf-menu.sf-style-simple .menuparent li a {
+background-color: #423f40;}
+.page-contemporary .view-display-id-block_1 .views-field-title,.page-contemporary .view-display-id-block_3 .views-field-title
+{text-align:center;width:185px;}
+.page-contemporary .views-field-field-artist-exhibition {
+text-align: center;
+width: 185px;
+font-weight: bold;
+}
+.page-contemporary .views-field-field-exibition-date {
+text-align: center;
+width: 185px;
+}
+.page-contemporary .pane-contemporary-exibitions .pane-title {text-align:center;}
+
+.page-taxonomy-term .pane-aboriginal-communities .pane-title {padding-left: 33px;
+padding-top: 34px;}
+
+#page {padding-bottom: 60px;padding-top: 40px;}
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms .views-field-nothing {
+text-transform: uppercase;
+color: #28b2c4;
+margin-top: 15px;
+margin-bottom: 5px;
+font-weight: bold;
+}
+.page-aboriginal .view-aboriginal-communities-terms.view-id-aboriginal_communities_terms table {padding-bottom:40px;}
+.header__region {
+padding-bottom: 40px;
+padding-top: 20px;
+margin-left: 0px;
+}
+.node-type-art .pane-artist-exibition-title {margin-bottom:8px;}
+.node-type-art #previous,#next  {font-size: 24px;
+font-weight: normal;}
+#views-exposed-form-faceted2-page .form-submit {/*padding: 11px 5px;margin-top: 2px!important;*/}
+.page-node-stockroom.page-node-stockroom-contemporary .pane-contemporary-art-title {margin-bottom:8px;}

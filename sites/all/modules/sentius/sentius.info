@@ -1,0 +1,9 @@
+name = Sentius customize 
+description = "Sentius"
+core = 7.x
+package = Sentius
+; Information added by drupal.org packaging script on 2011-07-13
+version = "7.x-2.2"
+core = "7.x"
+project = "Sentius"
+datestamp = "1310528214"

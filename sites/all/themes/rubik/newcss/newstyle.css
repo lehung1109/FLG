@@ -1,0 +1,17 @@
+#edit-field-art-showcase-und-form-field-price, #edit-field-art-showcase-und-form-field-medium, #edit-field-art-showcase-und-form-field-orientation{
+    float: left;	
+}
+#edit-field-art-showcase-und-form-field-genre, 
+.field-type-taxonomy-term-reference.field-name-field-genre.field-widget-options-buttons.form-wrapper{
+    clear: both;
+}
+#edit-field-art-showcase-und-form-field-medium, #edit-field-art-showcase-und-form-field-orientation ,
+#edit-field-art-showcase-und-entities-0-form-field-medium,#edit-field-art-showcase-und-entities-0-form-field-orientation
+ {
+ 	margin-left:60px;	
+}
+#edit-field-art-showcase-und-entities-0-form-field-medium, #edit-field-art-showcase-und-entities-0-form-field-price,
+#edit-field-art-showcase-und-entities-0-form-field-orientation
+{
+	float:left;
+}
