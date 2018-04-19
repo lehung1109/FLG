@@ -1648,6 +1648,20 @@ a.reset {
 .node-1140 .field-name-field-right-column .field-label{
 	display:none;
 }
+#block-formblock-user-register,
+#block-block-3{
+    max-width: 50%;
+    padding: 0px 20px;
+    float: left;
+}
+#block-formblock-user-register .description{
+    display: none;
+}
+.favourite{
+    clear:both;
+    width: 100%;
+}
+
 @media screen and (min-width: 768px) {
     .page-node-3820 #header, 
     .page-node-3820 #main{

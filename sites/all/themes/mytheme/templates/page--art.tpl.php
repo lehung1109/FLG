@@ -215,7 +215,9 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
 	<?php } ?>
 </div>
-
+<div class="favourite">
+dsads
+	</div>
 
 <div class="controls">
 
@@ -521,6 +523,7 @@ if(isset($artistNode->nid)){
 
 			<?php }
 	}
+}
 }
 if($context== 'contemporary'){
 	

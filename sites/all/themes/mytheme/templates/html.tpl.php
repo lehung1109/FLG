@@ -16,16 +16,22 @@
 		var pathToTheme = "<?php echo path_to_theme() ?>";
 	</script>
 	<?php print $scripts; ?>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-55712619-1', 'auto');
-  ga('send', 'pageview');
+	<?php if($_SERVER['HTTP_HOST'] === 'flg.com.au'){
+     echo "
+          <script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-</script>
+		  ga('create', 'UA-55712619-1', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+     ";
+	} ?>
+
 <script src="https://use.typekit.net/wca4amy.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
