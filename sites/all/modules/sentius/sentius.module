@@ -13,3 +13,32 @@ function sentius_inline_entity_form_table_fields_alter(&$fields, $context) {
   */
 
 }
+function sentius_form_alter(&$form, &$form_state, $form_id){
+	if($form_id == 'user_register_form'){
+		$form['#form_placeholder'] = TRUE;
+	}
+}
+
+
+function sentius_category_form($form, &$form_state) {
+  $form['category'] = array(
+    '#type' => 'textfield', //you can find a list of available types in the form api
+    '#title' => 'Folder Name',
+    '#required' => TRUE, //make this field required 
+  );
+
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Create'),
+  );
+  
+  return $form;
+}
+function sentius_category_form_validate($form, &$form_state) {
+
+}
+
+function sentius_category_form_submit($form, &$form_state) {
+
+}

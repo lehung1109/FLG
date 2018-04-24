@@ -216,8 +216,9 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 	<?php } ?>
 </div>
 <div class="favourite">
-dsads
-	</div>
+	
+	<?php print flag_create_link('favourite_art', arg(1)); ?>
+</div>
 
 <div class="controls">
 

@@ -76,6 +76,8 @@ if($category == 19) {
 
 
 	<div id="main" class="artist<?php if($context== 'contemporary'){ ?> contemporary-artist<?php } ?>" data-artist-id="<?php echo $node->nid ?>"<?php  if($context== 'contemporary'){ ?> data-contemporary="19"<?php } ?>>
+
+
 		<div id="content" role="main">
 
 			<div class="heading">
@@ -93,6 +95,10 @@ if($category == 19) {
 			<?php endif; ?>
 
 			<aside class="sidebar">
+				<div class="follow">
+					
+					<?php print flag_create_link('artist', arg(1)); ?>
+				</div>
 				<div class="description">
 					<?php
 					$description = $node->field_about_the_artist['und'][0]['value'];

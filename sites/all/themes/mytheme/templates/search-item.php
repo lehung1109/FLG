@@ -67,7 +67,10 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 			?>
 			<h1><a href="/search"?>SEARCH ART</a> - <span class="title"><?php echo $node->title ?></span> <?php echo $year ?> by <a href="<?php echo url('node/' . $artistNode->nid); ?>/contemporary"><?php echo $artistNode->title ?></a></h1>
 		</div>
-
+		<div class="favourite">
+			
+			<?php print flag_create_link('favourite_art',$_GET['nodeId']); ?>
+		</div>
 		<div class="controls">
 			<?php
 				$prevClass = ($currentKey == 0) ? ' class="disabled" ' : '';

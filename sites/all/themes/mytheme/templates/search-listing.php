@@ -13,7 +13,7 @@
 
 
 	<div id="content" class="column" role="main">
-
+		
 		<?php if(count($view->result)) {
 			$nodeIdArray = array();
 			foreach ($view->result as $key => $value) {

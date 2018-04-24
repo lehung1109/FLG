@@ -44,9 +44,7 @@ global $base_url;
 		<?php print render($page['header']); ?>
 
 	</header>
-
-
-
+	
 			<?php
 			$view = views_get_view('better_search');
 			$view->set_display('search_block');

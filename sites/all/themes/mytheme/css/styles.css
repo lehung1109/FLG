@@ -1650,16 +1650,179 @@ a.reset {
 }
 #block-formblock-user-register,
 #block-block-3{
-    max-width: 50%;
+    
     padding: 0px 20px;
     float: left;
+}
+#block-block-3{
+    width: 620px;
+margin-left: 30px;
+
+}
+#block-formblock-user-register{
+    max-width: 222px;
+}
+#block-block-3 .row{
+    clear: both;
+    width: 100%;
+    float: none;
+}
+#block-block-3 .row .left-content-block{
+    width: 315px;
+
+    float: left;
+}
+#block-block-3 .row .right-content-block{
+    width: 302px;
+    position: relative;
+    float: right;
+}
+#block-block-3 .row .right-content-block img{
+    right: -40px;
+    position: absolute;
+    margin-top: -30px;
+}
+#block-formblock-user-register{
+    width: 35%;
+    padding:20px;
+    border: 1px solid #dcdcdc;
+}
+#block-formblock-user-register .block-title{
+    text-align: center;
 }
 #block-formblock-user-register .description{
     display: none;
 }
-.favourite{
+#block-formblock-user-register .form-text{
+    height: 40px;
+    border:1px solid #000;
+    padding: 0px 0px 0px 10px;
+}
+#block-formblock-user-register label{
+    display: none;
+}
+#block-formblock-user-register #edit-submit{
+    width: 170px;
+    display: block;
+    margin: 0 auto;
+    height: 33px;
+    background: #ecebe9;
+    border: none;
+}
+#block-formblock-user-register .form-required{
+    display: none;
+}
+.favourite,
+.follow{
     clear:both;
     width: 100%;
+    padding:20px 0px;
+}
+.favourite a,.follow a{
+    font-size: 20px;
+}
+.view-my-followed-artists{
+
+}
+.view-my-followed-artists .views-field-nid .image{
+	width: 165px;
+	height: 200px;
+	display: block;
+}
+.view-my-followed-artists .content-follow h2{
+    margin-top: 0px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #bfbfbf;
+    font-size: 14px;
+    background: url('images/love.jpg') right center no-repeat;
+    height: 28px;
+    display: table-cell;
+	vertical-align: middle;
+}
+.view-my-followed-artists .content-follow ul {
+    padding: 0px;
+    margin: 0px;
+
+}
+.view-my-followed-artists .content-follow ul li{
+    list-style: none;
+    list-style-image: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.view-my-followed-artists .content-follow ul li a,.view-my-followed-artists .content-follow ul li{
+    text-transform: uppercase;
+    color: #797979;
+
+}
+.view-my-followed-artists .content-follow ul li a:hover{
+    color: #2da6b9;
+}
+.view-my-followed-artists .views-row{
+    display: inline-block;
+    width:165px;
+    padding: 0px 25px 10px;
+}
+.view-my-followed-artists .views-row:first-child{
+    padding-left: 0px;
+}
+.view-my-followed-artists .views-row:last-child{
+    padding-right: 0px;
+}
+#block-views-my-followed-artists-block .block-title,
+#block-views-my-artworks-block .block-title{
+    margin-bottom: 20px;
+    height:50px;
+    line-height: 50px;
+    padding-left: 20px;
+    background: #ecebe9;
+    color: #5e5e5c;
+    font-weight: normal;
+}
+#block-block-4{
+    margin: 20px 0px;
+    display: inline-block;
+    width: 100%;
+}
+#block-block-4 .left{
+    float: left;
+    max-width: 200px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color:  #2da6b9;
+
+}
+#block-block-4 {
+
+}
+#block-block-4 .right{
+     float: right;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color:  #2da6b9;
+}
+#block-block-4 .right a{
+    display: inline-block;
+    margin-right: 20px;
+}
+.art-showcase{
+
+}
+.view-my-artworks .views-row{
+    float: left;
+    width: 200px;
+    margin-right: 20px;
+}
+.view-my-artworks .art a{
+    color: black !important;
+}
+.view-my-artworks .art .art-detail{
+    font-size: 12px;
 }
 
 @media screen and (min-width: 768px) {
