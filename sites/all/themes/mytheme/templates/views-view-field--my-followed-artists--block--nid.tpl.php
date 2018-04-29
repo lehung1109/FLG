@@ -1,5 +1,17 @@
 <?php $node = node_load($output);
+	
+	$newEx = sentius_getExByAid($output);
 
+
+	$urlnewEx = '#';
+	if(count($newEx)>0)
+		$urlnewEx = url('node/'.$newEx[0]->entity_id);
+
+	$newWorks = sentius_checkNewestNode($output);
+	$urlNewWorks = '#';
+
+	if(count($newWorks)>0)
+		$urlNewWorks = url('node/'.$newWorks[0]->nid);
 ?>
 <div class="image">
 	<?php $image = image_style_url('small_image',$node->field_artist_image['und'][0]['uri']);?>
@@ -9,8 +21,8 @@
 <div class="content-follow">
 	<h2><?php echo $node->title?></h2>
 	<ul>
-		<li><a href="<?php echo url('node/'.$node->nid)?>">NEW WORKS</a></li>
+		<li><a href="<?php echo $urlNewWorks?>">NEW WORKS</a></li>
 		<li><a href="<?php echo url('node/'.$node->nid)?>">NEWS!</a></li>
-		<li><a href="<?php echo url('node/'.$node->nid)?>">Exhibitions</a></li>
+		<li><a href="<?php echo $urlnewEx?>">Exhibitions</a></li>
 	</ul>
 </div>

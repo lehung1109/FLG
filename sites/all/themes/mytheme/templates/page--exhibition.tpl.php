@@ -71,7 +71,6 @@
 					echo $description;
 					?>
 				</div>
-
 				<?php
 
 

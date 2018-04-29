@@ -1,18 +1,189 @@
 <?php 
+function sentius_menu(){
+  $items = array();
+  $items['sentiusajax'] = array(
+      'title' => t(''),
+      'page callback' => '_sentius_ajax',
+      'access arguments' => array('access content'),
+      'type' => MENU_CALLBACK
+    );
+  return $items;
+}
+function _sentius_ajax(){
+	if(isset($_GET['action'])){
+		global $user;
+		if($_GET['action'] == 'addFavourites'){
+			if(isset($_GET['tid'])){
+			    
+			    $tid = $_GET['tid'];
+			    $nid = $_GET['nid'];
+			    $uid = $user->uid;
+			    $check = sentius_checkFavorites($nid,$tid);
+			    if($check == 0){
+			      sentius_addFavorites($nid,$tid);
+			      echo 'Success';
+			      die;
+			    }else{
+			      echo 'Unsuccess';
+			      die;
+			    }
+			}
+		}
+		if($_GET['action'] == 'removeTid'){
 
+			$tid = $_GET['tid'];
+
+			taxonomy_term_delete($tid);
+
+			echo 'sucess';
+			die;
+		}
+	}
+  
+
+}
 function sentius_inline_entity_form_table_fields_alter(&$fields, $context) {
   
 
-  //add any fields you need to the $fields array
-  /*
-  $fields['field_art_preview_image'] = array(
-    'type' => 'field',
-    'label' => t('Image'),
-    'weight' => 2
-  );
-  */
 
 }
+// get all custom taxonomy
+function sentius_getTaxonomy(){
+  global $user;
+
+
+  $sql = "SELECT taxonomy_term_data.name AS taxonomy_term_data_name, taxonomy_term_data.vid AS taxonomy_term_data_vid, taxonomy_term_data.tid AS tid, taxonomy_vocabulary.machine_name AS taxonomy_vocabulary_machine_name, taxonomy_term_data.weight AS taxonomy_term_data_weight
+FROM 
+{taxonomy_term_data} taxonomy_term_data
+LEFT JOIN {field_data_field_author} field_data_field_author ON taxonomy_term_data.tid = field_data_field_author.entity_id AND (field_data_field_author.entity_type = 'taxonomy_term' AND field_data_field_author.deleted = '0')
+LEFT JOIN {taxonomy_vocabulary} taxonomy_vocabulary ON taxonomy_term_data.vid = taxonomy_vocabulary.vid
+WHERE (( (field_data_field_author.field_author_value = '".$user->uid."') )AND(( (taxonomy_term_data.vid IN  ('12')) )))
+ORDER BY taxonomy_term_data_weight ASC";
+    $data = array();
+    $newterm = new stdClass();
+    $newterm->taxonomy_term_data_name = 'Favourite';
+    $newterm->tid  = 42;
+    $data[] =  $newterm;
+    $query = db_query($sql);
+    foreach($query as $row){
+      $data[] = $row;
+    } 
+  return $data;
+
+}
+
+// get all Favorites
+
+function sentius_getALlFavorites($tid=''){
+  global $user;
+  $data = array();
+  if($tid!= ''){
+    $sql = "select * from {favouries_custom} WHERE `uid`= '".$user->uid."' AND `tid`='".$tid."'";
+  }else{
+    $sql = "select * from {favouries_custom} WHERE `uid`= '".$user->uid."'";
+  }
+  
+  $query = db_query($sql);
+  foreach($query as $row){
+    $data[] = $row;
+  }
+  return $data;
+
+}
+
+// check Favorites
+
+function sentius_checkFavorites($nid,$tid){
+  global $user;
+  $sql = "select count(`id`) as count from {favouries_custom} WHERE `uid`= '".$user->uid."' AND `nid` = '".$nid."'  AND `tid` = '".$tid."' LIMIT 1";
+  $query = db_query($sql)->fetchField();
+  return $query;
+
+}
+
+// add favourites
+function sentius_addFavorites($nid,$tid){
+  global $user;
+  $data = array(
+    'tid' => $tid,
+    'uid' => $user->uid,
+    'nid' => $nid,
+  );
+ return db_insert('favouries_custom')->fields($data)->execute(); 
+
+
+}
+
+
+// get all exhibition by artisid;
+function sentius_getExByAid($artistId){
+  $sql = 'select * from `gcd_field_data_field_artists_featured` where `field_artists_featured_target_id` = '.$artistId.' ORDER BY `entity_id` DESC limit 1';
+     $data = array();
+    $query = db_query($sql);
+    foreach($query as $row){
+      $data[] = $row;
+    } 
+  return $data;
+}
+
+// get art node by artisid;
+function sentius_checkNewestNode($artistId){
+  $sql = "SELECT node.created AS node_created, node.nid AS nid FROM  {node} node LEFT JOIN {field_data_field_artist} field_data_field_artist ON node.nid = field_data_field_artist.entity_id AND (field_data_field_artist.entity_type = 'node') 
+WHERE (( (node.status = '1') AND (node.type IN  ('art')) AND (field_data_field_artist.field_artist_nid IN  ('".$artistId."')) )) ORDER BY node_created DESC LIMIT 1 ";
+  $data = array();
+    $query = db_query($sql);
+    foreach($query as $row){
+      $data[] = $row;
+    } 
+  return $data;
+}
+
+function sentius_node_insert($node) {
+    if($node->type == 'art'){
+      echo '<pre>';
+      print_r($node);
+      die;
+    }
+}
+function sentius_theme() {
+    return array(
+      
+      'block_category' => array(
+        'variables' => array('data' => NULL),
+        'template' => 'templates/block_category'
+      ),
+      
+    );
+  }
+
+  function sentius_block_info() {
+    $blocks = array();
+    
+    $blocks['block_category']['info'] = t('Folder');
+    $blocks['block_category']['cache'] = DRUPAL_NO_CACHE;
+
+    
+    return $blocks;
+  }
+
+  function sentius_block_view($delta = '') {
+    global $base_url,$user;
+    $data = array();
+    $block = array();
+    switch ($delta) {
+    case 'block_category':
+      $tid = '';
+      if(isset($_GET['tid'])){
+        $tid = $_GET['tid'];
+      }
+
+      $data = sentius_getALlFavorites($tid);
+      $block['content'] = theme('block_category', array('data' => $data));
+      return $block;   
+    default:
+        break;
+    }
+  }
 function sentius_form_alter(&$form, &$form_state, $form_id){
 	if($form_id == 'user_register_form'){
 		$form['#form_placeholder'] = TRUE;
@@ -21,10 +192,11 @@ function sentius_form_alter(&$form, &$form_state, $form_id){
 
 
 function sentius_category_form($form, &$form_state) {
+  $form['#form_placeholder'] = TRUE;
   $form['category'] = array(
-    '#type' => 'textfield', //you can find a list of available types in the form api
+    '#type' => 'textfield', 
     '#title' => 'Folder Name',
-    '#required' => TRUE, //make this field required 
+    '#required' => TRUE, 
   );
 
 
@@ -40,5 +212,13 @@ function sentius_category_form_validate($form, &$form_state) {
 }
 
 function sentius_category_form_submit($form, &$form_state) {
-
+    global $user;
+    $vid = db_query("SELECT vid FROM {taxonomy_vocabulary} WHERE machine_name = 'tags_artwork'")->fetchField();
+    $category = $form_state['values']['category'];
+    $newterm = new stdClass();
+    $newterm->name = $category;
+    $newterm->vid  = $vid;
+    $newterm->field_author['und'][0]['value'] = $user->uid;
+    taxonomy_term_save($newterm);
+   
 }

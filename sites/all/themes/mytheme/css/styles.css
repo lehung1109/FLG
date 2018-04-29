@@ -1736,8 +1736,9 @@ margin-left: 30px;
     font-size: 14px;
     background: url('images/love.jpg') right center no-repeat;
     height: 28px;
-    display: table-cell;
-	vertical-align: middle;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
 }
 .view-my-followed-artists .content-follow ul {
     padding: 0px;
@@ -1762,8 +1763,8 @@ margin-left: 30px;
 }
 .view-my-followed-artists .views-row{
     display: inline-block;
-    width:165px;
-    padding: 0px 25px 10px;
+    width:164px;
+    padding: 0px 15px 10px;
 }
 .view-my-followed-artists .views-row:first-child{
     padding-left: 0px;
@@ -1772,7 +1773,9 @@ margin-left: 30px;
     padding-right: 0px;
 }
 #block-views-my-followed-artists-block .block-title,
-#block-views-my-artworks-block .block-title{
+#block-views-my-artworks-block .block-title,
+#block-sentius-block-category .block-title
+{
     margin-bottom: 20px;
     height:50px;
     line-height: 50px;
@@ -1780,6 +1783,25 @@ margin-left: 30px;
     background: #ecebe9;
     color: #5e5e5c;
     font-weight: normal;
+    cursor: pointer;
+    position: relative;
+}
+#block-views-my-followed-artists-block .block-title:after,
+#block-views-my-artworks-block .block-title:after,
+#block-sentius-block-category .block-title:after{
+    content: "+";
+    position: absolute;
+    right: 15px;
+    top: 0px;
+    color: #000;
+    font-size:30px;
+}
+#block-views-my-followed-artists-block .block-title.addMinus:after,
+#block-views-my-artworks-block .block-title.addMinus:after,
+#block-sentius-block-category .block-title.addMinus:after{
+    content: "-";
+    right:18px;
+    font-size: 36px;
 }
 #block-block-4{
     margin: 20px 0px;
@@ -1817,12 +1839,139 @@ margin-left: 30px;
     float: left;
     width: 200px;
     margin-right: 20px;
+    margin-bottom: 20px;
+    height:300px;
+}
+.view-my-artworks .views-row:nth-child(3n){
+    margin-right: 0px;
 }
 .view-my-artworks .art a{
     color: black !important;
 }
 .view-my-artworks .art .art-detail{
     font-size: 12px;
+}
+
+.view-my-artworks .view-header{
+    float:left;
+    width: 300px;
+    margin-right: 20px;
+}
+.content-right{    
+    float: right;
+    width: 640px;
+}
+.view-my-artworks .form-text{
+
+    width: 100%;
+
+}
+.view-author {
+    width: 100%;
+}
+#block-views-my-artworks-block .view-author .block-title{
+    display: none !important;
+}
+.view-my-artworks .view-author .views-row{
+    width: 100%;
+    clear: both;
+    float: left;
+width: 100%;
+}
+.view-author .views-row a,
+.view-author .views-row{
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000;
+    position: relative;
+}
+.view-author .views-row .remove{
+    float: right;
+    width: 10%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+.view-author .view-content{
+    width: 100%;
+}
+#block-sentius-block-category .form,
+#block-sentius-block-category .block,
+#block-sentius-block-category .control{
+    width: 270px;
+    float: left;
+    margin-bottom: 0px;
+}
+#block-sentius-block-category .form .form-text{
+    width: 260px;
+    height: 40px;
+    border: 1px solid #000;
+    padding: 0px 0px 0px 10px;
+}
+#block-sentius-block-category .form {
+    display: none;
+}
+#block-sentius-block-category .form .form-required{
+    display: none;
+}
+#block-sentius-block-category .content-left{
+    padding:0px 20px 0px 0px;
+    float: left;
+    width: 270px;
+}
+.control p{
+    cursor: pointer;
+    margin: 0px;
+}
+p.newFolder{
+    position: relative;
+    padding-left: 10px;
+}
+p.newFolder:after{
+    content: "+";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    color: #000;
+
+}
+.view-author .views-row{
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.view-author .views-row a{
+    width: 90%;
+    height: 100%;
+    padding-top:20px;
+    padding-bottom: 20px;
+    float: left;
+}
+.view-author .views-row {
+    border-bottom: 1px solid #000;
+}
+
+.view-author .views-row a:hover{
+    color:#2da6b9;
+}
+#block-sentius-block-category .control{
+    margin-top: 20px;
+}
+.view-author .views-row .view-favorites a{
+    background: url('images/love.jpg') left center no-repeat;
+    padding-left: 30px;
+    width: auto;
+}
+p.newFolder.addMinus:after{
+    content: "-";
+
+}
+
+.view-my-artworks .art-detail a.title:hover,
+.view-my-artworks .art-detail a{
+    color: #000;
 }
 
 @media screen and (min-width: 768px) {

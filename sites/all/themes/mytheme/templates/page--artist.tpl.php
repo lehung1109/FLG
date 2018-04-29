@@ -131,11 +131,13 @@ if($category == 19) {
 				$view->set_arguments($arguments);
 				$view->execute();
 				print $view->render();
+
 				
 				//past exhibitions attached to the node
 				$pastExhibitionsNodeIdArray = $node->field_past_exhibitions['und'];
+
 				$pastnew  = get_node_past();
-				if(count($pastExhibitionsNodeIdArray) != 0) { ?>
+				 ?>
 					<div class="list">
 					<h2>Past Exhibitions</h2>
 					<ul>
@@ -154,19 +156,20 @@ if($category == 19) {
 						<?php } }?>
 
 					<?php
-
+					if(count($pastExhibitionsNodeIdArray) != 0) {
 					foreach($pastExhibitionsNodeIdArray as $previousExhbitionsNodeId) {
 						$previousExhibitionNode = node_load($previousExhbitionsNodeId['target_id']);
 
 						$fileUrl = file_create_url($previousExhibitionNode->field_exhibition_pdf['und'][0]['uri']);
 						?>
 							<li><a href="<?php echo $fileUrl ?>" target="_blank"><?php echo $previousExhibitionNode->title ?></a></li>
-						<?php } ?>
+						<?php } 
+					}?>
 												
 					</ul>
 					</div>
 
-				<?php }	?>
+				<?php 	?>
 
 				<?php
 				$email = 'info@flg.com.au';

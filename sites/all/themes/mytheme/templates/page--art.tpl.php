@@ -215,11 +215,18 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
 	<?php } ?>
 </div>
+<?php global $user;?>
+<?php if($user->uid > 0){
+		$list = sentius_getTaxonomy();
+
+	?> 
 <div class="favourite">
 	
-	<?php print flag_create_link('favourite_art', arg(1)); ?>
-</div>
+	<?php //print flag_create_link('favourite_art', arg(1)); ?>
 
+	<p>Add this art to folder : <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add" id="buttonAdd" nid="<?php echo arg(1)?>" /><p>
+</div>
+<?php }?>
 <div class="controls">
 
 	<?php if(isset($prevNode)) { ?>

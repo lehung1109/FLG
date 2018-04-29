@@ -59,13 +59,18 @@
 				
 				$scroll.css({opacity:1});
 
-				var api = $scroll.data('jsp');
+				
 
 				var $active = $('.search-item.active');
-				var offset = $active.position().left - 430
+				if($active.length >0){
+					var api = $scroll.data('jsp');
+					var offset = $active.position().left - 430;
+					api.scrollToX(offset);
+				}
+				
 
 
-				api.scrollToX(offset);
+				
 
 			}
 
@@ -459,12 +464,65 @@ function loadTaxo(){
 			
 	}			
 	
+	(jQuery)("p.newFolder").click(function(){
+		(jQuery)(this).toggleClass('addMinus');
+		(jQuery)("#block-sentius-block-category .form").toggle();	
+	});
 	
+
+	(jQuery)('#block-views-my-followed-artists-block .block-title').click(function(){
+		(jQuery)(this).toggleClass('addMinus');
+		(jQuery)('#block-views-my-followed-artists-block .view-my-followed-artists').toggle();
+	});
+	(jQuery)('#block-sentius-block-category .block-title').click(function(){
+		(jQuery)(this).toggleClass('addMinus');
+		(jQuery)('#block-sentius-block-category .content-wrapper').toggle();
+	});			
+	(jQuery)('#buttonAdd').click(function(){	
+		var tid = (jQuery)('#tid').val();
+		var nid = (jQuery)(this).attr('nid');
+		var folder = (jQuery)('#tid :selected').text();
+		(jQuery).get( "/sentiusajax",{tid:tid,nid:nid,action:'addFavourites'}, function( data ) {
+
+			if(data == 'Success'){
+				alert('Artwork has been added into folder '+folder);
+			}else{
+				alert('Artwork is already added: '+folder);
+			}
+			
+		});
+	});
+
+
+	(jQuery)('.view-author .views-row .remove').click(function(){
+		var tid = (jQuery)(this).attr('tid');
+		(jQuery).get( "/sentiusajax",{tid:tid,action:'removeTid'}, function( data ) {
+
+			if(data == 'sucess'){
 				
-	
+				(jQuery)('.view-author .views-row .remove').each(function(){
+					if((jQuery)(this).attr('tid') == tid){
+						(jQuery)(this).closest('.views-row').remove();
+					}
+				});
+			}else{
+					
+			}
+			
+		});
+	});
 	
 });
+function removeLI(tid){
+	alert(tid);
+	(jQuery)('.view-author .views-row .remove').each(function(){
+		if((jQuery)(this).attr('tid') == tid){
+			alert("aaa");
+			(jQuery)(this).closest('.views-row').remove();
+		}
+	});
 
+}
 function showBoxFron(classxs){
 	var classShow = '.' + classxs;
 	(jQuery)('.module').hide();
