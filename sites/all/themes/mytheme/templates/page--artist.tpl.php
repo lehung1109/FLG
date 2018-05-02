@@ -129,7 +129,7 @@ if($category == 19) {
 				//past exhibitions attached to the node
 				$pastExhibitionsNodeIdArray = $node->field_past_exhibitions['und'];
 				$pastnew  = get_node_past();
-				if(count($pastExhibitionsNodeIdArray) != 0) { ?>
+				if(count($pastExhibitionsNodeIdArray) != 0 OR count($pastnew) != 0) { ?>
 					<div class="list">
 					<h2>Past Exhibitions</h2>
 					<ul>
