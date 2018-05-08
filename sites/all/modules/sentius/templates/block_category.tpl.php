@@ -1,14 +1,40 @@
+<?php $tid = 42;
+	if(isset($_GET['tid'])){
+		 $tid = $_GET['tid'];
+	}
+	$share = 'no';
+	if(isset($_GET['share'])){
+		$share = $_GET['share'];
+	}
+	$name = taxonomy_term_load($tid)->name;
+?>
 <div class="content-wrapper">
+	<?php if( $share == 'no'){?> 
 	<div class="content-left">
+
 		<div class="block">
-			<?php
-				$block = block_load('views', 'author-block');
-				$block = _block_render_blocks(array($block));
-				$block = _block_get_renderable_array($block);
-				$output = drupal_render($block);
-				print $output;
+			
+			<?php 
+			global $user;
+			$uid = $user->uid;
+		      if(isset($_GET['uid'])){
+		        $uid = $_GET['uid'];
+		      }
+			print views_embed_view('author', 'block', $uid);
+			?>
+
+		</div>
+		<div class="control-og">
+			<?php 
+			global $user;
+			$uid = $user->uid;
+		      if(isset($_GET['uid'])){
+		        $uid = $_GET['uid'];
+		      }
+			print views_embed_view('author', 'block_1', $uid);
 			?>
 		</div>
+		<?php if($user->uid == $_GET['uid']){?> 
 		<div class="control">
 			<p class="newFolder">New Folder</p>
 			<p class="organise">Organise Folders</p>
@@ -19,8 +45,36 @@
 			print drupal_render($form);
 			?>
 		</div>
+		<div class="sharethis-wrapper">
+			<?php 
+			global $base_url;
+			$urltoShare = $base_url."/share?tid=42&share=yes";
+
+			if(isset($_GET['tid'])){
+				$urltoShare = $base_url."/share?tid=".$_GET['tid']."&share=yes";
+			}
+			
+			?>
+			 <div class="fb-share-button" 
+			    data-href="<?php echo $urltoShare;?>" 
+			    data-layout="button_count">
+			  </div>
+
+		</div>
+		
+		<?php }?>
+		
+	</div>
+	<?php }?>
+
+	<div class="content-right view-right">
+		<div class="title">
+			<?php echo $name ?>
+		</div>
 	</div>
 	<div class="content-right view-my-artworks">
+		
+
 		<?php if(count($data)>0){
 
 			?> 
@@ -28,6 +82,10 @@
 			<?php $nid = $row->nid;
 				$artNode = node_load($nid);
 				$detail = artDetail($artNode);
+				$classGray = '';
+				
+				
+
 			?>
 			<?php 
 			$imageUrl  = '';
@@ -46,12 +104,13 @@
 			}?>
 
 			<?php if($imageUrl !=''){?>
-			<div class="views-row">
+			<div class="views-row favorites-<?php echo $artNode->nid?>">
 				<div class="art <?php echo $artNodeId['target_id'];?> <?php echo count($artNode)?>">
 						<a href="<?php echo $url; ?>/exhibition">
 							<img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>">
 						</a>
 					<div class='art-detail'>
+						<div class="heart-wrapper"><div class="heart <?php echo $classGray?>" tid="<?php echo $_GET['tid']?>"  nid="<?php echo $artNode->nid?>"></div></div>
 						<?php $artist = node_load($artNode->field_artist['und'][0]['nid']); ?>
 							<span class="artist-span" ><?php echo $artist->title; ?></span><br />
 							<a class='title' href='<?php echo $url; ?>/exhibition'><?php echo $artNode->title; ?></a>

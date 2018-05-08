@@ -169,6 +169,12 @@ function mytheme_preprocess_html(&$variables) {
 }
 
 function mytheme_form_alter(&$form, $form_state, $form_id) {
+	
+	if($form_id == 'user_login'){
+		
+	}
+
+	
 	if(isset($form_state['view']->name)){
 		if($form_state['view']->name == 'better_search'){
 

@@ -53,7 +53,11 @@ if($category == 19) {
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>
-
+		<?php
+		   $block =block_load('block',5);
+		   $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
+		   print $output;
+		?>
 		<?php if ($secondary_menu): ?>
 		<nav class="header__secondary-menu" id="secondary-menu" role="navigation">
 			<?php print theme('links__system_secondary_menu', array(
@@ -156,7 +160,7 @@ if($category == 19) {
 						<?php } }?>
 
 					<?php
-					if(count($pastExhibitionsNodeIdArray) != 0) {
+					if(count($pastExhibitionsNodeIdArray) != 0 OR count($pastnew) != 0) { 
 					foreach($pastExhibitionsNodeIdArray as $previousExhbitionsNodeId) {
 						$previousExhibitionNode = node_load($previousExhbitionsNodeId['target_id']);
 
@@ -217,12 +221,16 @@ if($category == 19) {
 
 				<?php } ?>
 
+				<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
+				
 				<div id="block-simplenews-1">
 					<?php
 					$block = module_invoke('simplenews', 'block_view', '1');
 					print $block['content'];
 					?>
 				</div>
+
+
 			</aside>
 			<div class="main-content">
 				<div class="art-showcase">

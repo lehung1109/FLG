@@ -477,6 +477,10 @@ function loadTaxo(){
 	(jQuery)('#block-sentius-block-category .block-title').click(function(){
 		(jQuery)(this).toggleClass('addMinus');
 		(jQuery)('#block-sentius-block-category .content-wrapper').toggle();
+	});	
+	(jQuery)('#block-sentius-block-archive-noti .block-title').click(function(){
+		(jQuery)(this).toggleClass('addMinus');
+		(jQuery)('#block-sentius-block-archive-noti .archives').toggle();
 	});			
 	(jQuery)('#buttonAdd').click(function(){	
 		var tid = (jQuery)('#tid').val();
@@ -493,6 +497,25 @@ function loadTaxo(){
 		});
 	});
 
+
+    (jQuery)('.view-my-artworks .heart').click(function(){
+
+    	var nid = (jQuery)(this).attr('nid');
+    	(jQuery).get( "/sentiusajax",{nid:nid,action:'removeFavourites'}, function( data ) {
+    		
+			if(data == 'Success'){
+				alert('Artwork has been remove');
+				(jQuery)('.favorites-'+nid).remove();
+			}
+			
+		});
+
+    });
+    (jQuery)('.organise').click(function(){
+    	(jQuery)('.control-og').toggle();
+    	(jQuery)('.organise').hide();
+    	(jQuery)('.content-left .block').hide();
+    });
 
 	(jQuery)('.view-author .views-row .remove').click(function(){
 		var tid = (jQuery)(this).attr('tid');

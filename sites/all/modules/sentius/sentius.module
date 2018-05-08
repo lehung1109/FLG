@@ -5,9 +5,19 @@ function sentius_menu(){
       'title' => t(''),
       'page callback' => '_sentius_ajax',
       'access arguments' => array('access content'),
-      'type' => MENU_CALLBACK
+      'type' => MENU_LOCAL_TASK
+    );
+  $items['share'] = array(
+      'title' => t(''),
+      'page callback' => '_sentius_share',
+      'access arguments' => array('access content'),
+      'type' => MENU_LOCAL_TASK
     );
   return $items;
+}
+function _sentius_share(){
+
+  return "";
 }
 function _sentius_ajax(){
 	if(isset($_GET['action'])){
@@ -29,6 +39,12 @@ function _sentius_ajax(){
 			    }
 			}
 		}
+    if($_GET['action'] == 'removeFavourites'){
+      $nid = $_GET['nid'];
+      sentius_removeFavorites($nid);
+      echo 'Success';
+      die;
+    }
 		if($_GET['action'] == 'removeTid'){
 
 			$tid = $_GET['tid'];
@@ -74,13 +90,13 @@ ORDER BY taxonomy_term_data_weight ASC";
 
 // get all Favorites
 
-function sentius_getALlFavorites($tid=''){
-  global $user;
+function sentius_getALlFavorites($tid='',$uid){
+ // global $user;
   $data = array();
   if($tid!= ''){
-    $sql = "select * from {favouries_custom} WHERE `uid`= '".$user->uid."' AND `tid`='".$tid."'";
+    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."' AND `tid`='".$tid."'";
   }else{
-    $sql = "select * from {favouries_custom} WHERE `uid`= '".$user->uid."'";
+    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."'";
   }
   
   $query = db_query($sql);
@@ -110,10 +126,16 @@ function sentius_addFavorites($nid,$tid){
     'nid' => $nid,
   );
  return db_insert('favouries_custom')->fields($data)->execute(); 
-
-
 }
-
+// remove favourites
+function sentius_removeFavorites($nid){
+  global $user;
+return db_delete('favouries_custom')
+  ->condition('nid',$nid)
+  ->condition('uid',$user->uid)
+  ->execute();
+ //return db_insert('favouries_custom')->fields($data)->execute(); 
+}
 
 // get all exhibition by artisid;
 function sentius_getExByAid($artistId){
@@ -137,14 +159,181 @@ WHERE (( (node.status = '1') AND (node.type IN  ('art')) AND (field_data_field_a
     } 
   return $data;
 }
+//
+function sentius_getUserFollow($nid){
+  $data = array();
+  $sql = "SELECT `uid` from {flagging} WHERE `entity_id` = '".$nid."' ";
 
+  $query  = db_query($sql);
+  foreach($query as $row){
+    $data[] = $row->uid;
+  }
+  return $data;
+}
+
+function sentius_mail_notifi($uid,$body){
+  global $base_url;
+  $user = user_load($uid);
+  $my_module = 'sentius';
+
+  $body = $body;
+  $from = variable_get('system_mail', 'sentius.dev@gmail.com');
+            $message = array(
+                  'id' => $my_module,
+                  'from' => $from,
+                  'to' => $user->mail,
+                  'subject' => 'New Art Created',
+                  'body' => $body,
+                  'headers' => array(
+                    'From' => $from, 
+                    'Sender' => $from, 
+                    'Return-Path' => $from,
+                    'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+                  ),
+                );
+
+              $system = drupal_mail_system($my_module);
+              if ($system->mail($message)) {
+                // Success.
+              }
+}
+//hook node insert
+function sentius_checkFavorites_folder($nid) {
+  global $user;
+  $sql = "select count(`id`) as count from {favouries_custom} WHERE `uid`= '".$user->uid."' AND `nid` = '".$nid."'  AND `tid` = '42' LIMIT 1";
+  $query = db_query($sql)->fetchField();
+  return $query;
+}
+// insert to custom table
+function sentius_insert_custom_notify($nid,$uid){
+  $data = array(
+      'uid' => $uid,
+      'nid' => $nid,
+      'daycreate'=>time(),
+      'status'=> 0
+    );
+  return db_insert('notify_custom')
+    ->fields($data)
+    ->execute();
+
+}
+
+// get all node base on user
+function sentius_get_all_node_create($day){
+	$data = array();
+	$dayAgo = strtotime('-'.$day.' days');
+	$sql = "SELECT * FROM {notify_custom} WHERE `daycreate` < '".$dayAgo."' AND `status` = '0'";
+	
+	$query = db_query($sql);
+	foreach($query as $row){
+		$data[] = $row;
+	}
+	return $data;
+}
+function sentius_sendmail_remind($day,$uid){
+	$body = '';
+	$nodes = sentius_get_all_node_create($day);
+	
+	if(count($nodes)>0){
+		foreach($nodes as $row){
+		
+			$node  = node_load($row->nid);
+			$url  = url('node/'.$row->nid);
+			$body .= "A record <a href='".$url."'>".$node->title."</a> has been created <br/>";
+			 db_update('notify_custom') // Table name no longer needs {}
+                ->fields(array('status' => 1,'sendat'=>time()))
+                ->condition('uid', $uid, '=')
+                ->condition('nid', $row->nid, '=')
+                ->execute();
+		}
+	}
+	return $body;
+}
+// get all log
+
+function sentius_get_archive(){
+  global $user;
+  $sql = "SELECT * FROM {notify_custom} WHERE uid = '".$user->uid."' AND `status` = '1'";
+  $data = array();
+  $query  = db_query($sql);
+  foreach($query as $row){
+    $data[] =  $row;
+  }
+  return $data;
+}
+
+
+// get listuser to send mail
+function sentius_get_user(){
+	$data = array();
+	$sql = "SELECT users.name AS users_name, users.uid AS uid, users.created AS users_created
+FROM 
+{users} users
+LEFT JOIN {field_data_field_send_notification} field_data_field_send_notification ON users.uid = field_data_field_send_notification.entity_id AND (field_data_field_send_notification.entity_type = 'user' AND field_data_field_send_notification.deleted = '0')
+WHERE (( (users.status <> '0') AND (field_data_field_send_notification.field_send_notification_value IS NOT NULL ) ))
+ORDER BY users_created DESC";
+	$query = db_query($sql);
+	foreach($query as $row){
+		$data[] = $row->uid;
+	}
+	return $data;
+
+}
+// get day user
+function sentius_get_day($user){
+
+	 $user = user_load($user);
+
+    	if(count($user->field_send_notification)>0){
+    		$sendnotify  = $user->field_send_notification['und'][0]['value'];
+    		$day = 0;
+			switch ($sendnotify) {
+			    case "2":
+			       $day = 1;
+			        break;
+			    case "3":
+			       $day = 2;
+			        break;
+			    case "4":
+			       $day = 3;
+			        break;
+			}
+			
+    	}	
+    return $day;	
+}
+
+
+//hook node insert
 function sentius_node_insert($node) {
     if($node->type == 'art'){
-      echo '<pre>';
-      print_r($node);
-      die;
+      if(count($node->field_artist)>0){
+        $artist = $node->field_artist['und'][0]['nid'];
+       // echo $artist;
+        $listuser = sentius_getUserFollow($artist);
+
+        if(count($listuser)>0){
+          foreach($listuser as $row){
+            $user = user_load($row);
+            if(count($user->field_send_notification)>0){
+              if($user->field_send_notification['und'][0]['value'] == 1 ){
+
+  				      $url = $base_url.'/'.url("node/".$node->nid);
+              	$body = "A record <a href='".$url."'>".$node->title."</a> has been created <br/>";
+                sentius_mail_notifi($row,$body);
+                sentius_insert_custom_notify($node->nid,$row);
+
+              }
+            }
+            
+          }
+        }
+      }
+
     }
 }
+
+// hook theme
 function sentius_theme() {
     return array(
       
@@ -152,33 +341,71 @@ function sentius_theme() {
         'variables' => array('data' => NULL),
         'template' => 'templates/block_category'
       ),
-      
+      'block_archive_noti' => array(
+        'variables' => array('data' => NULL),
+        'template' => 'templates/block_archive_noti'
+      ),
     );
   }
-
+// hook block
   function sentius_block_info() {
     $blocks = array();
     
     $blocks['block_category']['info'] = t('Folder');
     $blocks['block_category']['cache'] = DRUPAL_NO_CACHE;
 
+    $blocks['block_archive_noti']['info'] = t('Archives Notification');
+    $blocks['block_archive_noti']['cache'] = DRUPAL_NO_CACHE;
     
     return $blocks;
   }
 
+// send mail cron
+  function sentius_send_mail_cron(){
+  		 $userData = sentius_get_user();
+      if(count($userData)>0){
+      	foreach($userData as $row){
+      		$uid = $row;
+      		$day = sentius_get_day($uid);
+      		if($day != 0 ){
+				$body = sentius_sendmail_remind($day,$uid);
+				// send mail to user;
+				sentius_mail_notifi($uid,$body);
+				// update after send mail;
+				
+
+
+			}
+		}
+     }
+  }
+
+// hook block
   function sentius_block_view($delta = '') {
     global $base_url,$user;
     $data = array();
     $block = array();
     switch ($delta) {
-    case 'block_category':
-      $tid = '';
-      if(isset($_GET['tid'])){
-        $tid = $_GET['tid'];
-      }
+      case 'block_archive_noti':
 
-      $data = sentius_getALlFavorites($tid);
-      $block['content'] = theme('block_category', array('data' => $data));
+        $data = array();
+        $block['content'] = theme('block_archive_noti', array('data' => $data));
+
+      return $block;
+
+      case 'block_category':
+      
+        $tid = '';
+        if(isset($_GET['tid'])){
+          $tid = $_GET['tid'];
+        }
+        $uid = $user->uid;
+        if(isset($_GET['uid'])){
+          $uid = $_GET['uid'];
+        }
+        $data = sentius_getALlFavorites($tid,$uid);
+        $block['content'] = theme('block_category', array('data' => $data));
+
       return $block;   
     default:
         break;

@@ -1494,7 +1494,55 @@ a.reset {
 .page-node-3820 .sharethis-buttons{
 	display:block;
 }
+#block-block-5{
+    float: right;
 
+    height: 50px;
+}
+#block-block-5 a{
+    display: inline-block;
+    text-transform: uppercase;
+    margin-right: 20px;
+}
+
+#views-form-author-block-1 .tabledrag-toggle-weight-wrapper{
+    display: none;
+}
+.page-node-4187 .sharethis-wrapper{
+    display: none;
+}
+.page-node-4187 #page-title{
+    text-align: center;
+}
+#block-user-login .description{
+    display: none;
+}
+#block-user-login .form-text{
+    height: 40px;
+    border:1px solid #000;
+    padding: 0px 0px 0px 10px;
+    width: 100%;
+}
+#block-user-login label{
+    display: inline-block;
+    width: 100%;
+}
+#block-user-login #edit-submit{
+    width: 170px;
+    display: block;
+    margin: 0 auto;
+    height: 33px;
+    background: #ecebe9;
+    border: none;
+    cursor: pointer;
+}
+#block-user-login .form-required{
+    display: none;
+}
+#block-user-login{
+    max-width: 300px;
+    margin:0 auto;
+}
 
 @media screen and (max-width: 1069px) { 
     #page, .region-bottom{
@@ -1708,6 +1756,7 @@ margin-left: 30px;
     height: 33px;
     background: #ecebe9;
     border: none;
+    cursor: pointer;
 }
 #block-formblock-user-register .form-required{
     display: none;
@@ -1734,11 +1783,13 @@ margin-left: 30px;
     padding-bottom: 10px;
     border-bottom: 2px solid #bfbfbf;
     font-size: 14px;
-    background: url('images/love.jpg') right center no-repeat;
+
     height: 28px;
     display: block;
     width: 100%;
     margin-top: 10px;
+    line-height: 34px;
+    position: relative;
 }
 .view-my-followed-artists .content-follow ul {
     padding: 0px;
@@ -1769,12 +1820,16 @@ margin-left: 30px;
 .view-my-followed-artists .views-row:first-child{
     padding-left: 0px;
 }
-.view-my-followed-artists .views-row:last-child{
+.view-my-followed-artists .views-row:nth-child(5n){
     padding-right: 0px;
+}
+.view-my-followed-artists .views-row:nth-child(6n){
+    padding-left: 0px;
 }
 #block-views-my-followed-artists-block .block-title,
 #block-views-my-artworks-block .block-title,
-#block-sentius-block-category .block-title
+#block-sentius-block-category .block-title,
+#block-sentius-block-archive-noti .block-title
 {
     margin-bottom: 20px;
     height:50px;
@@ -1788,8 +1843,9 @@ margin-left: 30px;
 }
 #block-views-my-followed-artists-block .block-title:after,
 #block-views-my-artworks-block .block-title:after,
-#block-sentius-block-category .block-title:after{
-    content: "+";
+#block-sentius-block-category .block-title:after,
+#block-sentius-block-archive-noti .block-title:after{
+    content: "-";
     position: absolute;
     right: 15px;
     top: 0px;
@@ -1798,8 +1854,9 @@ margin-left: 30px;
 }
 #block-views-my-followed-artists-block .block-title.addMinus:after,
 #block-views-my-artworks-block .block-title.addMinus:after,
-#block-sentius-block-category .block-title.addMinus:after{
-    content: "-";
+#block-sentius-block-category .block-title.addMinus:after,
+#block-sentius-block-archive-noti .block-title.addMinus:after{
+    content: "+";
     right:18px;
     font-size: 36px;
 }
@@ -1832,24 +1889,30 @@ margin-left: 30px;
     display: inline-block;
     margin-right: 20px;
 }
+
 .art-showcase{
 
 }
+
 .view-my-artworks .views-row{
     float: left;
     width: 200px;
-    margin-right: 20px;
+    margin-right: 10px;
     margin-bottom: 20px;
     height:300px;
+
 }
+
 .view-my-artworks .views-row:nth-child(3n){
     margin-right: 0px;
 }
+
 .view-my-artworks .art a{
     color: black !important;
 }
 .view-my-artworks .art .art-detail{
     font-size: 12px;
+    position: relative;
 }
 
 .view-my-artworks .view-header{
@@ -1895,6 +1958,35 @@ width: 100%;
 }
 .view-author .view-content{
     width: 100%;
+}
+
+.view-author .views-row a{
+
+}
+.control-og{
+    width: 100%;
+    clear: both;
+}
+.control-og .views-table{
+    width: 100%;
+    clear: both;
+}
+.control-og .views-table td{
+    width: 90%;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    float: left;
+}
+body .control-og .views-table td a.color{
+    font-size: 14px;
+    color:#000; 
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.control-og{
+    display: none;
 }
 #block-sentius-block-category .form,
 #block-sentius-block-category .block,
@@ -1953,17 +2045,18 @@ p.newFolder:after{
     border-bottom: 1px solid #000;
 }
 
-.view-author .views-row a:hover{
+.view-author .views-row a:hover,.view-author .views-row a.active{
     color:#2da6b9;
 }
 #block-sentius-block-category .control{
     margin-top: 20px;
 }
 .view-author .views-row .view-favorites a{
-    background: url('images/love.jpg') left center no-repeat;
+
     padding-left: 30px;
     width: auto;
 }
+
 p.newFolder.addMinus:after{
     content: "-";
 
@@ -1973,7 +2066,239 @@ p.newFolder.addMinus:after{
 .view-my-artworks .art-detail a{
     color: #000;
 }
+#user-profile-form #edit-mimemail{
+    display: none;
+}
 
+.sidebar .sharethis-wrapper{
+    float: none;
+}
+.sharethis-wrapper{
+    position: relative;
+    max-width: 300px;
+    float: left;
+    margin-top: 20px;
+}
+.view-my-followed-artists .item-list,.content-right .item-list{
+    width: 100%;
+    display: block;
+    height: 35px;
+}
+.view-my-followed-artists .item-list .pager{
+    float: left;
+    width: 100%;
+}
+.view-my-artworks{
+    max-height: 500px;
+    overflow-y: auto;
+}
+.heart{
+    position: relative;
+    width: 10px;
+    height: 9px;
+    float: left;
+    cursor: pointer;
+}
+.heart.gray:before,
+.heart.gray:after{
+    background: #bfbfbf;
+}
+.heart:before,
+.heart:after{
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 0;
+    width: 10px;
+    height: 15px;
+    background: #31a6b8;
+    -moz-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    -webkit-transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+    -webkit-transform-origin: 0 100%;
+       -moz-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+         -o-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+}
+.heart:after{
+    left: 0;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+    -webkit-transform-origin: 100% 100%;
+       -moz-transform-origin: 100% 100%;
+        -ms-transform-origin: 100% 100%;
+         -o-transform-origin: 100% 100%;
+            transform-origin :100% 100%;
+}
+
+
+
+.content-follow .flag{
+    position: relative;
+    width: 10px;
+    height: 9px;
+    float: left;
+    cursor: pointer;
+    text-indent: -9999px;    
+}
+
+.content-follow .flag.unflagged:before,
+.content-follow .flag.unflagged:after{
+    background: #bfbfbf;
+}
+.content-follow .flag:before,
+.content-follow .flag:after{
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 0;
+    width: 10px;
+    height: 15px;
+    background: #31a6b8;
+    -moz-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    -webkit-transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+    -webkit-transform-origin: 0 100%;
+       -moz-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+         -o-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+}
+.content-follow .flag:after{
+    left: 0;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+    -webkit-transform-origin: 100% 100%;
+       -moz-transform-origin: 100% 100%;
+        -ms-transform-origin: 100% 100%;
+         -o-transform-origin: 100% 100%;
+            transform-origin :100% 100%;
+}
+
+.heart-wrapper{
+    position: absolute;
+    right: 10px;
+    top:5px;
+}
+.view-author .views-row .view-favorites .heart-wrapper{
+   right: auto;
+   left: 0px;
+   top: 22px; 
+    
+}
+.view-my-artworks .title,
+.view-right .title{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    padding-top: 20px;
+}
+
+
+#block-sentius-block-archive-noti{
+    clear: both;
+    width: 100%;
+    margin-top: 20px;
+    float: left;
+
+}
+.page-share .sharethis-wrapper{
+    display: none;
+}
+.page-share .content-right{
+    width: 100%;
+    float: left;
+}
+.page-share .view-my-artworks .views-row:nth-child(3n){
+    margin-right: 10px;
+}
+.page-share .view-my-artworks .views-row:nth-child(4n){
+    margin-right: 0px;
+}
+
+@media screen and (max-width: 991px) {
+    .view-my-followed-artists .views-row{
+        width: 49%;
+        margin-bottom: 20px;
+        padding: 0px;
+    }
+    #block-sentius-block-category .content-wrapper .content-left,
+    #block-sentius-block-category .content-wrapper .content-right,
+    #block-sentius-block-category .content-wrapper .content-left .block,
+    #block-sentius-block-category .content-wrapper .content-left .control,
+    #block-sentius-block-category .content-wrapper .content-left .form,
+    #block-sentius-block-category .content-wrapper .content-left .sharethis-wrapper{
+        width:100%;
+        height:auto;
+        clear: both;
+    }
+    #block-sentius-block-category .content-wrapper .content-right{
+        margin-top: 20px;
+    }
+    .view-my-artworks .views-row{
+        width: 50%;
+        padding: 0px;
+         margin: 0px;
+        margin-bottom: 10px;
+    }
+    #block-formblock-user-register , #block-block-3{
+        width: 100%;
+        margin: 0px;
+        padding: 20px;
+    }
+    #block-block-3{
+        padding: 0px;
+        margin-top: 20px;
+    }
+
+    #block-block-3 .row .left-content-block,
+    #block-block-3 .row .right-content-block{
+        width: 100%;
+        clear: none;
+        float: none;
+    }
+    #block-block-3 .row .right-content-block img{
+        position: relative;
+        right: 0px;
+        left: 0px;
+        margin: 0px;
+    }
+    #user-register-form {
+        margin-bottom: 20px;
+    }
+
+
+
+}
+@media screen and (max-width: 480px) {
+    .view-my-followed-artists .views-row{
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 0px;
+    }
+    .view-my-artworks .views-row{
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        margin-bottom: 10px;
+    }
+}
 @media screen and (min-width: 768px) {
     .page-node-3820 #header, 
     .page-node-3820 #main{

@@ -9,6 +9,11 @@
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta property="og:url"           content="http://flg.com.au/" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="FLG" />
+  <meta property="og:description"   content="FLG is a contemporary art gallery located in the heart of Melbourne’s vibrant laneway precinct. " />
+  <meta property="og:image"         content="https://flg.com.au/sites/default/files/logo%20only%20banner.gif" />
 	<title><?php print $head_title; ?></title>
 	<?php print $styles; ?>
 
@@ -16,7 +21,7 @@
 		var pathToTheme = "<?php echo path_to_theme() ?>";
 	</script>
 	<?php print $scripts; ?>
-
+	<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5aea85a5a9f6a00011d0350f&product=inline-share-buttons"></script>
 	<?php if($_SERVER['HTTP_HOST'] === 'flg.com.au'){
      echo "
           <script>
@@ -36,6 +41,14 @@
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=790729007623615&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <?php print $page_top; ?>
 <?php print $page ?>
 <?php print $page_bottom; ?>

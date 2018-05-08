@@ -34,7 +34,20 @@ if(jQuery('#edit-search-api-views-fulltext').val()!='ARTIST'){
 
 (jQuery)(function(){
 	(jQuery)('#webform-client-form-3740').prepend('<p>Join Our Mailing List</p>');
-	
+	(jQuery)('#user-register-form .form-text').attr('required','required');
+	(jQuery)("#user-register-form #edit-mail").attr('oninvalid',"this.setCustomValidity('Please enter Email')");
+	(jQuery)("#user-register-form #edit-mail").attr('oninput',"this.setCustomValidity('')");
+	(jQuery)("#user-register-form #edit-field-first-name-und-0-value").attr('oninvalid',"this.setCustomValidity('Please supply a valid first name.')");
+	(jQuery)("#user-register-form #edit-field-first-name-und-0-value").attr('oninput',"this.setCustomValidity('')");
+	(jQuery)("#user-register-form #edit-field-last-name-und-0-value").attr('oninvalid',"this.setCustomValidity('Please supply a valid last name.')");
+	(jQuery)("#user-register-form #edit-field-last-name-und-0-value").attr('oninput',"this.setCustomValidity('')");
+	/*
+	(jQuery)("#user-register-form #edit-mail").on("invalid", function(event) {
+        (jQuery)(this).setCustomValidity("Please enter at least 5 characters.");
+        (jQuery)(this).setCustomValidity("");
+    });*/
+
+
 });
 
 /*---------------------- Search data result append in search page----------------------------------  */
