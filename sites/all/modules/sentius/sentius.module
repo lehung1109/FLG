@@ -13,13 +13,67 @@ function sentius_menu(){
       'access arguments' => array('access content'),
       'type' => MENU_LOCAL_TASK
     );
+  $items['user/%user/archive'] = array(
+      'title' => t('Archive'),
+      'page callback' => '_sentius_archives',
+      'page arguments' => array(1),
+      'access callback' => TRUE,
+      'type' => MENU_LOCAL_TASK,
+    );
   return $items;
+}
+function _sentius_archives(){
+   $data = array();
+   return theme('block_archive_noti', array('data' => $data));
 }
 function _sentius_share(){
 
   return "";
 }
 function _sentius_ajax(){
+
+  if(isset($_GET['action'])){
+    if($_GET['action'] == 'sendmail'){
+
+      global $user;
+      $email = $_GET['email'];
+      $tid  = $_GET['tid'];
+      // '<p>My favorites folder from flg.com.au </p>' .  $html ;
+      $data = sentius_getALlFavorites($tid,$user->uid);
+      $data['name'] = taxonomy_term_load($tid)->name;
+      $body = theme('share_templates', array('data' => $data));
+     
+      $from = $user->mail;
+
+      $my_module = 'sentius';
+
+      $from = variable_get('system_mail', 'sentius.dev@gmail.com');
+                $message = array(
+                      'id' => $my_module,
+                      'from' => $from,
+                      'to' => $email,
+                      'subject' => 'My folder : '.$data['name'],
+                      'body' => $body,
+                      'headers' => array(
+                        'From' => $from, 
+                        'Sender' => $from, 
+                        'Return-Path' => $from,
+                        'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
+                      ),
+                    );
+
+                  $system = drupal_mail_system($my_module);
+                  if ($system->mail($message)) {
+                    // Success.
+                    echo 'success';
+                  }else{
+                    echo 'fail';
+                  }
+
+      die;
+    }
+  }
+
 	if(isset($_GET['action'])){
 		global $user;
 		if($_GET['action'] == 'addFavourites'){
@@ -41,15 +95,24 @@ function _sentius_ajax(){
 		}
     if($_GET['action'] == 'removeFavourites'){
       $nid = $_GET['nid'];
+
       sentius_removeFavorites($nid);
       echo 'Success';
       die;
     }
+
+
 		if($_GET['action'] == 'removeTid'){
 
 			$tid = $_GET['tid'];
-
-			taxonomy_term_delete($tid);
+      if($tid != 42){
+         db_delete('favouries_custom')
+        ->condition('tid',$tid)
+        ->condition('uid',$user->uid)
+        ->execute();
+        taxonomy_term_delete($tid);
+      }
+     
 
 			echo 'sucess';
 			die;
@@ -77,7 +140,7 @@ WHERE (( (field_data_field_author.field_author_value = '".$user->uid."') )AND(( 
 ORDER BY taxonomy_term_data_weight ASC";
     $data = array();
     $newterm = new stdClass();
-    $newterm->taxonomy_term_data_name = 'Favourite';
+    $newterm->taxonomy_term_data_name = 'Favourites';
     $newterm->tid  = 42;
     $data[] =  $newterm;
     $query = db_query($sql);
@@ -94,11 +157,12 @@ function sentius_getALlFavorites($tid='',$uid){
  // global $user;
   $data = array();
   if($tid!= ''){
+
     $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."' AND `tid`='".$tid."'";
   }else{
-    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."'";
+    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."' AND `tid`='42'";
   }
-  
+
   $query = db_query($sql);
   foreach($query as $row){
     $data[] = $row;
@@ -205,13 +269,25 @@ function sentius_checkFavorites_folder($nid) {
   return $query;
 }
 // insert to custom table
-function sentius_insert_custom_notify($nid,$uid){
-  $data = array(
+function sentius_insert_custom_notify($nid,$uid,$status=0){
+  
+
+  if($status != 0){
+     $data = array(
       'uid' => $uid,
       'nid' => $nid,
       'daycreate'=>time(),
-      'status'=> 0
+      'status'=> $status,
+      'sendat'=>time()
     );
+  }else{
+     $data = array(
+      'uid' => $uid,
+      'nid' => $nid,
+      'daycreate'=>time(),
+      'status'=> $status
+    );
+  }
   return db_insert('notify_custom')
     ->fields($data)
     ->execute();
@@ -287,18 +363,18 @@ function sentius_get_day($user){
     	if(count($user->field_send_notification)>0){
     		$sendnotify  = $user->field_send_notification['und'][0]['value'];
     		$day = 0;
-			switch ($sendnotify) {
-			    case "2":
-			       $day = 1;
-			        break;
-			    case "3":
-			       $day = 2;
-			        break;
-			    case "4":
-			       $day = 3;
-			        break;
-			}
-			
+  			switch ($sendnotify) {
+  			    case "2":
+  			       $day = 1;
+  			        break;
+  			    case "3":
+  			       $day = 2;
+  			        break;
+  			    case "4":
+  			       $day = 3;
+  			        break;
+  			}
+  			
     	}	
     return $day;	
 }
@@ -321,7 +397,7 @@ function sentius_node_insert($node) {
   				      $url = $base_url.'/'.url("node/".$node->nid);
               	$body = "A record <a href='".$url."'>".$node->title."</a> has been created <br/>";
                 sentius_mail_notifi($row,$body);
-                sentius_insert_custom_notify($node->nid,$row);
+                sentius_insert_custom_notify($node->nid,$row,'1');
 
               }
             }
@@ -345,6 +421,10 @@ function sentius_theme() {
         'variables' => array('data' => NULL),
         'template' => 'templates/block_archive_noti'
       ),
+      'share_templates' => array(
+        'variables' => array('data' => NULL),
+        'template' => 'templates/share_templates'
+      ),
     );
   }
 // hook block
@@ -364,19 +444,16 @@ function sentius_theme() {
   function sentius_send_mail_cron(){
   		 $userData = sentius_get_user();
       if(count($userData)>0){
-      	foreach($userData as $row){
-      		$uid = $row;
-      		$day = sentius_get_day($uid);
-      		if($day != 0 ){
-				$body = sentius_sendmail_remind($day,$uid);
-				// send mail to user;
-				sentius_mail_notifi($uid,$body);
-				// update after send mail;
-				
-
-
-			}
-		}
+        	foreach($userData as $row){
+        		$uid = $row;
+        		$day = sentius_get_day($uid);
+        		if($day != 0 ){
+  				    $body = sentius_sendmail_remind($day,$uid);
+  				    // send mail to user;
+  				    sentius_mail_notifi($uid,$body);
+  				    // update after send mail;
+  			}
+  		}
      }
   }
 
@@ -412,9 +489,21 @@ function sentius_theme() {
     }
   }
 function sentius_form_alter(&$form, &$form_state, $form_id){
-	if($form_id == 'user_register_form'){
+  
+	if($form_id == 'user_register_form' || $form_id == 'user_login_block' || $form_id == 'user_pass'){
 		$form['#form_placeholder'] = TRUE;
 	}
+  if($form_id == 'user_login_block'){
+   
+    $form['name']['#title'] = 'E-mail address';
+   
+  }
+   if($form_id == 'user_pass'){
+   
+    $form['name']['#title'] = 'E-mail address';
+   
+  }
+  
 }
 
 
@@ -435,6 +524,27 @@ function sentius_category_form($form, &$form_state) {
   return $form;
 }
 function sentius_category_form_validate($form, &$form_state) {
+      global $user;
+      $namefolder = $form_state['values']['category'];
+
+      if($namefolder){
+        // check if name folder exits
+          $sql = "SELECT count(*) as count FROM 
+{taxonomy_term_data} taxonomy_term_data
+LEFT JOIN {field_data_field_author} field_data_field_author ON taxonomy_term_data.tid = field_data_field_author.entity_id AND (field_data_field_author.entity_type = 'taxonomy_term' AND field_data_field_author.deleted = '0')
+LEFT JOIN {taxonomy_vocabulary} taxonomy_vocabulary ON taxonomy_term_data.vid = taxonomy_vocabulary.vid
+WHERE (( (taxonomy_term_data.vid IN  ('12')) AND (field_data_field_author.field_author_value = '".$user->uid."') AND (taxonomy_term_data.name = '".$namefolder."') ))";
+          $count = 0 ;
+          $query = db_query($sql);
+          foreach($query as $row){
+            $count = $row->count;
+          }
+          if($count > 0 ){
+            form_set_error('category',t('Folder name exists') );
+          }
+
+      }
+
 
 }
 

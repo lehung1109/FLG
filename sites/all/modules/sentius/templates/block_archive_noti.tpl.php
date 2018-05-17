@@ -9,6 +9,8 @@
 		$data  = sentius_get_archive();
 		if(count($data)>0){?>
 			<?php foreach($data as $row){
+				//print_r($row);
+					//echo $row->sendat;
 					$timesent = date('d-m-Y h:i:s',$row->sendat);
 
 					$node  = node_load($row->nid);

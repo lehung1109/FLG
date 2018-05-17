@@ -483,59 +483,170 @@ function loadTaxo(){
 		(jQuery)('#block-sentius-block-archive-noti .archives').toggle();
 	});			
 	(jQuery)('#buttonAdd').click(function(){	
+
+
 		var tid = (jQuery)('#tid').val();
 		var nid = (jQuery)(this).attr('nid');
 		var folder = (jQuery)('#tid :selected').text();
-		(jQuery).get( "/sentiusajax",{tid:tid,nid:nid,action:'addFavourites'}, function( data ) {
 
-			if(data == 'Success'){
-				alert('Artwork has been added into folder '+folder);
-			}else{
-				alert('Artwork is already added: '+folder);
-			}
-			
+		(jQuery).confirm({
+		    title: 'Confirm Add',
+		    content: "Are you sure you'd like to add the Artwork?",
+		    type: '',
+		    buttons: {   
+		        ok: {
+		            text: "ok",
+		            btnClass: 'btn-primary',
+		            keys: ['enter'],
+		            action: function(){
+					  
+							(jQuery).get( "/sentiusajax",{tid:tid,nid:nid,action:'addFavourites'}, function( data ) {
+
+								if(data == 'Success'){
+									alert('Artwork has been added into folder '+folder);
+								}else{
+									alert('Artwork is already added: '+folder);
+								}
+								
+							});
+
+
+		            }
+		        },
+		        cancel: function(){
+		               // console.log('the user clicked cancel');
+		        }
+		    }
 		});
+
+
+		
+
+
 	});
 
 
     (jQuery)('.view-my-artworks .heart').click(function(){
 
     	var nid = (jQuery)(this).attr('nid');
-    	(jQuery).get( "/sentiusajax",{nid:nid,action:'removeFavourites'}, function( data ) {
-    		
-			if(data == 'Success'){
-				alert('Artwork has been remove');
-				(jQuery)('.favorites-'+nid).remove();
-			}
-			
-		});
 
+    	(jQuery).confirm({
+		    title: 'Confirm Remove',
+		    content: "Are you sure you'd like to remove the Artwork?",
+		    type: '',
+		    buttons: {   
+		        ok: {
+		            text: "ok",
+		            btnClass: 'btn-primary',
+		            keys: ['enter'],
+		            action: function(){
+					  
+							(jQuery).get( "/sentiusajax",{nid:nid,action:'removeFavourites'}, function( data ) {
+    		
+									if(data == 'Success'){
+										//alert('Artwork has been remove');
+										(jQuery)('.favorites-'+nid).remove();
+
+									}
+									
+								});	
+
+		            }
+		        },
+		        cancel: function(){
+		               // console.log('the user clicked cancel');
+		        }
+		    }
+		});
     });
+
+
+
+
     (jQuery)('.organise').click(function(){
     	(jQuery)('.control-og').toggle();
     	(jQuery)('.organise').hide();
     	(jQuery)('.content-left .block').hide();
     });
 
-	(jQuery)('.view-author .views-row .remove').click(function(){
-		var tid = (jQuery)(this).attr('tid');
-		(jQuery).get( "/sentiusajax",{tid:tid,action:'removeTid'}, function( data ) {
+    (jQuery)('#sharemail').click(function(){
+    	(jQuery)('.form-sharemail').toggle();
 
-			if(data == 'sucess'){
-				
-				(jQuery)('.view-author .views-row .remove').each(function(){
-					if((jQuery)(this).attr('tid') == tid){
-						(jQuery)(this).closest('.views-row').remove();
-					}
+    });
+    (jQuery)('#mailsendSubmit').click(function(){
+    	var email = (jQuery)("#mailsend").val();
+    	var tid = (jQuery)("#tid").val();
+    	if(email !=''){
+    		if (validateEmail(email)) {
+    			(jQuery)("#mailsend").removeClass('error');
+    			var htmlSend = (jQuery)('.view-my-artworks').html();
+    			(jQuery).get( "/sentiusajax",{tid:tid,email:email,action:'sendmail'}, function( data ) {
+
+					if(data == 'success'){
+						(jQuery)('.result-send').html('<p>Email was send!</p>');
+						(jQuery)('#mailsend').val('');
+						(jQuery)('.form-sharemail').toggle();
+					}	
 				});
-			}else{
-					
-			}
-			
+
+
+    		}else{
+    			(jQuery)("#mailsend").addClass('error');
+    		}
+    	}else{
+    		(jQuery)("#mailsend").addClass('error');
+    	}
+
+    });
+
+
+	(jQuery)('.view-author .views-row .remove').click(function(){
+		  var tid = (jQuery)(this).attr('tid');
+		//  alert(tid);
+		(jQuery).confirm({
+		    title: 'Confirm Delete',
+		    content: "Are you sure you'd like to delete the folder?",
+		    type: '',
+		    buttons: {   
+		        ok: {
+		            text: "ok",
+		            btnClass: 'btn-primary',
+		            keys: ['enter'],
+		            action: function(){
+					  
+						(jQuery).get( "/sentiusajax",{tid:tid,action:'removeTid'}, function( data ) {
+
+							if(data == 'sucess'){
+								
+								(jQuery)('.view-author .views-row .remove').each(function(){
+									if((jQuery)(this).attr('tid') == tid){
+										(jQuery)(this).closest('.views-row').remove();
+										(jQuery)('.art-'+tid).remove();
+									}
+								});
+							}else{
+									
+							}
+							
+						});
+		            }
+		        },
+		        cancel: function(){
+		               // console.log('the user clicked cancel');
+		        }
+		    }
 		});
+
+
 	});
 	
 });
+
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
 function removeLI(tid){
 	alert(tid);
 	(jQuery)('.view-author .views-row .remove').each(function(){

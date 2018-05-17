@@ -221,7 +221,6 @@ if($category == 19) {
 
 				<?php } ?>
 
-				<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
 				
 				<div id="block-simplenews-1">
 					<?php

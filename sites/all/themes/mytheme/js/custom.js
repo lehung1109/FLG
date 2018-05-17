@@ -46,7 +46,14 @@ if(jQuery('#edit-search-api-views-fulltext').val()!='ARTIST'){
         (jQuery)(this).setCustomValidity("Please enter at least 5 characters.");
         (jQuery)(this).setCustomValidity("");
     });*/
+    (jQuery)('.unflag-action').attr('title','Click to remove');
 
+
+    (jQuery)('#user-login-form .form-item').append('<div class="tooltip">This field is required!</div>');
+    (jQuery)('#user-pass .form-item').append('<div class="tooltip">This field is required!</div>');
+    //(jQuery)('#user-login-form #edit-pass').attr('title','Password');
+	(jQuery)('#user-register-form .form-item').append('<div class="tooltip">This field is required!</div>');
+    
 
 });
 

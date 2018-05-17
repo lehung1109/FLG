@@ -63,41 +63,81 @@ Drupal.flagLink = function(context) {
     }
     $wrapper.addClass('flag-waiting');
 
+
+    if($(element).hasClass('unflag-action')){
+      var titleConfirm = 'Confirm Remove';
+      var contentConfirm = "Are you sure you'd like to unfollow the Artists?";
+    }else{
+      var titleConfirm = 'Confirm Follow';
+      var contentConfirm = "Are you sure you'd like to follow the Artists?";
+    }
     // Hide any other active messages.
     $('span.flag-message:visible').fadeOut();
 
-    // Send POST request
-    $.ajax({
-      type: 'POST',
-      url: element.href,
-      data: { js: true },
-      dataType: 'json',
-      success: function (data) {
-        data.link = $wrapper.get(0);
-        $.event.trigger('flagGlobalBeforeLinkUpdate', [data]);
-        if (!data.preventDefault) { // A handler may cancel updating the link.
-          data.link = updateLink(element, data.newLink);
+
+
+      (jQuery).confirm({
+        title: titleConfirm,
+        content: contentConfirm,
+        type: '',
+        buttons: {   
+            ok: {
+                text: "ok",
+                btnClass: 'btn-primary',
+                keys: ['enter'],
+                action: function(){
+                          
+                          // Send POST request
+                        $.ajax({
+                          type: 'POST',
+                          url: element.href,
+                          data: { js: true },
+                          dataType: 'json',
+                          success: function (data) {
+                            data.link = $wrapper.get(0);
+                            $.event.trigger('flagGlobalBeforeLinkUpdate', [data]);
+                            if (!data.preventDefault) { // A handler may cancel updating the link.
+                              data.link = updateLink(element, data.newLink);
+                            }
+
+                            // Find all the link wrappers on the page for this flag, but exclude
+                            // the triggering element because Flag's own javascript updates it.
+                            var $wrappers = $('.flag-wrapper.flag-' + data.flagName.flagNameToCSS() + '-' + data.contentId).not(data.link);
+                            var $newLink = $(data.newLink);
+
+                            // Hide message, because we want the message to be shown on the triggering element alone.
+                            $('.flag-message', $newLink).hide();
+
+                            // Finally, update the page.
+                            $wrappers = $newLink.replaceAll($wrappers);
+                            Drupal.attachBehaviors($wrappers.parent());
+
+                            $.event.trigger('flagGlobalAfterLinkUpdate', [data]);
+                          },
+                          error: function (xmlhttp) {
+                            alert('An HTTP error '+ xmlhttp.status +' occurred.\n'+ element.href);
+                            $wrapper.removeClass('flag-waiting');
+                          }
+                        });
+              
+
+
+                }
+            },
+            cancel: function(){
+                 $wrapper.removeClass('flag-waiting');
+            }
         }
-
-        // Find all the link wrappers on the page for this flag, but exclude
-        // the triggering element because Flag's own javascript updates it.
-        var $wrappers = $('.flag-wrapper.flag-' + data.flagName.flagNameToCSS() + '-' + data.contentId).not(data.link);
-        var $newLink = $(data.newLink);
-
-        // Hide message, because we want the message to be shown on the triggering element alone.
-        $('.flag-message', $newLink).hide();
-
-        // Finally, update the page.
-        $wrappers = $newLink.replaceAll($wrappers);
-        Drupal.attachBehaviors($wrappers.parent());
-
-        $.event.trigger('flagGlobalAfterLinkUpdate', [data]);
-      },
-      error: function (xmlhttp) {
-        alert('An HTTP error '+ xmlhttp.status +' occurred.\n'+ element.href);
-        $wrapper.removeClass('flag-waiting');
-      }
     });
+
+
+
+    
+
+
+
+
+
   }
 
   $('a.flag-link-toggle:not(.flag-processed)', context).addClass('flag-processed').click(flagClick);

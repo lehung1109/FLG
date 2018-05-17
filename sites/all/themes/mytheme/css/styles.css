@@ -1512,16 +1512,24 @@ a.reset {
     display: none;
 }
 .page-node-4187 #page-title{
-    text-align: center;
+    
+
 }
 #block-user-login .description{
     display: none;
 }
-#block-user-login .form-text{
+#block-user-login .form-text,
+#user-pass .form-text{
     height: 40px;
     border:1px solid #000;
     padding: 0px 0px 0px 10px;
     width: 100%;
+}
+#user-pass{
+    max-width: 300px;
+}
+#user-pass .form-required{
+    display: none;
 }
 #block-user-login label{
     display: inline-block;
@@ -1541,13 +1549,46 @@ a.reset {
 }
 #block-user-login{
     max-width: 300px;
-    margin:0 auto;
+   
+}
+.page-user-password .tabs{
+    display: none;
+}
+
+#block-user-login .item-list{
+
+}
+#user-login-form .item-list .first{
+    display: none;
+}
+#user-login-form .form-item{
+    margin-top: 0px;
+}
+#block-user-login .item-list ul{
+    padding:0px;
+}
+#block-user-login .item-list ul li {
+    list-style: none;
+    list-style-image: none;
+}
+.messages.warning{
+    position: relative;
+    float: left;
+}
+#block-user-login .item-list ul li a{
+       margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 100%;
 }
 
 @media screen and (max-width: 1069px) { 
     #page, .region-bottom{
         width: 100%;
         
+    }
+    #block-block-3{
+        margin-left: 0px;
     }
     .footer-main{
         width: 100%;
@@ -1786,10 +1827,12 @@ margin-left: 30px;
 
     height: 28px;
     display: block;
-    width: 100%;
+    width: auto;
     margin-top: 10px;
     line-height: 34px;
     position: relative;
+    padding-right:25px;
+
 }
 .view-my-followed-artists .content-follow ul {
     padding: 0px;
@@ -1840,6 +1883,7 @@ margin-left: 30px;
     font-weight: normal;
     cursor: pointer;
     position: relative;
+    text-transform: uppercase;
 }
 #block-views-my-followed-artists-block .block-title:after,
 #block-views-my-artworks-block .block-title:after,
@@ -1847,10 +1891,10 @@ margin-left: 30px;
 #block-sentius-block-archive-noti .block-title:after{
     content: "-";
     position: absolute;
-    right: 15px;
-    top: 0px;
+    right: 20px;
+    top: -4px;
     color: #000;
-    font-size:30px;
+    font-size:43px;
 }
 #block-views-my-followed-artists-block .block-title.addMinus:after,
 #block-views-my-artworks-block .block-title.addMinus:after,
@@ -1859,6 +1903,8 @@ margin-left: 30px;
     content: "+";
     right:18px;
     font-size: 36px;
+    top:0px;
+    font-size: 30px;
 }
 #block-block-4{
     margin: 20px 0px;
@@ -1899,7 +1945,7 @@ margin-left: 30px;
     width: 200px;
     margin-right: 10px;
     margin-bottom: 20px;
-    height:300px;
+    height:360px;
 
 }
 
@@ -1995,12 +2041,38 @@ body .control-og .views-table td a.color{
     float: left;
     margin-bottom: 0px;
 }
+#block-sentius-block-category ,
+#block-views-my-followed-artists-block,
+#block-sentius-block-archive-noti{
+    clear: both;
+    float: left;
+    width: 100%;
+}
 #block-sentius-block-category .form .form-text{
     width: 260px;
     height: 40px;
     border: 1px solid #000;
     padding: 0px 0px 0px 10px;
 }
+
+.sharethis-custom,.form-sharemail{
+    width: 100%;
+    margin-top: 20px;
+    float: left;
+}
+.form-sharemail {
+
+}
+.form-sharemail .form-item{
+    margin-top: 0px;
+}
+.form-sharemail .form-text{
+    width: 260px;
+    height: 40px;
+    border: 1px solid #000;
+    padding: 0px 0px 0px 10px;
+}
+
 #block-sentius-block-category .form {
     display: none;
 }
@@ -2192,9 +2264,13 @@ p.newFolder.addMinus:after{
 
 .heart-wrapper{
     position: absolute;
-    right: 10px;
-    top:5px;
+    right: 16px;
+    top: 1px;
 }
+.content-follow .heart-wrapper{
+  top:10px;  
+}
+
 .view-author .views-row .view-favorites .heart-wrapper{
    right: auto;
    left: 0px;
@@ -2214,7 +2290,7 @@ p.newFolder.addMinus:after{
 #block-sentius-block-archive-noti{
     clear: both;
     width: 100%;
-    margin-top: 20px;
+
     float: left;
 
 }
@@ -2231,13 +2307,204 @@ p.newFolder.addMinus:after{
 .page-share .view-my-artworks .views-row:nth-child(4n){
     margin-right: 0px;
 }
+.form-submit{
 
+    width: 170px;
+    display: block;
+
+    height: 33px;
+    background: #ecebe9;
+    border: none;
+    cursor: pointer;
+}
+.views-form .form-submit{
+    margin-top: 20px;
+}
+.jconfirm .jconfirm-box.jconfirm-type-green{
+	max-width: 280px;
+}
+.jconfirm.jconfirm-white .jconfirm-box, .jconfirm.jconfirm-light .jconfirm-box{
+	max-width: 280px;
+}
+#buttonAdd{
+        width: auto;
+    display: inline-block;
+    height: 22px;
+    background: #ecebe9;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.form-item{
+    position: relative;
+
+}
+
+/* Tooltip text */
+.form-item .tooltip  {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.form-item:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.flag-waiting .flag-throbber{
+    background: none;
+    padding: 0;
+    display: none !important; 
+}
+.flag-waiting a{
+    opacity: 1;
+}
+
+#user-profile-form label{
+    width: 100%;
+    clear: both;
+    display: block;
+}
+.password-strength{
+    display: none;
+}
+div.password-confirm{
+   position: absolute;
+   right: 0px;
+
+}
+div.password-suggestions{
+    display: none;
+}
+#user-profile-form .form-item{
+    position: relative;
+}
+.form-item .description{
+    text-transform: lowercase;
+}
+#edit-subscriptions legend{
+    display: none;
+}
+#edit-subscriptions{
+    border: none;
+    padding: 0px;
+margin-bottom: 20px;
+}
+#user-profile-form #edit-subscriptions label{
+    display: inline-block;
+    padding-left: 20px;
+}
+#user-profile-form #edit-subscriptions .form-checkbox{
+    position: absolute;
+    left: -5px;
+    z-index: 99;
+}
+
+.form-sharemail{
+    display: none;
+
+}
+#sharemail{
+    background: url('images/mail.png');
+    background-size: contain;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: inline-block;
+}
+#pdf{
+    background: url('images/print.png');
+    background-size: contain;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    display: inline-block;
+    text-indent: -9999px;
+}
+
+@media print {
+ 
+ 
+ .content-right,.view-my-artworks{
+   height: auto !important;
+   overflow-y:auto !important;
+   max-height:  2000px !important;
+ }
+.content-right{
+    width: 100%  !important;
+ }
+      /*
+      //HERE I NEED A RULE TO HIDE
+      // ONLY HREF ATTRIBUTE BUT NOT CONTENT OF A TAG
+      //BUT IN THIS WAY THEY HIDE THE WHOLE TAG OF COURSE
+      #section_to_print a {
+        display:none;
+      } 
+     */
+     
+    a{
+        color:#f00;
+    }
+    a:link:after, a:visited:after {
+      content: "" !important;
+    }
+      @page { size: landscape; }
+
+
+}
+@media screen and (max-width: 1024px) {
+    #block-block-3{
+        margin-left: 0px;
+    }
+}
 @media screen and (max-width: 991px) {
+    #block-user-login{
+        margin:0 auto;
+    }
+    #user-login-form input,
+    #user-pass input{
+        max-width: 95%;
+    }
+
     .view-my-followed-artists .views-row{
         width: 49%;
         margin-bottom: 20px;
         padding: 0px;
     }
+
+
     #block-sentius-block-category .content-wrapper .content-left,
     #block-sentius-block-category .content-wrapper .content-right,
     #block-sentius-block-category .content-wrapper .content-left .block,
@@ -2261,6 +2528,11 @@ p.newFolder.addMinus:after{
         width: 100%;
         margin: 0px;
         padding: 20px;
+    }
+    #block-formblock-user-register,#user-pass{
+        margin: 0 auto;
+        width: auto;
+        float: none;
     }
     #block-block-3{
         padding: 0px;

@@ -135,9 +135,7 @@
       <?php print render($page['content']); ?>
       <?php print $feed_icons; ?>
       <?php $path = current_path();?>
-      <?php if($path != 'node/4175'){?> 
-        <div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
-      <?php }?>
+     
     </div>
 
     

@@ -21,6 +21,8 @@
 		var pathToTheme = "<?php echo path_to_theme() ?>";
 	</script>
 	<?php print $scripts; ?>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 	<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5aea85a5a9f6a00011d0350f&product=inline-share-buttons"></script>
 	<?php if($_SERVER['HTTP_HOST'] === 'flg.com.au'){
      echo "

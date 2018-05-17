@@ -93,12 +93,13 @@
 
 
 
-	  if($user-uid == 0){  ?>
+	  if($user->uid == 0){  ?>
 		  <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
 	  <?php } ?>
 
 
       <?php endif; ?>
+
       <?php print render($title_suffix); ?>
 
 

@@ -130,7 +130,9 @@ function STARTERKIT_preprocess_block(&$variables, $hook) {
   //}
 }
 // */
-
+function truncate($string, $length, $dots = "...") {
+    return (strlen($string) > $length) ? substr($string, 0, $length - strlen($dots)) . $dots : $string;
+}
 function get_node_past(){
 	// SELECT * FROM `gcd_field_data_field_move_art_to_artist` 
 	//$query = db_query("SELECT * FROM `{field_data_field_show_as}` WHERE `bundle` = 'exhibition' AND `field_show_as_tid` = '35' ORDER BY `entity_id` DESC");
@@ -168,10 +170,23 @@ function mytheme_preprocess_html(&$variables) {
 	$variables['local'] = $local;
 }
 
+function mytheme_submit_handle_form_og($form, &$form_state) {
+    
+   drupal_set_message('Your folders have been updated.');
+    // do code here $form_state['values'] etc...
+}
+function mytheme_submit_handle_form_user_pass($form, &$form_state) {
+    
+   $form_state['redirect'] =  "/member-login";
+    // do code here $form_state['values'] etc...
+}
 function mytheme_form_alter(&$form, $form_state, $form_id) {
 	
-	if($form_id == 'user_login'){
-		
+	if($form_id == 'user_pass'){
+		$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_user_pass';
+	}
+	if($form_id == 'views_form_author_block_1'){
+		$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_og';
 	}
 
 	

@@ -51,8 +51,7 @@
     </div>
   <?php endif; ?>
 
-  <?php if ($rows): ?>
-    <?php 
+  <?php 
     global $user;
 
     $uid = $user->uid;
@@ -60,20 +59,26 @@
       $uid = $_GET['uid'];
     }?>
     <div class="view-content">
-      <div class="views-row">
-          <div class="views-field views-field-name view-favorites">
+    <div class="views-row">
+            <div class="views-field views-field-name view-favorites">
 
-            <span class="field-content">
-              <a href="/dashboard?uid=<?php echo $uid?>&tid=42"> <div class="heart-wrapper"><div class="heart"></div></div>Favourite</a>
-             
-            </span>
+              <span class="field-content">
+                <!--<a href="#/dashboard?uid=<?php echo $uid?>&tid=42"> <div class="heart-wrapper"><div class="heart"></div></div>Favourites</a>-->
+               <a href="#"> <div class="heart-wrapper"><div class="heart"></div></div>Favourites</a>
+              </span>
 
-          </div>
-      </div>
+            </div>
+        </div>
+       </div>
+  <?php if ($rows): ?>
+  
+    <div class="view-content">
+      
       <?php print $rows; ?>
     </div>
   <?php elseif ($empty): ?>
     <div class="view-empty">
+
       <?php print $empty; ?>
     </div>
   <?php endif; ?>
