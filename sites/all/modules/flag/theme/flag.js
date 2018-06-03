@@ -66,10 +66,10 @@ Drupal.flagLink = function(context) {
 
     if($(element).hasClass('unflag-action')){
       var titleConfirm = 'Confirm Remove';
-      var contentConfirm = "Are you sure you'd like to unfollow the Artists?";
+      var contentConfirm = "Are you sure you'd like to unfollow the Artist?";
     }else{
       var titleConfirm = 'Confirm Follow';
-      var contentConfirm = "Are you sure you'd like to follow the Artists?";
+      var contentConfirm = "Are you sure you'd like to follow the Artist?";
     }
     // Hide any other active messages.
     $('span.flag-message:visible').fadeOut();

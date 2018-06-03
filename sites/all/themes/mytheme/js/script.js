@@ -583,7 +583,7 @@ function loadTaxo(){
     			(jQuery).get( "/sentiusajax",{tid:tid,email:email,action:'sendmail'}, function( data ) {
 
 					if(data == 'success'){
-						(jQuery)('.result-send').html('<p>Email was send!</p>');
+						(jQuery)('.result-send').html('<p>Email was sent.</p>');
 						(jQuery)('#mailsend').val('');
 						(jQuery)('.form-sharemail').toggle();
 					}	
@@ -599,10 +599,16 @@ function loadTaxo(){
 
     });
 
+    //(jQuery)( "#my_printable_div .views-row" ).draggable();
+    
 
 	(jQuery)('.view-author .views-row .remove').click(function(){
 		  var tid = (jQuery)(this).attr('tid');
 		//  alert(tid);
+			var htmlChoose = '';
+			(jQuery).get( "/sentiusajax",{tid:tid,action:'getTaxo'}, function( data ) {
+				htmlChoose = data;
+			});
 		(jQuery).confirm({
 		    title: 'Confirm Delete',
 		    content: "Are you sure you'd like to delete the folder?",
@@ -613,22 +619,93 @@ function loadTaxo(){
 		            btnClass: 'btn-primary',
 		            keys: ['enter'],
 		            action: function(){
-					  
-						(jQuery).get( "/sentiusajax",{tid:tid,action:'removeTid'}, function( data ) {
+					  	
 
-							if(data == 'sucess'){
-								
-								(jQuery)('.view-author .views-row .remove').each(function(){
-									if((jQuery)(this).attr('tid') == tid){
-										(jQuery)(this).closest('.views-row').remove();
-										(jQuery)('.art-'+tid).remove();
-									}
-								});
-							}else{
-									
-							}
-							
-						});
+
+		            		(jQuery).confirm({
+							    title: 'Confirm Delete',
+							    content: "Do you want to move all artworks to another folder?",
+							    type: '',
+							    buttons: {   
+							        ok: {
+							            text: "Yes",
+							            btnClass: 'btn-primary',
+							            keys: ['enter'],
+							            action: function(){
+
+							            	(jQuery).confirm({
+											    title: 'Confirm Delete',
+											    content: "Please choose folder <br/>" + htmlChoose,
+											    type: '',
+											    buttons: {   
+											        ok: {
+											            text: "Yes",
+											            btnClass: 'btn-primary',
+											            keys: ['enter'],
+											            action: function(){
+
+											           			var folderChoose = (jQuery)('#choose_folder').val();
+											           		
+											           			(jQuery).get( "/sentiusajax",{tid:tid,movetid:folderChoose,action:'removeTid'}, function( data ) {
+
+																		if(data == 'sucess'){
+																			
+																			(jQuery)('.view-author .views-row .remove').each(function(){
+																				if((jQuery)(this).attr('tid') == tid){
+																					(jQuery)(this).closest('.views-row').remove();
+																					(jQuery)('.art-'+tid).remove();
+																				}
+																			});
+																		}else{
+																				
+																		}
+																		
+																	});	
+
+
+
+											            }
+											        },
+											        no: function(){
+											             
+											        	
+
+											        }
+											    }
+											});
+
+
+
+							            }
+							        },
+							        no: function(){
+							             
+							             (jQuery).get( "/sentiusajax",{tid:tid,action:'removeTid'}, function( data ) {
+
+											if(data == 'sucess'){
+												
+												(jQuery)('.view-author .views-row .remove').each(function(){
+													if((jQuery)(this).attr('tid') == tid){
+														(jQuery)(this).closest('.views-row').remove();
+														(jQuery)('.art-'+tid).remove();
+													}
+												});
+											}else{
+													
+											}
+											
+										});
+							        	
+
+							        }
+							    }
+							});
+
+						
+
+
+
+
 		            }
 		        },
 		        cancel: function(){

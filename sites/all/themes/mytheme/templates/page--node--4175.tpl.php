@@ -6,9 +6,8 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
  */
- global $user;
- 
 
+drupal_add_js('https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
 ?>
 
 <div id="page">
@@ -32,7 +31,7 @@
         <?php endif; ?>
       </div>
     <?php endif; ?>
-<?php
+    <?php
        $block =block_load('block',5);
        $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
        print $output;
@@ -97,39 +96,48 @@
 
 
 
-	  if($user->uid == 0){  ?>
+	  if($segments[1] == 'communities' && isset($segments[2])){ ?>
+
+		  <h1 class="page__title title" id="page-title"><a href="/aboriginal"><?php print $title; ?></a> <?php echo $segments[2] ?></h1>
+
+	  <?php }else{ ?>
 		  <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
 	  <?php } ?>
 
 
       <?php endif; ?>
-
       <?php print render($title_suffix); ?>
 
 
+	  <?php
+	  // Render the sidebars to see if there's anything in them.
+	  $sidebar_first  = render($page['sidebar_first']);
+	  $sidebar_second = render($page['sidebar_second']);
+	  ?>
+
+	  <?php if ($sidebar_first || $sidebar_second): ?>
+	  <aside class="sidebars">
+		  <?php print $sidebar_first; ?>
+		  <?php print $sidebar_second; ?>
+	  </aside>
+	  <?php endif; ?>
 
 
 	  <div id="content" class="column" role="main">
       <?php print render($page['highlighted']); ?>
       <?php //print $breadcrumb; ?>
       <a id="main-content"></a>
-    
-      <?php //print $messages; ?>
+      
+      <?php print $messages; ?>
       <?php print render($tabs); ?>
-      <?php //print render($page['help']); ?>
-      <?php
-     
-      if($user->uid > 0){
-        $block = block_load('block', '4');
-        $block = _block_render_blocks(array($block));
-        $block = _block_get_renderable_array($block);
-        $output = drupal_render($block);
-        print $output;
-      }
-        
-      ?>
+      <?php print render($page['help']); ?>
+      <?php if ($action_links): ?>
+        <ul class="action-links"><?php print render($action_links); ?></ul>
+      <?php endif; ?>
       <?php print render($page['content']); ?>
       <?php print $feed_icons; ?>
+      <?php $path = current_path();?>
+     
     </div>
 
     
@@ -144,5 +152,37 @@
  <?php print render($page['footer']); ?>
  </div>
  <div class="clearnew"></div>
+<script type="text/javascript">
+  // When the document is ready set up our sortable with it's inherant function(s) 
+    (jQuery)(document).ready(function() { 
+        (jQuery)("#dragthis").sortable({ 
+           // handle : '.handle', 
+            update : function () { 
+                var order = (jQuery)('#dragthis').sortable('toArray');
+               // alert(order);
+               console.log(order);
+               // send ajax
+               (jQuery).get( "/sentiusajax",{list:order,action:'reorderArt'}, function( data ) {}); 
 
+                //$("#info").load("process-sortable.php?"+order); 
+            } 
+        });
+
+        (jQuery)(".view-my-followed-artists  .view-content").sortable({ 
+           // handle : '.handle', 
+            update : function () { 
+                var order = (jQuery)('.view-my-followed-artists  .view-content').sortable('toArray');
+               // alert(order);
+               console.log(order);
+               // send ajax
+              (jQuery).get( "/sentiusajax",{list:order,action:'reorderArtist'}, function( data ) {}); 
+
+                //$("#info").load("process-sortable.php?"+order); 
+            } 
+        });
+
+
+    }); 
+
+</script>
 <?php print render($page['bottom']); ?>

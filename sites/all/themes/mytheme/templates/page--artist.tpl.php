@@ -86,7 +86,13 @@ if($category == 19) {
 
 			<div class="heading">
 				<?php $title = $node->title; ?>
-				<h1><?php if($context== 'contemporary'){ ?><a href="<?php echo url('node/267'); ?>">CONTEMPORARY ART STOCKROOM</a><?php } ?> <?php echo $node->title ?></h1>
+				<h1><?php if($context== 'contemporary'){ ?><a href="<?php echo url('node/267'); ?>">CONTEMPORARY ART STOCKROOM</a><?php } ?> <?php echo $node->title ?>
+					<div class="follow">
+					
+						<?php print flag_create_link('artist', arg(1)); ?>
+					</div>
+				</h1>
+
 			</div>
 
 			<?php print render($page['highlighted']); ?>
@@ -99,10 +105,7 @@ if($category == 19) {
 			<?php endif; ?>
 
 			<aside class="sidebar">
-				<div class="follow">
-					
-					<?php print flag_create_link('artist', arg(1)); ?>
-				</div>
+				
 				<div class="description">
 					<?php
 					$description = $node->field_about_the_artist['und'][0]['value'];

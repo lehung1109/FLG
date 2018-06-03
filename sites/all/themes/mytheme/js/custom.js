@@ -53,6 +53,9 @@ if(jQuery('#edit-search-api-views-fulltext').val()!='ARTIST'){
     (jQuery)('#user-pass .form-item').append('<div class="tooltip">This field is required!</div>');
     //(jQuery)('#user-login-form #edit-pass').attr('title','Password');
 	(jQuery)('#user-register-form .form-item').append('<div class="tooltip">This field is required!</div>');
+    (jQuery)('.share-control').click(function(){
+    	(jQuery)('.share-add-wrapper .share').toggle();
+    });
     
 
 });

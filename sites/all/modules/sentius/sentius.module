@@ -22,6 +22,34 @@ function sentius_menu(){
     );
   return $items;
 }
+function _sentius_check_access($nid){
+  global $user;
+  $return = true;
+   $user = user_load($user->uid);
+  if(count($user->field_access)>0){
+      foreach($user->field_access['und'] as $row){
+        if($row['value'] == $nid){
+          $return = false;
+        }
+      }
+  }
+  return $return;
+}
+function _sentius_insert_access($nid){
+  global $user;
+  $user = user_load($user->uid);
+
+  if(count($user->field_access)>0){
+    $count = count($user->field_access['und']);
+    $user->field_access['und'][$count + 1]['value'] = $nid;
+  }else{
+    $user->field_access['und'][0]['value'] = $nid;
+  }
+  user_save($user);
+ 
+  return true;
+}
+
 function _sentius_archives(){
    $data = array();
    return theme('block_archive_noti', array('data' => $data));
@@ -31,11 +59,67 @@ function _sentius_share(){
   return "";
 }
 function _sentius_ajax(){
-
+  global $user;
   if(isset($_GET['action'])){
+
+
+    //reorderArtist
+    if($_GET['action'] == 'reorderArtist'){
+      $list = $_GET['list'];
+      if(count($list)>0){
+        $count = 0;
+        foreach($list as $row){
+
+           $node = node_load($row);
+           $node->field_weight['und'][0]['value'] = $count;
+           node_save($node);
+          $count ++;
+        }
+      }
+
+    }
+
+    if($_GET['action'] == 'reorderArt'){
+      $list = $_GET['list'];
+      if(count($list)>0){
+        $count = 0;
+        foreach($list as $row){
+
+           db_update('favouries_custom')
+            ->fields(array(
+              'weight' => $count ,
+            ))
+            ->condition('nid',$row)
+            ->condition('uid',$user->uid)
+            ->execute();
+          $count ++;
+        }
+      }
+
+    }
+    if($_GET['action'] == 'getTaxo'){
+        $tid = $_GET['tid']; 
+        $sql = "SELECT taxonomy_term_data.name AS taxonomy_term_data_name, taxonomy_term_data.vid AS taxonomy_term_data_vid, taxonomy_term_data.tid AS tid, taxonomy_vocabulary.machine_name AS taxonomy_vocabulary_machine_name
+FROM 
+{taxonomy_term_data} taxonomy_term_data
+LEFT JOIN {taxonomy_vocabulary} taxonomy_vocabulary ON taxonomy_term_data.vid = taxonomy_vocabulary.vid
+LEFT JOIN {field_data_field_author} field_data_field_author ON taxonomy_term_data.tid = field_data_field_author.entity_id AND (field_data_field_author.entity_type = 'taxonomy_term' AND field_data_field_author.deleted = '0')
+WHERE (( (taxonomy_vocabulary.machine_name IN  ('tags_artwork')) AND (taxonomy_term_data.tid != '".$tid."') AND (field_data_field_author.field_author_value = '".$user->uid."') ))
+LIMIT 50 OFFSET 0";
+        $query = db_query($sql);
+        $html = '<select id="choose_folder">';
+        foreach($query as $row){
+
+           $html .= '<option value="'.$row->tid.'">'.$row->taxonomy_term_data_name.'</option>';
+        }
+        $html .= '<select>';
+        echo $html;
+        die;
+    }
+
     if($_GET['action'] == 'sendmail'){
 
-      global $user;
+      
       $email = $_GET['email'];
       $tid  = $_GET['tid'];
       // '<p>My favorites folder from flg.com.au </p>' .  $html ;
@@ -74,25 +158,25 @@ function _sentius_ajax(){
     }
   }
 
-	if(isset($_GET['action'])){
-		global $user;
-		if($_GET['action'] == 'addFavourites'){
-			if(isset($_GET['tid'])){
-			    
-			    $tid = $_GET['tid'];
-			    $nid = $_GET['nid'];
-			    $uid = $user->uid;
-			    $check = sentius_checkFavorites($nid,$tid);
-			    if($check == 0){
-			      sentius_addFavorites($nid,$tid);
-			      echo 'Success';
-			      die;
-			    }else{
-			      echo 'Unsuccess';
-			      die;
-			    }
-			}
-		}
+  if(isset($_GET['action'])){
+    global $user;
+    if($_GET['action'] == 'addFavourites'){
+      if(isset($_GET['tid'])){
+          
+          $tid = $_GET['tid'];
+          $nid = $_GET['nid'];
+          $uid = $user->uid;
+          $check = sentius_checkFavorites($nid,$tid);
+          if($check == 0){
+            sentius_addFavorites($nid,$tid);
+            echo 'Success';
+            die;
+          }else{
+            echo 'Unsuccess';
+            die;
+          }
+      }
+    }
     if($_GET['action'] == 'removeFavourites'){
       $nid = $_GET['nid'];
 
@@ -102,22 +186,36 @@ function _sentius_ajax(){
     }
 
 
-		if($_GET['action'] == 'removeTid'){
+    if($_GET['action'] == 'removeTid'){
 
-			$tid = $_GET['tid'];
+      $tid = $_GET['tid'];
       if($tid != 42){
-         db_delete('favouries_custom')
-        ->condition('tid',$tid)
-        ->condition('uid',$user->uid)
-        ->execute();
+        if($_GET['movetid'] != ''){
+            db_update('favouries_custom')
+            ->fields(array(
+              'tid' => $_GET['movetid'],
+            ))
+            ->condition('tid',$tid)
+            ->condition('uid',$user->uid)
+            ->execute();
+             
+        }else{
+           db_delete('favouries_custom')
+            ->condition('tid',$tid)
+            ->condition('uid',$user->uid)
+            ->execute();
+           
+        }
         taxonomy_term_delete($tid);
+
+
       }
      
 
-			echo 'sucess';
-			die;
-		}
-	}
+      echo 'sucess';
+      die;
+    }
+  }
   
 
 }
@@ -158,9 +256,9 @@ function sentius_getALlFavorites($tid='',$uid){
   $data = array();
   if($tid!= ''){
 
-    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."' AND `tid`='".$tid."'";
+    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."' AND `tid`='".$tid."' ORDER BY `weight` ASC";
   }else{
-    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."' AND `tid`='42'";
+    $sql = "select * from {favouries_custom} WHERE `uid`= '".$uid."' AND `tid`='42' ORDER BY `weight` ASC";
   }
 
   $query = db_query($sql);
@@ -216,6 +314,23 @@ function sentius_getExByAid($artistId){
 function sentius_checkNewestNode($artistId){
   $sql = "SELECT node.created AS node_created, node.nid AS nid FROM  {node} node LEFT JOIN {field_data_field_artist} field_data_field_artist ON node.nid = field_data_field_artist.entity_id AND (field_data_field_artist.entity_type = 'node') 
 WHERE (( (node.status = '1') AND (node.type IN  ('art')) AND (field_data_field_artist.field_artist_nid IN  ('".$artistId."')) )) ORDER BY node_created DESC LIMIT 1 ";
+  $data = array();
+    $query = db_query($sql);
+    foreach($query as $row){
+      $data[] = $row;
+    } 
+  return $data;
+}
+
+// get news node by artisid;
+function sentius_NewsNode($artistId){
+  $sql = "SELECT node.created AS node_created, node.nid AS nid
+FROM 
+{node} node
+LEFT JOIN {field_data_field_artist} field_data_field_artist ON node.nid = field_data_field_artist.entity_id AND (field_data_field_artist.entity_type = 'node' AND field_data_field_artist.deleted = '0')
+WHERE (( (node.status = '1') AND (node.type IN  ('news')) AND (field_data_field_artist.field_artist_nid IN  ('".$artistId."')) ))
+ORDER BY node_created DESC
+LIMIT 1 OFFSET 0";
   $data = array();
     $query = db_query($sql);
     foreach($query as $row){
@@ -296,34 +411,34 @@ function sentius_insert_custom_notify($nid,$uid,$status=0){
 
 // get all node base on user
 function sentius_get_all_node_create($day){
-	$data = array();
-	$dayAgo = strtotime('-'.$day.' days');
-	$sql = "SELECT * FROM {notify_custom} WHERE `daycreate` < '".$dayAgo."' AND `status` = '0'";
-	
-	$query = db_query($sql);
-	foreach($query as $row){
-		$data[] = $row;
-	}
-	return $data;
+  $data = array();
+  $dayAgo = strtotime('-'.$day.' days');
+  $sql = "SELECT * FROM {notify_custom} WHERE `daycreate` < '".$dayAgo."' AND `status` = '0'";
+  
+  $query = db_query($sql);
+  foreach($query as $row){
+    $data[] = $row;
+  }
+  return $data;
 }
 function sentius_sendmail_remind($day,$uid){
-	$body = '';
-	$nodes = sentius_get_all_node_create($day);
-	
-	if(count($nodes)>0){
-		foreach($nodes as $row){
-		
-			$node  = node_load($row->nid);
-			$url  = url('node/'.$row->nid);
-			$body .= "A record <a href='".$url."'>".$node->title."</a> has been created <br/>";
-			 db_update('notify_custom') // Table name no longer needs {}
+  $body = '';
+  $nodes = sentius_get_all_node_create($day);
+  
+  if(count($nodes)>0){
+    foreach($nodes as $row){
+    
+      $node  = node_load($row->nid);
+      $url  = url('node/'.$row->nid);
+      $body .= "A record <a href='".$url."'>".$node->title."</a> has been created <br/>";
+       db_update('notify_custom') // Table name no longer needs {}
                 ->fields(array('status' => 1,'sendat'=>time()))
                 ->condition('uid', $uid, '=')
                 ->condition('nid', $row->nid, '=')
                 ->execute();
-		}
-	}
-	return $body;
+    }
+  }
+  return $body;
 }
 // get all log
 
@@ -341,42 +456,42 @@ function sentius_get_archive(){
 
 // get listuser to send mail
 function sentius_get_user(){
-	$data = array();
-	$sql = "SELECT users.name AS users_name, users.uid AS uid, users.created AS users_created
+  $data = array();
+  $sql = "SELECT users.name AS users_name, users.uid AS uid, users.created AS users_created
 FROM 
 {users} users
 LEFT JOIN {field_data_field_send_notification} field_data_field_send_notification ON users.uid = field_data_field_send_notification.entity_id AND (field_data_field_send_notification.entity_type = 'user' AND field_data_field_send_notification.deleted = '0')
 WHERE (( (users.status <> '0') AND (field_data_field_send_notification.field_send_notification_value IS NOT NULL ) ))
 ORDER BY users_created DESC";
-	$query = db_query($sql);
-	foreach($query as $row){
-		$data[] = $row->uid;
-	}
-	return $data;
+  $query = db_query($sql);
+  foreach($query as $row){
+    $data[] = $row->uid;
+  }
+  return $data;
 
 }
 // get day user
 function sentius_get_day($user){
 
-	 $user = user_load($user);
+   $user = user_load($user);
 
-    	if(count($user->field_send_notification)>0){
-    		$sendnotify  = $user->field_send_notification['und'][0]['value'];
-    		$day = 0;
-  			switch ($sendnotify) {
-  			    case "2":
-  			       $day = 1;
-  			        break;
-  			    case "3":
-  			       $day = 2;
-  			        break;
-  			    case "4":
-  			       $day = 3;
-  			        break;
-  			}
-  			
-    	}	
-    return $day;	
+      if(count($user->field_send_notification)>0){
+        $sendnotify  = $user->field_send_notification['und'][0]['value'];
+        $day = 0;
+        switch ($sendnotify) {
+            case "2":
+               $day = 1;
+                break;
+            case "3":
+               $day = 2;
+                break;
+            case "4":
+               $day = 3;
+                break;
+        }
+        
+      } 
+    return $day;  
 }
 
 
@@ -394,8 +509,8 @@ function sentius_node_insert($node) {
             if(count($user->field_send_notification)>0){
               if($user->field_send_notification['und'][0]['value'] == 1 ){
 
-  				      $url = $base_url.'/'.url("node/".$node->nid);
-              	$body = "A record <a href='".$url."'>".$node->title."</a> has been created <br/>";
+                $url = $base_url.'/'.url("node/".$node->nid);
+                $body = "A record <a href='".$url."'>".$node->title."</a> has been created <br/>";
                 sentius_mail_notifi($row,$body);
                 sentius_insert_custom_notify($node->nid,$row,'1');
 
@@ -442,18 +557,18 @@ function sentius_theme() {
 
 // send mail cron
   function sentius_send_mail_cron(){
-  		 $userData = sentius_get_user();
+       $userData = sentius_get_user();
       if(count($userData)>0){
-        	foreach($userData as $row){
-        		$uid = $row;
-        		$day = sentius_get_day($uid);
-        		if($day != 0 ){
-  				    $body = sentius_sendmail_remind($day,$uid);
-  				    // send mail to user;
-  				    sentius_mail_notifi($uid,$body);
-  				    // update after send mail;
-  			}
-  		}
+          foreach($userData as $row){
+            $uid = $row;
+            $day = sentius_get_day($uid);
+            if($day != 0 ){
+              $body = sentius_sendmail_remind($day,$uid);
+              // send mail to user;
+              sentius_mail_notifi($uid,$body);
+              // update after send mail;
+        }
+      }
      }
   }
 
@@ -490,9 +605,9 @@ function sentius_theme() {
   }
 function sentius_form_alter(&$form, &$form_state, $form_id){
   
-	if($form_id == 'user_register_form' || $form_id == 'user_login_block' || $form_id == 'user_pass'){
-		$form['#form_placeholder'] = TRUE;
-	}
+  if($form_id == 'user_register_form' || $form_id == 'user_login_block' || $form_id == 'user_pass'){
+    $form['#form_placeholder'] = TRUE;
+  }
   if($form_id == 'user_login_block'){
    
     $form['name']['#title'] = 'E-mail address';

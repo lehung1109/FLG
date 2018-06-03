@@ -130,6 +130,8 @@ function STARTERKIT_preprocess_block(&$variables, $hook) {
   //}
 }
 // */
+drupal_add_library('system', 'ui.draggable');
+
 function truncate($string, $length, $dots = "...") {
     return (strlen($string) > $length) ? substr($string, 0, $length - strlen($dots)) . $dots : $string;
 }
@@ -181,7 +183,14 @@ function mytheme_submit_handle_form_user_pass($form, &$form_state) {
     // do code here $form_state['values'] etc...
 }
 function mytheme_form_alter(&$form, $form_state, $form_id) {
-	
+	if($form_id == 'user_profile_form'){
+		$form['text']= array(
+		  '#markup' => '<p><a href="/user/password">Request new password</a></p>',
+		  '#weight' => -100
+		);
+		unset($form['account']['pass']);
+		
+	}
 	if($form_id == 'user_pass'){
 		$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_user_pass';
 	}

@@ -100,7 +100,8 @@
 		</div>
 	</div>
 	<div class="content-right view-my-artworks art-<?php echo $tid?>" id="my_printable_div">
-			
+			<ul id="dragthis">
+					
 
 		<?php if(count($data)>0){?> 
 			<?php foreach($data as $row){?> 
@@ -129,7 +130,8 @@
 			}?>
 
 			<?php if($imageUrl !=''){?>
-			<div class="views-row favorites-<?php echo $artNode->nid?>">
+			<li class="views-row favorites-<?php echo $artNode->nid?>" id="<?php echo $artNode->nid?>">
+			<div class="views-row favorites-<?php echo $artNode->nid?>" id="<?php echo $artNode->nid?>">
 				<div class="art <?php echo $artNodeId['target_id'];?> <?php echo count($artNode)?>">
 						<a href="<?php echo $url; ?>/exhibition">
 							<img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>">
@@ -149,8 +151,10 @@
 					</div>
 				</div>
 			</div>
+			</li>
 			<?php }?>
 			<?php }?>
+		</ul>
 		<?php }else{?>
 		<script type="text/javascript">
 			(jQuery)(function(){

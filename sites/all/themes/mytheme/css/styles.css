@@ -1802,11 +1802,14 @@ margin-left: 30px;
 #block-formblock-user-register .form-required{
     display: none;
 }
-.favourite,
-.follow{
+.favourite{
     clear:both;
     width: 100%;
     padding:20px 0px;
+    text-align: right;
+}
+.follow{
+    float: right;
 }
 .favourite a,.follow a{
     font-size: 20px;
@@ -1851,6 +1854,12 @@ margin-left: 30px;
     text-transform: uppercase;
     color: #797979;
 
+}
+.view-my-followed-artists .content-follow ul li a.blue{
+    color: #2da6b9;
+}
+.view-my-followed-artists .content-follow ul li a.blue:active{
+    color: #797979;
 }
 .view-my-followed-artists .content-follow ul li a:hover{
     color: #2da6b9;
@@ -1939,18 +1948,25 @@ margin-left: 30px;
 .art-showcase{
 
 }
-
+.view-my-artworks #dragthis{
+    display: inline-block;
+    padding:0px;
+    margin: 0px;
+}
 .view-my-artworks .views-row{
     float: left;
-    width: 200px;
+    width: 195px;
     margin-right: 10px;
     margin-bottom: 20px;
     height:360px;
-
+    list-style: none;
 }
 
 .view-my-artworks .views-row:nth-child(3n){
     margin-right: 0px;
+}
+.view-my-artworks .heart-wrapper{
+    right:10px;
 }
 
 .view-my-artworks .art a{
@@ -2147,9 +2163,15 @@ p.newFolder.addMinus:after{
 }
 .sharethis-wrapper{
     position: relative;
-    max-width: 300px;
+    width: 250px;
     float: left;
     margin-top: 20px;
+}
+#st-1 .st-btn{
+    max-width: 50px;
+}
+#st-1.st-has-labels .st-btn{
+    min-width: 50px !important;
 }
 .view-my-followed-artists .item-list,.content-right .item-list{
     width: 100%;
@@ -2264,7 +2286,7 @@ p.newFolder.addMinus:after{
 
 .heart-wrapper{
     position: absolute;
-    right: 16px;
+    right: 1px;
     top: 1px;
 }
 .content-follow .heart-wrapper{
@@ -2439,19 +2461,38 @@ margin-bottom: 20px;
 #sharemail{
     background: url('images/mail.png');
     background-size: contain;
-    width: 50px;
-    height: 50px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
     display: inline-block;
 }
 #pdf{
     background: url('images/print.png');
     background-size: contain;
-    width: 45px;
-    height: 45px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
     display: inline-block;
     text-indent: -9999px;
+}
+.share-add{
+    float: right;
+}
+.share-add-wrapper .share{
+    display: none;
+}
+.share-add a{
+    color: #30A5B9;
+    cursor: pointer;
+}
+.share-add-wrapper{
+    float: right;
+    max-width: 300px;
+    clear: both;
+}
+
+#edit-field-access{
+	display: none;
 }
 
 @media print {
@@ -2484,9 +2525,25 @@ margin-bottom: 20px;
 
 
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1199px) {
     #block-block-3{
         margin-left: 0px;
+    }
+
+    .share-add{
+        float: none;
+        width: 100%;
+    }
+    .share{
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .sharethis-wrapper{
+        margin-top: 0px;
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 @media screen and (max-width: 991px) {

@@ -198,5 +198,17 @@
 	<?php print render($page['footer']); ?>
 </div>
 <div class="clearnew"></div>
+<?php global $user;
+	if($user->uid > 0){
 
+		$nid = arg(1);
+		
+		$check = _sentius_check_access($nid);
+		if($check){
+			_sentius_insert_access($nid);
+		}
+	}
+
+	
+?>
 <?php print render($page['bottom']); ?>
