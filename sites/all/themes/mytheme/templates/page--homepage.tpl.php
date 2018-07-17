@@ -26,6 +26,12 @@ $homeNode = $node;
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>
+		<?php
+		   $block =block_load('block',5);
+		   $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
+		   print $output;
+		?>
+
 
 		<?php if ($secondary_menu): ?>
 		<nav class="header__secondary-menu" id="secondary-menu" role="navigation">
@@ -56,7 +62,9 @@ $homeNode = $node;
 		<ul class="action-links"><?php print render($action_links); ?></ul>
 		<?php endif; ?>
 
+
 		<div id="content" role="main">
+			<?php print $messages; ?>
 			<div class="channel-selector">
 				<ul>
 					<?php

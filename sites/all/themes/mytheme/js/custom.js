@@ -34,7 +34,30 @@ if(jQuery('#edit-search-api-views-fulltext').val()!='ARTIST'){
 
 (jQuery)(function(){
 	(jQuery)('#webform-client-form-3740').prepend('<p>Join Our Mailing List</p>');
-	
+	(jQuery)('#user-register-form .form-text').attr('required','required');
+	(jQuery)("#user-register-form #edit-mail").attr('oninvalid',"this.setCustomValidity('Please enter Email')");
+	(jQuery)("#user-register-form #edit-mail").attr('oninput',"this.setCustomValidity('')");
+	(jQuery)("#user-register-form #edit-field-first-name-und-0-value").attr('oninvalid',"this.setCustomValidity('Please supply a valid first name.')");
+	(jQuery)("#user-register-form #edit-field-first-name-und-0-value").attr('oninput',"this.setCustomValidity('')");
+	(jQuery)("#user-register-form #edit-field-last-name-und-0-value").attr('oninvalid',"this.setCustomValidity('Please supply a valid last name.')");
+	(jQuery)("#user-register-form #edit-field-last-name-und-0-value").attr('oninput',"this.setCustomValidity('')");
+	/*
+	(jQuery)("#user-register-form #edit-mail").on("invalid", function(event) {
+        (jQuery)(this).setCustomValidity("Please enter at least 5 characters.");
+        (jQuery)(this).setCustomValidity("");
+    });*/
+    (jQuery)('.unflag-action').attr('title','Click to remove');
+
+
+    (jQuery)('#user-login-form .form-item').append('<div class="tooltip">This field is required!</div>');
+    (jQuery)('#user-pass .form-item').append('<div class="tooltip">This field is required!</div>');
+    //(jQuery)('#user-login-form #edit-pass').attr('title','Password');
+	(jQuery)('#user-register-form .form-item').append('<div class="tooltip">This field is required!</div>');
+    (jQuery)('.share-control').click(function(){
+    	(jQuery)('.share-add-wrapper .share').toggle();
+    });
+    
+
 });
 
 /*---------------------- Search data result append in search page----------------------------------  */

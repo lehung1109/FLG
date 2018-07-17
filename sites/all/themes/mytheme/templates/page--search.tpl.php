@@ -24,7 +24,11 @@ global $base_url;
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>
-
+		<?php
+       $block =block_load('block',5);
+       $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
+       print $output;
+    ?>
 		<?php if ($secondary_menu): ?>
 		<nav class="header__secondary-menu" id="secondary-menu" role="navigation">
 			<?php print theme('links__system_secondary_menu', array(
@@ -44,9 +48,7 @@ global $base_url;
 		<?php print render($page['header']); ?>
 
 	</header>
-
-
-
+	
 			<?php
 			$view = views_get_view('better_search');
 			$view->set_display('search_block');

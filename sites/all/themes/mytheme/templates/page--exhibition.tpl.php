@@ -19,7 +19,11 @@
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>
-
+		<?php
+		   $block =block_load('block',5);
+		   $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
+		   print $output;
+		?>
 		<?php if ($secondary_menu): ?>
 		<nav class="header__secondary-menu" id="secondary-menu" role="navigation">
 			<?php print theme('links__system_secondary_menu', array(
@@ -71,7 +75,6 @@
 					echo $description;
 					?>
 				</div>
-
 				<?php
 
 
@@ -97,7 +100,7 @@
 						?>
 					</div>
 					<?php } ?>
-
+					<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
 
 				<div id="block-simplenews-1">
 					<?php
@@ -195,5 +198,17 @@
 	<?php print render($page['footer']); ?>
 </div>
 <div class="clearnew"></div>
+<?php global $user;
+	if($user->uid > 0){
 
+		$nid = arg(1);
+		
+		$check = _sentius_check_access($nid);
+		if($check){
+			_sentius_insert_access($nid);
+		}
+	}
+
+	
+?>
 <?php print render($page['bottom']); ?>

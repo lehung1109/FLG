@@ -162,7 +162,11 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 		<?php endif; ?>
 	</div>
 	<?php endif; ?>
-
+	<?php
+		   $block =block_load('block',5);
+		   $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
+		   print $output;
+		?>
 	<?php if ($secondary_menu): ?>
 	<nav class="header__secondary-menu" id="secondary-menu" role="navigation">
 		<?php print theme('links__system_secondary_menu', array(
@@ -215,7 +219,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
 	<?php } ?>
 </div>
-
+<?php global $user;?>
 
 <div class="controls">
 
@@ -239,7 +243,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 <?php print render($page['help']); ?>
 <?php if ($action_links): ?>
 <ul class="action-links"><?php print render($action_links); ?></ul>
-	<?php endif; ?>
+<?php endif; ?>
 
 
 <div class="art-image">
@@ -326,17 +330,22 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
 	<div class="links">
 		
-
-
 		<a class="link-title" href="<?php echo $mailToUrl ?>">Enquire about work</a>
-
-
+		<div class="share-add">
+			
+			<a class="link-title share-control" >Share</a>
+		
+		</div>
+		
 
 		<?php if($node->field_category['und'][0]['tid'] == '24')  { ?>
 		<a href="<?php echo url('node/' . $artistNode->nid); ?>" class="link-title">View artist profile</a>
 		<?php }else{ ?>
-		<a href="<?php echo url('node/' . $artistNode->nid); ?><?php if($context == 'exhibition' || $context == 'contemporary') {?>/contemporary<? } ?>" class="link-title">View artist profile</a>
+		<a href="<?php echo url('node/' . $artistNode->nid); ?><?php if($context == 'exhibition' || $context == 'contemporary') {?>/contemporary<?php } ?>" class="link-title">View artist profile</a>
 		<?php } ?>
+		
+		
+
 		<?php if($context == 'aboriginal') {?>
 		
 
@@ -348,12 +357,22 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 			 ?>
 			<a href="<?php echo $base_url . '/' . $taxonomy_term_url ?>" class="link-title">Back to Community</a>
 		
-		<?php } ?>
+		<?php } ?>	
 	</div>
-
+	<div class="share-add-wrapper">
+		<div class="share">
+			<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
+		</div>
+	</div>
+	<?php if($user->uid > 0){$list = sentius_getTaxonomy();?> 
+			<div class="favourite">
+				<p>Add this art to folder : <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add" id="buttonAdd" nid="<?php echo arg(1)?>" /><p>
+			</div>
+		<?php }?>
+	
 </div>
 <?php
-
+	
 ?>
 <div class="art-in-situ">
 	<?php
@@ -445,6 +464,7 @@ if(isset($artistNode->nid)){
 	$allExhibitionArtworks = array();
 	$exhibitionWorks = array();
 	$nodeexhibition = array();
+
 	foreach($artworksNidsInExhibition as $exhibitionNids){
 		$exhibitionArtworks = $exhibitionNids->field_field_art_showcase;
 
@@ -456,7 +476,7 @@ if(isset($artistNode->nid)){
 			array_push($exhibitionWorks, $art['raw']['target_id']);
 		}
 	}
-	
+
 	
 	
 	
@@ -522,7 +542,9 @@ if(isset($artistNode->nid)){
 			<?php }
 	}
 }
+
 if($context== 'contemporary'){
+	
 	
 	if(!empty($allExhibitionArtworks)) { 
 		$show = true;
@@ -534,12 +556,9 @@ if($context== 'contemporary'){
 			}
 			
 		}
-		echo $show;
-		if($show == true){
-			
 		
+		if($show == true){
 		?>
-	
 		
 	<div class="exhibition-preview preview-art-container als-container als-small" data-offset="<?php echo $activeIndex ?>">
 		<h3>Exhibition pieces by <a href="<?php echo url('node/' . $exhibitionNid) ?>"><?php echo $artistNode->title ?></a></h3>
@@ -558,5 +577,15 @@ if($context== 'contemporary'){
 	<?php print render($page['footer']); ?>
 </div>
 <div class="clearnew"></div>
+<?php global $user;
+	if($user->uid > 0){
+		$nid = arg(1);
+		$check = _sentius_check_access($nid);
+		if($check){
+			_sentius_insert_access($nid);
+		}
+	}
 
+	
+?>
 <?php print render($page['bottom']); ?>

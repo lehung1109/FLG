@@ -75,8 +75,7 @@ body {
 .text-uppercase{
     text-transform:uppercase;
 }
-.text-bold h2{
-    font-weight:bold;
+.text-bold h2EMAIL font-weight:bold;
 }
 
 .breadcrumb a {
@@ -1494,12 +1493,101 @@ a.reset {
 .page-node-3820 .sharethis-buttons{
 	display:block;
 }
+#block-block-5{
+    float: right;
 
+    height: 50px;
+}
+#block-block-5 a{
+    display: inline-block;
+    text-transform: uppercase;
+    margin-right: 20px;
+}
+
+#views-form-author-block-1 .tabledrag-toggle-weight-wrapper{
+    display: none;
+}
+.page-node-4187 .sharethis-wrapper{
+    display: none;
+}
+.page-node-4187 #page-title{
+    
+
+}
+#block-user-login .description{
+    display: none;
+}
+#block-user-login .form-text,
+#user-pass .form-text{
+    height: 40px;
+    border:1px solid #000;
+    padding: 0px 0px 0px 10px;
+    width: 100%;
+}
+#user-pass{
+    max-width: 300px;
+}
+#user-pass .form-required{
+    display: none;
+}
+#block-user-login label{
+    display: inline-block;
+    width: 100%;
+}
+#block-user-login #edit-submit{
+    width: 170px;
+    display: block;
+    margin: 0 auto;
+    height: 33px;
+    background: #ecebe9;
+    border: none;
+    cursor: pointer;
+}
+#block-user-login .form-required{
+    display: none;
+}
+#block-user-login{
+    max-width: 300px;
+   
+}
+.page-user-password .tabs{
+    display: none;
+}
+
+#block-user-login .item-list{
+
+}
+#user-login-form .item-list .first{
+    display: none;
+}
+#user-login-form .form-item{
+    margin-top: 0px;
+}
+#block-user-login .item-list ul{
+    padding:0px;
+}
+#block-user-login .item-list ul li {
+    list-style: none;
+    list-style-image: none;
+}
+.messages.warning{
+    position: relative;
+    float: left;
+}
+#block-user-login .item-list ul li a{
+       margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
 
 @media screen and (max-width: 1069px) { 
     #page, .region-bottom{
         width: 100%;
         
+    }
+    #block-block-3{
+        margin-left: 0px;
     }
     .footer-main{
         width: 100%;
@@ -1647,6 +1735,906 @@ a.reset {
 
 .node-1140 .field-name-field-right-column .field-label{
 	display:none;
+}
+#block-formblock-user-register,
+#block-block-3{
+    
+    padding: 0px 20px;
+    float: left;
+}
+#block-block-3{
+    width: 620px;
+margin-left: 30px;
+
+}
+#block-formblock-user-register{
+    max-width: 222px;
+}
+#block-block-3 .row{
+    clear: both;
+    width: 100%;
+    float: none;
+}
+#block-block-3 .row .left-content-block{
+    width: 315px;
+
+    float: left;
+}
+#block-block-3 .row .right-content-block{
+    width: 302px;
+    position: relative;
+    float: right;
+}
+#block-block-3 .row .right-content-block img{
+    right: -40px;
+    position: absolute;
+    margin-top: -30px;
+}
+#block-formblock-user-register{
+    width: 35%;
+    padding:20px;
+    border: 1px solid #dcdcdc;
+}
+#block-formblock-user-register .block-title{
+    text-align: center;
+}
+#block-formblock-user-register .description{
+    display: none;
+}
+#block-formblock-user-register .form-text{
+    height: 40px;
+    border:1px solid #000;
+    padding: 0px 0px 0px 10px;
+}
+#block-formblock-user-register label{
+    display: none;
+}
+#block-formblock-user-register #edit-submit{
+    width: 170px;
+    display: block;
+    margin: 0 auto;
+    height: 33px;
+    background: #ecebe9;
+    border: none;
+    cursor: pointer;
+}
+#block-formblock-user-register .form-required{
+    display: none;
+}
+.favourite{
+    clear:both;
+    width: 100%;
+    padding:20px 0px;
+    text-align: right;
+}
+.follow{
+    float: right;
+}
+.favourite a{
+    font-size: 20px;
+}
+.follow a{
+    font-size: 16px;
+}
+.view-my-followed-artists{
+
+}
+.view-my-followed-artists .views-field-nid .image{
+	width: 165px;
+	height: 150px;
+	display: block;
+}
+.view-my-followed-artists .views-field-nid .image a{
+    width:100px;
+    margin:0 auto; 
+}
+.view-my-followed-artists .content-follow h2{
+    margin-top: 0px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #bfbfbf;
+    font-size: 14px;
+
+    height: 28px;
+    display: block;
+    width: auto;
+    margin-top: 10px;
+    line-height: 34px;
+    position: relative;
+    padding-right:25px;
+
+}
+.view-my-followed-artists .content-follow ul {
+    padding: 0px;
+    margin: 0px;
+
+}
+.view-my-followed-artists .content-follow ul li{
+    list-style: none;
+    list-style-image: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.view-my-followed-artists .content-follow ul li a,.view-my-followed-artists .content-follow ul li{
+    text-transform: uppercase;
+    color: #797979;
+
+}
+.view-my-followed-artists .content-follow ul li a.blue{
+    color: #2da6b9;
+}
+.view-my-followed-artists .content-follow ul li a.blue:active{
+    color: #797979;
+}
+.view-my-followed-artists .content-follow ul li a:hover{
+    color: #2da6b9;
+}
+.view-my-followed-artists .views-row{
+    display: inline-block;
+    width:164px;
+    padding: 0px 15px 10px;
+}
+.view-my-followed-artists .views-row:first-child{
+    padding-left: 0px;
+}
+.view-my-followed-artists .views-row:nth-child(5n){
+    padding-right: 0px;
+}
+.view-my-followed-artists .views-row:nth-child(6n){
+    padding-left: 0px;
+}
+#block-views-my-followed-artists-block .block-title,
+#block-views-my-artworks-block .block-title,
+#block-sentius-block-category .block-title,
+#block-sentius-block-archive-noti .block-title
+{
+    margin-bottom: 20px;
+    height:50px;
+    line-height: 50px;
+    padding-left: 20px;
+    background: #ecebe9;
+    color: #5e5e5c;
+    font-weight: normal;
+    cursor: pointer;
+    position: relative;
+    text-transform: uppercase;
+}
+#block-views-my-followed-artists-block .block-title:after,
+#block-views-my-artworks-block .block-title:after,
+#block-sentius-block-category .block-title:after,
+#block-sentius-block-archive-noti .block-title:after{
+    content: "-";
+    position: absolute;
+    right: 20px;
+    top: -4px;
+    color: #000;
+    font-size:43px;
+}
+#block-views-my-followed-artists-block .block-title.addMinus:after,
+#block-views-my-artworks-block .block-title.addMinus:after,
+#block-sentius-block-category .block-title.addMinus:after,
+#block-sentius-block-archive-noti .block-title.addMinus:after{
+    content: "+";
+    right:18px;
+    font-size: 36px;
+    top:0px;
+    font-size: 30px;
+}
+#block-block-4{
+    margin: 20px 0px;
+    display: inline-block;
+    width: 100%;
+}
+#block-block-4 .left{
+    float: left;
+    max-width: 200px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color:  #2da6b9;
+
+}
+#block-block-4 {
+
+}
+#block-block-4 .right{
+     float: right;
+
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    color:  #2da6b9;
+}
+#block-block-4 .right a{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.art-showcase{
+
+}
+.view-my-artworks #dragthis{
+    display: inline-block;
+    padding:0px;
+    margin: 0px;
+}
+.view-my-artworks .views-row{
+    float: left;
+    width: 195px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    height:360px;
+    list-style: none;
+}
+
+.view-my-artworks .views-row:nth-child(3n){
+    margin-right: 0px;
+}
+.view-my-artworks .heart-wrapper{
+    right:10px;
+}
+
+.view-my-artworks .art a{
+    color: black !important;
+}
+.view-my-artworks .art .art-detail{
+    font-size: 12px;
+    position: relative;
+}
+
+.view-my-artworks .view-header{
+    float:left;
+    width: 300px;
+    margin-right: 20px;
+}
+.content-right{    
+    float: right;
+    width: 640px;
+}
+.view-my-artworks .form-text{
+
+    width: 100%;
+
+}
+.view-author {
+    width: 100%;
+}
+#block-views-my-artworks-block .view-author .block-title{
+    display: none !important;
+}
+.view-my-artworks .view-author .views-row{
+    width: 100%;
+    clear: both;
+    float: left;
+width: 100%;
+}
+.view-author .views-row a,
+.view-author .views-row{
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000;
+    position: relative;
+}
+.view-author .views-row .remove{
+    float: right;
+    width: 10%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+.view-author .view-content{
+    width: 100%;
+}
+
+.view-author .views-row a{
+
+}
+.control-og{
+    width: 100%;
+    clear: both;
+}
+.control-og .views-table{
+    width: 100%;
+    clear: both;
+}
+.control-og .views-table td{
+    width: 90%;
+    height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    float: left;
+}
+body .control-og .views-table td a.color{
+    font-size: 14px;
+    color:#000; 
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.control-og{
+    display: none;
+}
+#block-sentius-block-category .form,
+#block-sentius-block-category .block,
+#block-sentius-block-category .control{
+    width: 270px;
+    float: left;
+    margin-bottom: 0px;
+}
+#block-sentius-block-category ,
+#block-views-my-followed-artists-block,
+#block-sentius-block-archive-noti{
+    clear: both;
+    float: left;
+    width: 100%;
+}
+#block-sentius-block-category .form .form-text{
+    width: 260px;
+    height: 40px;
+    border: 1px solid #000;
+    padding: 0px 0px 0px 10px;
+}
+
+.sharethis-custom,.form-sharemail{
+    width: 100%;
+    margin-top: 20px;
+    float: left;
+}
+.form-sharemail {
+
+}
+.form-sharemail .form-item{
+    margin-top: 0px;
+}
+.form-sharemail .form-text{
+    width: 260px;
+    height: 40px;
+    border: 1px solid #000;
+    padding: 0px 0px 0px 10px;
+}
+
+#block-sentius-block-category .form {
+    display: none;
+}
+#block-sentius-block-category .form .form-required{
+    display: none;
+}
+#block-sentius-block-category .content-left{
+    padding:0px 20px 0px 0px;
+    float: left;
+    width: 270px;
+}
+.control p{
+    cursor: pointer;
+    margin: 0px;
+}
+p.newFolder{
+    position: relative;
+    padding-left: 10px;
+}
+p.newFolder:after{
+    content: "+";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    color: #000;
+
+}
+.view-author .views-row{
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.view-author .views-row a{
+    width: 90%;
+    height: 100%;
+    padding-top:20px;
+    padding-bottom: 20px;
+    float: left;
+}
+.view-author .views-row {
+    border-bottom: 1px solid #000;
+}
+
+.view-author .views-row a:hover,.view-author .views-row a.active{
+    color:#2da6b9;
+}
+#block-sentius-block-category .control{
+    margin-top: 20px;
+}
+.view-author .views-row .view-favorites a{
+
+    padding-left: 30px;
+    width: auto;
+}
+
+p.newFolder.addMinus:after{
+    content: "-";
+
+}
+
+.view-my-artworks .art-detail a.title:hover,
+.view-my-artworks .art-detail a{
+    color: #000;
+}
+#user-profile-form #edit-mimemail{
+    display: none;
+}
+
+.sidebar .sharethis-wrapper{
+    float: none;
+}
+.sharethis-wrapper{
+    position: relative;
+    width: 250px;
+    float: left;
+    margin-top: 20px;
+}
+#st-1 .st-btn{
+    max-width: 50px;
+}
+#st-1.st-has-labels .st-btn{
+    min-width: 50px !important;
+}
+.view-my-followed-artists .item-list,.content-right .item-list{
+    width: 100%;
+    display: block;
+    height: 35px;
+}
+.view-my-followed-artists .item-list .pager{
+    float: left;
+    width: 100%;
+}
+.view-my-artworks{
+    max-height: 1130px;
+    overflow-y: auto;
+}
+.heart{
+    position: relative;
+    width: 10px;
+    height: 9px;
+    float: left;
+    cursor: pointer;
+}
+.heart.gray:before,
+.heart.gray:after{
+    background: #bfbfbf;
+}
+.heart:before,
+.heart:after{
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 0;
+    width: 10px;
+    height: 15px;
+    background: #31a6b8;
+    -moz-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    -webkit-transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+    -webkit-transform-origin: 0 100%;
+       -moz-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+         -o-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+}
+.heart:after{
+    left: 0;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+    -webkit-transform-origin: 100% 100%;
+       -moz-transform-origin: 100% 100%;
+        -ms-transform-origin: 100% 100%;
+         -o-transform-origin: 100% 100%;
+            transform-origin :100% 100%;
+}
+
+
+
+.content-follow .flag{
+    position: relative;
+    width: 10px;
+    height: 9px;
+    float: left;
+    cursor: pointer;
+    text-indent: -9999px;    
+}
+
+.content-follow .flag.unflagged:before,
+.content-follow .flag.unflagged:after{
+    background: #bfbfbf;
+}
+.content-follow .flag:before,
+.content-follow .flag:after{
+    position: absolute;
+    content: "";
+    left: 10px;
+    top: 0;
+    width: 10px;
+    height: 15px;
+    background: #31a6b8;
+    -moz-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    -webkit-transform: rotate(-45deg);
+       -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+         -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+    -webkit-transform-origin: 0 100%;
+       -moz-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+         -o-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+}
+.content-follow .flag:after{
+    left: 0;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+         -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+    -webkit-transform-origin: 100% 100%;
+       -moz-transform-origin: 100% 100%;
+        -ms-transform-origin: 100% 100%;
+         -o-transform-origin: 100% 100%;
+            transform-origin :100% 100%;
+}
+
+.heart-wrapper{
+    position: absolute;
+    right: 1px;
+    top: 1px;
+}
+.content-follow .heart-wrapper{
+  top:10px;  
+}
+
+.view-author .views-row .view-favorites .heart-wrapper{
+   right: auto;
+   left: 0px;
+   top: 22px; 
+    
+}
+.view-my-artworks .title,
+.view-right .title{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    padding-top: 20px;
+}
+
+
+#block-sentius-block-archive-noti{
+    clear: both;
+    width: 100%;
+
+    float: left;
+
+}
+.page-share .sharethis-wrapper{
+    display: none;
+}
+.page-share .content-right{
+    width: 100%;
+    float: left;
+}
+.page-share .view-my-artworks .views-row:nth-child(3n){
+    margin-right: 10px;
+}
+.page-share .view-my-artworks .views-row:nth-child(4n){
+    margin-right: 0px;
+}
+.form-submit{
+
+    width: 170px;
+    display: block;
+
+    height: 33px;
+    background: #ecebe9;
+    border: none;
+    cursor: pointer;
+}
+.views-form .form-submit{
+    margin-top: 20px;
+}
+.jconfirm .jconfirm-box.jconfirm-type-green{
+	max-width: 280px;
+}
+.jconfirm.jconfirm-white .jconfirm-box, .jconfirm.jconfirm-light .jconfirm-box{
+	max-width: 280px;
+}
+#buttonAdd{
+        width: auto;
+    display: inline-block;
+    height: 22px;
+    background: #ecebe9;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.form-item{
+    position: relative;
+
+}
+
+/* Tooltip text */
+.form-item .tooltip  {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.form-item:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+.flag-waiting .flag-throbber{
+    background: none;
+    padding: 0;
+    display: none !important; 
+}
+.flag-waiting a{
+    opacity: 1;
+}
+
+#user-profile-form label{
+    width: 100%;
+    clear: both;
+    display: block;
+}
+.password-strength{
+    display: none;
+}
+div.password-confirm{
+   position: absolute;
+   right: 0px;
+
+}
+div.password-suggestions{
+    display: none;
+}
+#user-profile-form .form-item{
+    position: relative;
+}
+.form-item .description{
+    text-transform: lowercase;
+}
+#edit-subscriptions legend{
+    display: none;
+}
+#edit-subscriptions{
+    border: none;
+    padding: 0px;
+margin-bottom: 20px;
+}
+#user-profile-form #edit-subscriptions label{
+    display: inline-block;
+    padding-left: 20px;
+}
+#user-profile-form #edit-subscriptions .form-checkbox{
+    position: absolute;
+    left: -5px;
+    z-index: 99;
+}
+
+.form-sharemail{
+    display: none;
+
+}
+#sharemail{
+
+    background-size: contain;
+    width: 50px;
+    height: 22px;
+    cursor: pointer;
+    display: inline-block;
+}
+#pdf{
+    color: #000;
+    background-size: contain;
+    width: 50px;
+    height: 24px;
+    cursor: pointer;
+    display: inline-block;
+}
+.share-add{
+    float: right;
+}
+.share-add-wrapper .share{
+    display: none;
+}
+.share-add a{
+    color: #30A5B9;
+    cursor: pointer;
+}
+.share-add-wrapper{
+    float: right;
+    max-width: 300px;
+    clear: both;
+}
+
+#edit-field-access{
+	display: none;
+}
+.node-news .node-title{
+    display: none;
+}
+
+@media print {
+ 
+ 
+ .content-right,.view-my-artworks{
+   height: auto !important;
+   overflow-y:auto !important;
+   max-height:  2000px !important;
+ }
+.content-right{
+    width: 100%  !important;
+ }
+      /*
+      //HERE I NEED A RULE TO HIDE
+      // ONLY HREF ATTRIBUTE BUT NOT CONTENT OF A TAG
+      //BUT IN THIS WAY THEY HIDE THE WHOLE TAG OF COURSE
+      #section_to_print a {
+        display:none;
+      } 
+     */
+     
+    a{
+        color:#f00;
+    }
+    a:link:after, a:visited:after {
+      content: "" !important;
+    }
+      @page { size: landscape; }
+
+
+}
+@media screen and (max-width: 1199px) {
+    #block-block-3{
+        margin-left: 0px;
+    }
+
+    .share-add{
+        float: none;
+        width: 100%;
+    }
+    .share{
+        float: left;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .sharethis-wrapper{
+        margin-top: 0px;
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+@media screen and (max-width: 991px) {
+    #block-user-login{
+        margin:0 auto;
+    }
+    #user-login-form input,
+    #user-pass input{
+        max-width: 95%;
+    }
+
+    .view-my-followed-artists .views-row{
+        width: 49%;
+        margin-bottom: 20px;
+        padding: 0px;
+    }
+
+
+    #block-sentius-block-category .content-wrapper .content-left,
+    #block-sentius-block-category .content-wrapper .content-right,
+    #block-sentius-block-category .content-wrapper .content-left .block,
+    #block-sentius-block-category .content-wrapper .content-left .control,
+    #block-sentius-block-category .content-wrapper .content-left .form,
+    #block-sentius-block-category .content-wrapper .content-left .sharethis-wrapper{
+        width:100%;
+        height:auto;
+        clear: both;
+    }
+    #block-sentius-block-category .content-wrapper .content-right{
+        margin-top: 20px;
+    }
+    .view-my-artworks .views-row{
+        width: 50%;
+        padding: 0px;
+         margin: 0px;
+        margin-bottom: 10px;
+    }
+    #block-formblock-user-register , #block-block-3{
+        width: 100%;
+        margin: 0px;
+        padding: 20px;
+    }
+    #block-formblock-user-register,#user-pass{
+        margin: 0 auto;
+        width: auto;
+        float: none;
+    }
+    #block-block-3{
+        padding: 0px;
+        margin-top: 20px;
+    }
+
+    #block-block-3 .row .left-content-block,
+    #block-block-3 .row .right-content-block{
+        width: 100%;
+        clear: none;
+        float: none;
+    }
+    #block-block-3 .row .right-content-block img{
+        position: relative;
+        right: 0px;
+        left: 0px;
+        margin: 0px;
+    }
+    #user-register-form {
+        margin-bottom: 20px;
+    }
+
+
+
+}
+@media screen and (max-width: 480px) {
+    .view-my-followed-artists .views-row{
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 0px;
+    }
+    .view-my-artworks .views-row{
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        margin-bottom: 10px;
+    }
 }
 @media screen and (min-width: 768px) {
     .page-node-3820 #header, 

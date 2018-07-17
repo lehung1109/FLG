@@ -1,0 +1,8 @@
+.content-right,.view-my-artworks{
+   height: auto !important;
+   overflow-y:auto !important;
+   max-height:  2000px !important;
+ }
+.content-right{
+ 	width: 100%  !important;
+ }
