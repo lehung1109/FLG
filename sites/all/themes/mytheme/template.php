@@ -179,20 +179,27 @@ function mytheme_submit_handle_form_og($form, &$form_state) {
 }
 function mytheme_submit_handle_form_user_pass($form, &$form_state) {
     
-   $form_state['redirect'] =  "/member-login";
+   //$form_state['redirect'] =  "/member-login";
     // do code here $form_state['values'] etc...
 }
 function mytheme_form_alter(&$form, $form_state, $form_id) {
+
+	if($form_id == 'user_login'){
+		if(current_path() == 'user'){
+			drupal_goto('/member-login');
+		}
+	}
 	if($form_id == 'user_profile_form'){
 		$form['text']= array(
 		  '#markup' => '<p><a href="/user/password">Request new password</a></p>',
 		  '#weight' => -100
 		);
-		unset($form['account']['pass']);
+		//unset($form['account']['pass']);
 		
 	}
 	if($form_id == 'user_pass'){
-		$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_user_pass';
+
+		//$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_user_pass';
 	}
 	if($form_id == 'views_form_author_block_1'){
 		$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_og';
@@ -529,17 +536,10 @@ function renderArtList($nids, $individualGallery = false, $context = '', $minLim
 				<?php
 					$count = 0;
 				foreach($nids as $row_nid) {
-					
-					
 					$searchNode = node_load($row_nid['target_id']);
-					
-					
-					
-					
 					$activeClass = ($count == 0) ? ' active' : '';
 					$itemUrl = url('node/'.$row_nid['target_id']) ;
 					$imageRef = $searchNode->field_art_image['und'][0]['uri'];
-
 					$imageUrl = image_style_url('art-thumbnail-slider',$imageRef);
 					?>
 					<a href="<?php echo $itemUrl  ?>" class="search-item<?php echo $activeClass ?>">

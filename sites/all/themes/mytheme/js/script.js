@@ -503,7 +503,7 @@ function loadTaxo(){
 							(jQuery).get( "/sentiusajax",{tid:tid,nid:nid,action:'addFavourites'}, function( data ) {
 
 								if(data == 'Success'){
-									alert('Artwork has been added into folder '+folder);
+									//alert('Artwork has been added into folder '+folder);
 								}else{
 									alert('Artwork is already added: '+folder);
 								}
@@ -529,7 +529,7 @@ function loadTaxo(){
     (jQuery)('.view-my-artworks .heart').click(function(){
 
     	var nid = (jQuery)(this).attr('nid');
-
+    	var tid = (jQuery)(this).attr('tid');
     	(jQuery).confirm({
 		    title: 'Confirm Remove',
 		    content: "Are you sure you'd like to remove the Artwork?",
@@ -541,7 +541,7 @@ function loadTaxo(){
 		            keys: ['enter'],
 		            action: function(){
 					  
-							(jQuery).get( "/sentiusajax",{nid:nid,action:'removeFavourites'}, function( data ) {
+							(jQuery).get( "/sentiusajax",{nid:nid,tid:tid,action:'removeFavourites'}, function( data ) {
     		
 									if(data == 'Success'){
 										//alert('Artwork has been remove');
@@ -581,7 +581,7 @@ function loadTaxo(){
     			(jQuery)("#mailsend").removeClass('error');
     			var htmlSend = (jQuery)('.view-my-artworks').html();
     			(jQuery).get( "/sentiusajax",{tid:tid,email:email,action:'sendmail'}, function( data ) {
-
+    				//alert(data);
 					if(data == 'success'){
 						(jQuery)('.result-send').html('<p>Email was sent.</p>');
 						(jQuery)('#mailsend').val('');
@@ -654,6 +654,7 @@ function loadTaxo(){
 																				if((jQuery)(this).attr('tid') == tid){
 																					(jQuery)(this).closest('.views-row').remove();
 																					(jQuery)('.art-'+tid).remove();
+																					location.reload();
 																				}
 																			});
 																		}else{
@@ -688,6 +689,7 @@ function loadTaxo(){
 													if((jQuery)(this).attr('tid') == tid){
 														(jQuery)(this).closest('.views-row').remove();
 														(jQuery)('.art-'+tid).remove();
+														location.reload();
 													}
 												});
 											}else{

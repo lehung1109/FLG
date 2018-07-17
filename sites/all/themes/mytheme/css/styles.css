@@ -75,8 +75,7 @@ body {
 .text-uppercase{
     text-transform:uppercase;
 }
-.text-bold h2{
-    font-weight:bold;
+.text-bold h2EMAIL font-weight:bold;
 }
 
 .breadcrumb a {
@@ -1811,16 +1810,23 @@ margin-left: 30px;
 .follow{
     float: right;
 }
-.favourite a,.follow a{
+.favourite a{
     font-size: 20px;
+}
+.follow a{
+    font-size: 16px;
 }
 .view-my-followed-artists{
 
 }
 .view-my-followed-artists .views-field-nid .image{
 	width: 165px;
-	height: 200px;
+	height: 150px;
 	display: block;
+}
+.view-my-followed-artists .views-field-nid .image a{
+    width:100px;
+    margin:0 auto; 
 }
 .view-my-followed-artists .content-follow h2{
     margin-top: 0px;
@@ -2183,7 +2189,7 @@ p.newFolder.addMinus:after{
     width: 100%;
 }
 .view-my-artworks{
-    max-height: 500px;
+    max-height: 1130px;
     overflow-y: auto;
 }
 .heart{
@@ -2459,21 +2465,20 @@ margin-bottom: 20px;
 
 }
 #sharemail{
-    background: url('images/mail.png');
+
     background-size: contain;
-    width: 22px;
+    width: 50px;
     height: 22px;
     cursor: pointer;
     display: inline-block;
 }
 #pdf{
-    background: url('images/print.png');
+    color: #000;
     background-size: contain;
-    width: 24px;
+    width: 50px;
     height: 24px;
     cursor: pointer;
     display: inline-block;
-    text-indent: -9999px;
 }
 .share-add{
     float: right;
@@ -2493,6 +2498,9 @@ margin-bottom: 20px;
 
 #edit-field-access{
 	display: none;
+}
+.node-news .node-title{
+    display: none;
 }
 
 @media print {

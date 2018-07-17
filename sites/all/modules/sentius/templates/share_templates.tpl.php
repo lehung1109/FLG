@@ -1,5 +1,8 @@
 <?php 
-	$name = $data['name']?>
+	$name = $data['name'];
+global $base_url;
+
+	?>
 <div class="content-right view-right art-<?php echo $tid?>">
 		<div class="title">
 			<?php echo $name ?>
@@ -31,27 +34,27 @@
 				 $url = '#';
 			}?>
 
-			<?php if($imageUrl !=''){?>
-			<div class="views-row favorites-<?php echo $artNode->nid?>">
-				<div class="art <?php echo $artNodeId['target_id'];?> <?php echo count($artNode)?>">
+				<?php if($imageUrl !=''){?>
+				<div class="views-row favorites-<?php echo $artNode->nid?>">
+					<div class="art <?php echo $artNodeId['target_id'];?> <?php echo count($artNode)?>">
+							
+						<a href="<?php echo $base_url?><?php echo $url?>"><img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>"></a>
 						
-							<img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>">
-					
-					<div class='art-detail'>
-						<?php if($user->uid == $_GET['uid']){?> <div class="heart-wrapper"><div class="heart <?php echo $classGray?>" tid="<?php echo $_GET['tid']?>"  nid="<?php echo $artNode->nid?>" title="Click to remove"></div></div><?php }?>
-						<?php $artist = node_load($artNode->field_artist['und'][0]['nid']); ?>
-							<span class="artist-span" ><?php echo $artist->title; ?></span><br />
-							<?php echo $artNode->title; ?>
-							<?php $break_separated = implode("<br /> ", $detail);?>
-								<?php echo $break_separated ?>
-						<?php if(count($artNode->field_sale_status)){
-							if($artNode->field_sale_status['und'][0]['tid'] == '27'){?>
-								<?php if($clear == ''){?><br><span class='sold'>Sold</span> <?php }?>
-						<?php }
-					}?>
+						<div class='art-detail'>
+							<?php if($user->uid == $_GET['uid']){?> <div class="heart-wrapper"><div class="heart <?php echo $classGray?>" tid="<?php echo $_GET['tid']?>"  nid="<?php echo $artNode->nid?>" title="Click to remove"></div></div><?php }?>
+							<?php $artist = node_load($artNode->field_artist['und'][0]['nid']); ?>
+								<span class="artist-span" ><?php echo $artist->title; ?></span><br />
+								<a href="<?php echo $base_url?><?php echo $url?>"><?php echo $artNode->title; ?></a>
+								<?php $break_separated = implode("<br /> ", $detail);?>
+									<?php echo $break_separated ?>
+							<?php if(count($artNode->field_sale_status)){
+								if($artNode->field_sale_status['und'][0]['tid'] == '27'){?>
+									<?php if($clear == ''){?><br><span class='sold'>Sold</span> <?php }?>
+							<?php }
+						}?>
+						</div>
 					</div>
 				</div>
-			</div>
+				<?php }?>
 			<?php }?>
-			<?php }?>
-		<?php }?>
+		<?php } ?>

@@ -9,11 +9,7 @@
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta property="og:url"           content="http://flg.com.au/" />
-  <meta property="og:type"          content="website" />
-  <meta property="og:title"         content="FLG" />
-  <meta property="og:description"   content="FLG is a contemporary art gallery located in the heart of Melbourne’s vibrant laneway precinct. " />
-  <meta property="og:image"         content="https://flg.com.au/sites/default/files/logo%20only%20banner.gif" />
+  
 	<title><?php print $head_title; ?></title>
 	<?php print $styles; ?>
 

@@ -67,10 +67,10 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 			?>
 			<h1><a href="/search"?>SEARCH ART</a> - <span class="title"><?php echo $node->title ?></span> <?php echo $year ?> by <a href="<?php echo url('node/' . $artistNode->nid); ?>/contemporary"><?php echo $artistNode->title ?></a></h1>
 		</div>
-		<div class="favourite">
-			
-			<?php print flag_create_link('favourite_art',$_GET['nodeId']); ?>
-		</div>
+
+		
+
+
 		<div class="controls">
 			<?php
 				$prevClass = ($currentKey == 0) ? ' class="disabled" ' : '';
@@ -126,6 +126,11 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 
 			<div class="search-cta">
 				<a href="<?php echo $mailToUrl ?>">Enquire about this artwork</a>
+				<div class="share-add">
+			
+			<a class="link-title share-control" >Share</a>
+		
+		</div>
 				<?php if(!empty($associatedExhibitionUrl)) { ?>
 				<a href="<?php echo $associatedExhibitionUrl ?>">View Current Exhibition</a>
 				<?php } ?>
@@ -139,6 +144,16 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 					<?php }	?>
 
 			</div>
+			<div class="share-add-wrapper">
+				<div class="share">
+					<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
+				</div>
+			</div>
+			<?php if($user->uid > 0){$list = sentius_getTaxonomy();?> 
+			<div class="favourite">
+				<p>Add this art to folder : <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add" id="buttonAdd" nid="<?php echo $_GET['nodeId']?>" /><p>
+			</div>
+		<?php }?>
 
 		</div>
 

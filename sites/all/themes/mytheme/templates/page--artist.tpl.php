@@ -273,5 +273,21 @@ if($category == 19) {
 <div class="footer-main">
 	<?php print render($page['footer']); ?>
 </div>
+
+<?php global $user;
+	if($user->uid > 0){
+
+		$nid = arg(1);
+
+		$check = _sentius_check_access($nid);
+		
+		if($check){
+
+			_sentius_insert_access($nid);
+		}
+	}
+
+	
+?>
 <div class="clearnew"></div>
 <?php print render($page['bottom']); ?>

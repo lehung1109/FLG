@@ -40,7 +40,16 @@
 		<?php if($user->uid == $_GET['uid']){?> 
 		<div class="control">
 			<p class="newFolder">New Folder</p>
-			<p class="organise">Organise Folders</p>
+			<?php 
+				$viewName = 'author';
+				$view = views_get_view($viewName);
+				$view->execute();
+				$reviewCount = count($view->result);
+				if($reviewCount > 1 ){?>
+					<p class="organise">Organise Folders</p>
+				<?php }?>
+			
+
 		</div>
 		<div class="form">
 			<?php 
@@ -61,12 +70,12 @@
 
 		<div class="sharethis-custom"> 
 			<p>Share Folder</p>
-			<a id="sharemail">&nbsp;</a>
+			<a id="sharemail">EMAIL</a>
 			<?php
 				$options = array(
 				  'target_id' => 'my_printable_div',
 				  'button_id' => 'pdf',
-				  'value' => t('Print'),
+				  'value' => t('PRINT'),
 				  'type' => 'link',
 
 				  'custom_css' => drupal_get_path('module','sentius').'/css/print.css',
@@ -137,7 +146,7 @@
 							<img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>">
 						</a>
 					<div class='art-detail'>
-						<?php if($user->uid == $_GET['uid']){?> <div class="heart-wrapper"><div class="heart <?php echo $classGray?>" tid="<?php echo $_GET['tid']?>"  nid="<?php echo $artNode->nid?>" title="Click to remove"></div></div><?php }?>
+						<?php if($user->uid == $_GET['uid']){?> <div class="heart-wrapper"><div class="heart <?php echo $classGray?>" tid="<?php echo $tid ?>"  nid="<?php echo $artNode->nid?>" title="Click to remove"></div></div><?php }?>
 						<?php $artist = node_load($artNode->field_artist['und'][0]['nid']); ?>
 							<span class="artist-span" ><?php echo $artist->title; ?></span><br />
 							<a class='title' href='<?php echo $url; ?>/exhibition'><?php echo $artNode->title; ?></a>

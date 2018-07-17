@@ -464,6 +464,7 @@ if(isset($artistNode->nid)){
 	$allExhibitionArtworks = array();
 	$exhibitionWorks = array();
 	$nodeexhibition = array();
+
 	foreach($artworksNidsInExhibition as $exhibitionNids){
 		$exhibitionArtworks = $exhibitionNids->field_field_art_showcase;
 
@@ -475,7 +476,7 @@ if(isset($artistNode->nid)){
 			array_push($exhibitionWorks, $art['raw']['target_id']);
 		}
 	}
-	
+
 	
 	
 	
@@ -544,6 +545,7 @@ if(isset($artistNode->nid)){
 
 if($context== 'contemporary'){
 	
+	
 	if(!empty($allExhibitionArtworks)) { 
 		$show = true;
 		if(count($nodeexhibition)>0){
@@ -554,12 +556,9 @@ if($context== 'contemporary'){
 			}
 			
 		}
-		echo $show;
-		if($show == true){
-			
 		
+		if($show == true){
 		?>
-	
 		
 	<div class="exhibition-preview preview-art-container als-container als-small" data-offset="<?php echo $activeIndex ?>">
 		<h3>Exhibition pieces by <a href="<?php echo url('node/' . $exhibitionNid) ?>"><?php echo $artistNode->title ?></a></h3>
