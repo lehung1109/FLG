@@ -1809,12 +1809,28 @@ margin-left: 30px;
 }
 .follow{
     float: right;
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: normal;
+}
+.right-follow a{
+    font-size: 22px;
+}
+.right-follow{
+    clear: both;
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .favourite a{
     font-size: 20px;
 }
 .follow a{
     font-size: 16px;
+}
+.right-follow .follow a{
+    font-size: 22px;
 }
 .view-my-followed-artists{
 

@@ -20,7 +20,7 @@
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 	<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5aea85a5a9f6a00011d0350f&product=inline-share-buttons"></script>
-	<?php if($_SERVER['HTTP_HOST'] === 'flg.com.au'){
+	<?php if($_SERVER['HTTP_HOST'] === 'www.flg.com.au'){
      echo "
           <script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -29,7 +29,7 @@
 		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 		  ga('create', 'UA-55712619-1', 'auto');
-		  ga('send', 'pageview');
+		  ga('send', 'pageview'); 
 
 		</script>
      ";
@@ -37,8 +37,23 @@
 
 <script src="https://use.typekit.net/wca4amy.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
 </head>
-<body class="<?php print $classes; ?>" <?php print $attributes;?>>
+<body class="<?php print $classes; ?>" <?php if(arg(1) == '4415'){?>onunload="" <?php }?> <?php print $attributes;?>>
+<?php if(arg(1) == '4415'){?>
+	<script type="text/javascript">
+		window.onpageshow = function (event) {
+	        if (event.persisted) {
+	            window.location.reload();
+	        }
+	    };
+	    if(performance.navigation.type == 2){
+		   location.reload(true);
+		}
+
+	</script>
+
+<?php }?>
 	<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

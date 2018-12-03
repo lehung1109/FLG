@@ -219,6 +219,20 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
 	<?php } ?>
 </div>
+<div class="right-follow">
+				<?php 
+				
+				if(count($node->field_artist['und'])) {
+
+						$follow = $node->field_artist['und'][0]['nid'];
+					
+					}
+					?>	
+					<div class="follow">
+					
+						<?php print flag_create_link('artist',$follow); ?>
+					</div>
+			</div>
 <?php global $user;?>
 
 <div class="controls">
@@ -577,6 +591,7 @@ if($context== 'contemporary'){
 	<?php print render($page['footer']); ?>
 </div>
 <div class="clearnew"></div>
+
 <?php global $user;
 	if($user->uid > 0){
 		$nid = arg(1);

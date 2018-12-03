@@ -6,20 +6,11 @@
  * Complete documentation for this file is available online.
  * @see https://drupal.org/node/1728148
  */
- global $user;
- if($user->uid > 0){
-  $path = current_path();
-  if (strpos($path,'edit') !== false) {
-     
-  }else if(strpos($path,'password') !== false){
-
-  }else{
-    $options = array('query' => array('uid' => $user->uid));
-    drupal_goto('/node/4415',$options);
-  }
-    
- }
-
+global $user;
+if($user->uid > 0 ){
+  $options = array('query' => array('uid' => $user->uid));
+  drupal_goto('/dashboard',$options);
+}
 ?>
 
 <div id="page">
@@ -108,37 +99,44 @@
 
 
 
-	  if($user->uid == 0){  ?>
+	  if($segments[1] == 'communities' && isset($segments[2])){ ?>
+
+		  <h1 class="page__title title" id="page-title"><a href="/aboriginal"><?php print $title; ?></a> <?php echo $segments[2] ?></h1>
+
+	  <?php }else{ ?>
 		  <h1 class="page__title title" id="page-title"><?php print $title; ?></h1>
 	  <?php } ?>
 
 
       <?php endif; ?>
-
       <?php print render($title_suffix); ?>
 
 
+	  <?php
+	  // Render the sidebars to see if there's anything in them.
+	  $sidebar_first  = render($page['sidebar_first']);
+	  $sidebar_second = render($page['sidebar_second']);
+	  ?>
+
+	  <?php if ($sidebar_first || $sidebar_second): ?>
+	  <aside class="sidebars">
+		  <?php print $sidebar_first; ?>
+		  <?php print $sidebar_second; ?>
+	  </aside>
+	  <?php endif; ?>
 
 
 	  <div id="content" class="column" role="main">
       <?php print render($page['highlighted']); ?>
       <?php //print $breadcrumb; ?>
       <a id="main-content"></a>
-    
-      <?php //print $messages; ?>
+      
+      <?php print $messages; ?>
       <?php print render($tabs); ?>
-      <?php //print render($page['help']); ?>
-      <?php
-     
-      if($user->uid > 0){
-        $block = block_load('block', '4');
-        $block = _block_render_blocks(array($block));
-        $block = _block_get_renderable_array($block);
-        $output = drupal_render($block);
-        print $output;
-      }
-        
-      ?>
+      <?php print render($page['help']); ?>
+      <?php if ($action_links): ?>
+        <ul class="action-links"><?php print render($action_links); ?></ul>
+      <?php endif; ?>
       <?php print render($page['content']); ?>
       <?php print $feed_icons; ?>
     </div>

@@ -1,0 +1,15 @@
+name = update website flg
+description = update website flg
+core = 7.x
+package = Features
+version = 7.x-1.0
+dependencies[] = features
+dependencies[] = flag
+dependencies[] = taxonomy
+dependencies[] = text
+features[features_api][] = api:2
+features[field_base][] = field_author
+features[field_instance][] = taxonomy_term-tags_artwork-field_author
+features[flag][] = artist
+features[flag][] = favourite_art
+features[taxonomy][] = tags_artwork

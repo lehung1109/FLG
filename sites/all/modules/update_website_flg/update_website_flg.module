@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the update website flg feature.
+ */
+
+include_once 'update_website_flg.features.inc';
