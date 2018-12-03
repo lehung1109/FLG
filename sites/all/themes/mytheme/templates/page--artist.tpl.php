@@ -108,11 +108,14 @@ if($category == 19) {
 				
 				<div class="description">
 					<?php
+
 					$description = $node->field_about_the_artist['und'][0]['value'];
 
 					echo $description;
 
 					$cvLink = file_create_url($node->field_cv_resume['und'][0]['uri']);
+
+					
 					?>
 					
 

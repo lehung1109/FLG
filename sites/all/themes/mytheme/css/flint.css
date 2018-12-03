@@ -24,6 +24,7 @@
 .controls a {
   font-size: 30px;
   margin: 0 60px;
+  display: inline-block;
 }
 .controls a.disabled {
   pointer-events: none;
@@ -109,11 +110,10 @@
   /*float: none;*/
   clear: both;
   padding: 0;
+  float: left;
 }
 #views-exposed-form-better-search-search-block #edit-art-price-wrapper {
-  border-top: 1px solid #F5F2F2;
-  margin-top: 5px;
-  padding-top: 5px;
+ 
 }
 #views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-medium'],
 #views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-genre'],

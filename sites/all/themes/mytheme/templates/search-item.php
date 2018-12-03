@@ -70,7 +70,20 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 
 		
 
+<div class="right-follow">
+				<?php 
+				
+				if(count($node->field_artist['und'])) {
 
+						$follow = $node->field_artist['und'][0]['nid'];
+					
+					}
+					?>	
+					<div class="follow">
+					
+						<?php print flag_create_link('artist',$follow); ?>
+					</div>
+			</div>
 		<div class="controls">
 			<?php
 				$prevClass = ($currentKey == 0) ? ' class="disabled" ' : '';

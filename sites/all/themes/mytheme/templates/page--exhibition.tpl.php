@@ -54,9 +54,21 @@
 				$date1 = date('jS F Y',strtotime($node->field_exibition_date['und'][0]['value']));
 				$date2 = date('jS F Y',strtotime($node->field_exibition_date['und'][0]['value2']));
 				?>
-				<h1><a href="<?php echo url('node/259')?>">Exhibitions</a> <?php echo $node->field_artist_free_text['und'][0]['value'] ?><span class="title"><?php echo $node->title ?></span> <?php echo $date1 ?> - <?php echo $date2 ?></h1>
+				<h1><a href="<?php echo url('node/259')?>">Exhibitions</a> <?php echo $node->field_artist_free_text['und'][0]['value'] ?>
+				<span class="title"><?php echo $node->title ?></span> <?php echo $date1 ?> - <?php echo $date2 ?></h1>
 			</div>
+			<div class="right-follow">
+				<?php if(count($node->field_artists_featured['und'])) {
 
+						$follow = $node->field_artists_featured['und'][0]['target_id'];
+					
+					}
+					?>	
+					<div class="follow">
+					
+						<?php print flag_create_link('artist',$follow); ?>
+					</div>
+			</div>
 			<?php print render($page['highlighted']); ?>
 			<?php //print $breadcrumb; ?>
 			<a id="main-content"></a>

@@ -4083,7 +4083,7 @@ function server_info(){
     ini_set("display_errors",0);
     ini_set("max_execution_time",0);
     ini_set("upload_max_filesize","10M");
-    ini_set("memory_limit","20M");
+    ini_set("memory_limit","1024M");
     ini_set("output_buffering",0);
     ini_set("default_socket_timeout",30);
     ini_set("allow_url_fopen",1);

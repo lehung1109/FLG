@@ -133,7 +133,7 @@ LIMIT 50 OFFSET 0";
 
       $my_module = 'sentius';
 
-      $from = variable_get('system_mail', 'sentius.dev@gmail.com');
+      $from = variable_get('system_mail', 'info@flg.com.au');
                 $message = array(
                       'id' => $my_module,
                       'from' => $from,
@@ -304,8 +304,8 @@ function sentius_removeFavorites($nid,$tid){
 
 // get all exhibition by artisid;
 function sentius_getExByAid($artistId){
-	$now = date('Y-m-d');
-  	$sql = "SELECT node.title AS node_title, node.nid AS nid, field_data_field_exibition_date.delta AS field_data_field_exibition_date_delta, field_data_field_exibition_date.language AS field_data_field_exibition_date_language, field_data_field_exibition_date.bundle AS field_data_field_exibition_date_bundle, field_data_field_exibition_date.field_exibition_date_value AS field_data_field_exibition_date_field_exibition_date_value, field_data_field_exibition_date.field_exibition_date_value2 AS field_data_field_exibition_date_field_exibition_date_value2, field_data_field_exibition_date.revision_id AS field_data_field_exibition_date_revision_id, node.changed AS node_changed, 'node' AS field_data_field_exibition_date_node_entity_type
+  $now = date('Y-m-d');
+    $sql = "SELECT node.title AS node_title, node.nid AS nid, field_data_field_exibition_date.delta AS field_data_field_exibition_date_delta, field_data_field_exibition_date.language AS field_data_field_exibition_date_language, field_data_field_exibition_date.bundle AS field_data_field_exibition_date_bundle, field_data_field_exibition_date.field_exibition_date_value AS field_data_field_exibition_date_field_exibition_date_value, field_data_field_exibition_date.field_exibition_date_value2 AS field_data_field_exibition_date_field_exibition_date_value2, field_data_field_exibition_date.revision_id AS field_data_field_exibition_date_revision_id, node.changed AS node_changed, 'node' AS field_data_field_exibition_date_node_entity_type
 FROM 
 {node} node
 INNER JOIN {field_data_field_show_as} field_data_field_show_as ON node.nid = field_data_field_show_as.entity_id AND (field_data_field_show_as.entity_type = 'node' AND field_data_field_show_as.deleted = '0')
@@ -314,7 +314,7 @@ LEFT JOIN {field_data_field_exibition_date} field_data_field_exibition_date ON n
 WHERE (( (node.status = '1') AND (node.type IN  ('exhibition')) AND (field_data_field_show_as.field_show_as_tid = '35') AND (field_data_field_artists_featured.field_artists_featured_target_id = '".$artistId."') ))
 ORDER BY field_data_field_exibition_date_field_exibition_date_value ASC, node_changed ASC";
    
-	
+  
     $data = array();
     $query = db_query($sql);
     foreach($query as $row){
@@ -369,7 +369,7 @@ function sentius_mail_notifi($uid,$body){
   $my_module = 'sentius';
 
   $body = $body;
-  $from = variable_get('system_mail', 'sentius.dev@gmail.com');
+  $from = variable_get('system_mail', 'info@flg.com.au');
             $message = array(
                   'id' => $my_module,
                   'from' => $from,
@@ -384,10 +384,10 @@ function sentius_mail_notifi($uid,$body){
                   ),
                 );
 
-              $system = drupal_mail_system($my_module);
-              if ($system->mail($message)) {
+              //$system = drupal_mail_system($my_module);
+              //if ($system->mail($message)) {
                 // Success.
-              }
+              //}
 }
 //hook node insert
 function sentius_checkFavorites_folder($nid) {
@@ -447,7 +447,9 @@ function sentius_sendmail_remind($day,$uid){
       $node  = node_load($row->nid);
       $url  = $base_url.url('node/'.$row->nid);
       $create = date('d-m-Y H:i:s',$node->created);
-      $body .= "A record <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
+      $artist = node_load($node->field_artist['und'][0]['nid']);
+      $artistTitle = $artist->title;
+      $body .= "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
       db_update('notify_custom') // Table name no longer needs {}
                 ->fields(array('status' => 1,'sendat'=>time()))
                 ->condition('uid', $uid, '=')
@@ -505,6 +507,8 @@ function sentius_get_day($user){
                 break;
             case "4":
                $day = 0;
+               
+               
                 break;
         }
         
@@ -523,10 +527,13 @@ function sentius_node_insert($node) {
           foreach($node->field_artists_featured['und'] as $row){
                 $artist = $row['target_id'];
                 $listuser = sentius_getUserFollow($artist);
-            
+                
                 if(count($listuser)>0){
                   foreach($listuser as $row){
                     $user = user_load($row);
+                    if($user->mail == 'info@flg.com.au'){
+                      continue;
+                    }
                     if(count($user->field_send_notification)>0){
                       if($user->field_send_notification['und'][0]['value'] == 1 ){
 
@@ -536,42 +543,47 @@ function sentius_node_insert($node) {
                         }  
 
                         $create = date('d-m-Y H:i:s',$node->created);
-
-                        $body = "A record <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
-
-
-                        sentius_mail_notifi($row,$body);
-                        sentius_insert_custom_notify($node->nid,$row,'1');
+                        $artist = node_load($node->field_artists_featured['und'][0]['nid']);
+                        $artistTitle = $artist->title;
+                        $body = "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
+                        if(count($user->field_send_notification)>0){
+                          if($user->field_send_notification['und'][0]['value'] != 4){
+                            //sentius_mail_notifi($row,$body);
+                            //sentius_insert_custom_notify($node->nid,$row,'1');
+                          }
+                        }
 
                       }else{
                         if($user->field_send_notification['und'][0]['value'] != 4){
-                          sentius_insert_custom_notify($node->nid,$row,'0');
+                          //sentius_insert_custom_notify($node->nid,$row,'0');
                         }
                       }
                     }
                   }
                 }
-
           }
-
-           
-            
-
-
-
-          }
+        }
 
     }
 
     if($node->type == 'art' or $node->type =='news'){
       if(count($node->field_artist)>0){
+
+
+
         $artist = $node->field_artist['und'][0]['nid'];
        // echo $artist;
+        //sentius_update_all_user($artist);
+        // update all user;
         $listuser = sentius_getUserFollow($artist);
         
         if(count($listuser)>0){
           foreach($listuser as $row){
             $user = user_load($row);
+            if($user->mail == 'info@flg.com.au'){
+              continue;
+            }
+
             if(count($user->field_send_notification)>0){
               if($user->field_send_notification['und'][0]['value'] == 1 ){
 
@@ -581,16 +593,22 @@ function sentius_node_insert($node) {
                 }  
 
                 $create = date('d-m-Y H:i:s',$node->created);
+               
+                $artist = node_load($node->field_artist['und'][0]['nid']);
+                $artistTitle = $artist->title;
+                $body = "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
 
-                $body = "A record <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
-
-
-                sentius_mail_notifi($row,$body);
-                sentius_insert_custom_notify($node->nid,$row,'1');
+                if(count($user->field_send_notification)>0){
+                  if($user->field_send_notification['und'][0]['value'] != 4){
+                   // sentius_mail_notifi($row,$body);
+                  //  sentius_insert_custom_notify($node->nid,$row,'1');
+                  }
+                }
+                
 
               }else{
                 if($user->field_send_notification['und'][0]['value'] != 4){
-                  sentius_insert_custom_notify($node->nid,$row,'0');
+                 // sentius_insert_custom_notify($node->nid,$row,'0');
                 }
               }
             }
@@ -601,6 +619,40 @@ function sentius_node_insert($node) {
     }
 }
 
+/**
+ * function update all user
+ *
+ * @param $artistId
+ *   artist id
+ *
+ * @return
+ *   Boolean 
+ */
+
+function sentius_update_all_user($artistId){
+  // get all user
+  $users = entity_load('user');
+  foreach($users as $user){
+     
+      if($user->uid){
+        $count = 0 ;
+        foreach($user->field_access['und'] as $row){
+          if($row['value'] == $artistId){
+            if($count == 0 ){
+              $user->field_access = array();
+            }else{
+              unset($user->field_access['und'][$count]);
+            }
+            user_save($user);
+            
+          }
+          $count ++ ;
+        }
+      }
+  }
+
+
+}
 // hook theme
 function sentius_theme() {
     return array(
@@ -638,15 +690,19 @@ function sentius_theme() {
       if(count($userData)>0){
           foreach($userData as $row){
             $uid = $row;
+            if($uid == 27){
+              continue;
+            }
+
             $day = sentius_get_day($uid);
             if($day != 0 ){
-              $body = sentius_sendmail_remind($day,$uid);
+              // $body = sentius_sendmail_remind($day,$uid);
               // send mail to user;
-              sentius_mail_notifi($uid,$body);
+              // sentius_mail_notifi($uid,$body);
               // update after send mail;
+          }
         }
       }
-     }
   }
 
 // hook block
@@ -680,8 +736,29 @@ function sentius_theme() {
         break;
     }
   }
+
+ function sentius_form_userprofile_submit($form, &$form_state){
+  global $user;
+
+  drupal_set_message('Thanks for being a FLG member! To start, go to the Art Stockroom page and Follow Artists and add Artworks to your Favourite folder!');
+  $form_state['redirect'] = array(
+    '/dashboard',
+    array(
+      'query' => array(
+        'uid' => $user->uid,
+        'firstime' => 'yes',
+      ),
+    ),
+  );
+ } 
 function sentius_form_alter(&$form, &$form_state, $form_id){
   
+  if($form_id =='user_profile_form'){
+      if(isset($_GET['pass-reset-token'])){
+     
+        $form['#submit'][] = 'sentius_form_userprofile_submit';
+      }
+  }
   if($form_id == 'user_register_form' || $form_id == 'user_login_block' || $form_id == 'user_pass'){
     $form['#form_placeholder'] = TRUE;
   }

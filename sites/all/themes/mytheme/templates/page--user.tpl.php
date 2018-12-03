@@ -7,7 +7,18 @@
  * @see https://drupal.org/node/1728148
  */
  global $user;
- 
+ if($user->uid > 0){
+  $path = current_path();
+  if (strpos($path,'edit') !== false) {
+     
+  }else if(strpos($path,'password') !== false){
+
+  }else{
+    $options = array('query' => array('uid' => $user->uid));
+    drupal_goto('/node/4415',$options);
+  }
+    
+ }
 
 ?>
 
