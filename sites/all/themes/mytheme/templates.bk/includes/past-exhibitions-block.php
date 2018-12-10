@@ -17,7 +17,7 @@ $sql = "SELECT node.created AS node_created, node.nid AS nid
 FROM 
 {node} node
 INNER JOIN {field_data_field_show_as} field_data_field_show_as ON node.nid = field_data_field_show_as.entity_id AND (field_data_field_show_as.entity_type = 'node' AND field_data_field_show_as.deleted = '0')
-WHERE (( (node.status = '1') AND (node.type IN  ('exhibition')) AND (field_data_field_show_as.field_show_as_tid = '35') ))
+WHERE (( (node.status = '1') AND (node.type IN  ('exhibition')) AND (field_data_field_show_as.field_show_as_tid = '34') ))
 ORDER BY node_created DESC";
 $query = db_query($sql);
 $data = array();
