@@ -591,6 +591,7 @@ if($context== 'contemporary'){
 	<?php print render($page['footer']); ?>
 </div>
 <div class="clearnew"></div>
+
 <?php global $user;
 	if($user->uid > 0){
 		$nid = arg(1);

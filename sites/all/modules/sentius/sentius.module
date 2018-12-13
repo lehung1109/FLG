@@ -1,6 +1,13 @@
 <?php 
 function sentius_menu(){
   $items = array();
+  $items['admin/config_sendmail'] = array(
+      'title' => t('Config mail send to all user'),
+      'page callback' => '_sentius_config_sendmail',
+      'access arguments' => array('access content'),
+      'type' => MENU_NORMAL_ITEM
+    );
+
   $items['sentiusajax'] = array(
       'title' => t(''),
       'page callback' => '_sentius_ajax',
@@ -22,19 +29,124 @@ function sentius_menu(){
     );
   return $items;
 }
-function _sentius_check_access($nid){
+function _sentius_config_sendmail(){
+
+  return drupal_get_form('form_config_mail_form');
+}
+
+function form_config_mail_form($form, &$form_state) {
+  $array_value = array(
+                        '1'=>'Send to all user',
+                        '2'=>'Dont send any user'
+                      );
+
+  $form['checking'] = array(
+    '#type' => 'radios',
+    '#default_value' => variable_get('checking_sendmail',1),
+    '#title' => t('Send mail to all user'),
+    '#options' => $array_value
+  );
+
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+
+
+  $form['submit_button'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+  
+  return $form;
+}
+
+function form_config_mail_form_validate($form, &$form_state) {
+}
+
+function form_config_mail_form_submit($form, &$form_state) {
+  if($form_state['values']['checking']){
+  	variable_set('checking_sendmail', ($form_state['values']['checking']));	
+  	if($form_state['values']['checking'] == 1){
+  		
+  		 $nodes = sentius_get_all_node_send_immidiately();
+  			global $base_url;
+		  	foreach($nodes as $row){
+		  		
+    			$body = ''; 
+			    $node  = node_load($row->nid);
+
+			      if(count($node)>0){
+
+			        //if($node->field_send_email_notification['und'][0]['value'] == 1){
+			            $url  = $base_url.url('node/'.$row->nid);
+			            $create = date('d-m-Y H:i:s',$node->created);
+			            $artist = node_load($node->field_artist['und'][0]['nid']);
+			            $artistTitle = $artist->title;
+			            $body .= "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
+
+			            db_update('notify_custom') // Table name no longer needs {}
+			                      ->fields(array('status' => 1,'sendat'=>time()))
+			                      ->condition('id', $row->id, '=')
+			                      ->execute();
+			        //}
+			      }
+			      if($body){
+	                  sentius_mail_notifi($row->uid,$body);
+	               }
+			    }
+	      
+	  	}
+	  		
+
+      
+  }
+
+}
+function _sentius_get_time_flagging($uid,$nid){
+  $query = db_query("SELECT * FROM {flagging} WHERE `uid` = '".$uid."' AND `entity_id` = '".$nid."'")->fetchObject();
+  
+  if($query){
+    return $query;
+  }else{
+    return false;
+  }
+}
+
+
+function _sentius_check_access($nid,$artistid = false){
 
   global $user;
+  //echo $nid;
+  //print_r($user);
   $return = true;
   $user = user_load($user->uid);
-  if(count($user->field_access)>0){
-    //print_r($user->field_access['und']);
-      foreach($user->field_access['und'] as $row){
-        if($row['value'] == $nid){
+  $node = node_load($nid);
+
+  if($artistid){
+    $time = _sentius_get_time_flagging($user->uid,$artistid);
+    if($artistid != $nid){
+      if($time){
+        $timecheck = $time->timestamp;
+        if($node->created < $timecheck){
           $return = false;
         }
       }
+    }
+    
   }
+  
+  // get time follow;
+  if(count($user->field_access)>0){
+    foreach($user->field_access['und'] as $row){
+      if($row['value'] == $nid){
+        $return = false;
+      }
+    }
+  }
+  
+  
+  
   return $return;
 }
 function _sentius_insert_access($nid){
@@ -147,14 +259,18 @@ LIMIT 50 OFFSET 0";
                         'Content-Type' => 'text/html; charset=UTF-8; format=flowed',
                       ),
                     );
+            $sendmail =  variable_get('checking_sendmail',1);
 
-                  $system = drupal_mail_system($my_module);
+           if($sendmail != 2){
+               $system = drupal_mail_system($my_module);
                   if ($system->mail($message)) {
                     // Success.
                     echo 'success';
                   }else{
                     echo 'fail';
                   }
+           }
+                 
 
       die;
     }
@@ -311,9 +427,8 @@ FROM
 INNER JOIN {field_data_field_show_as} field_data_field_show_as ON node.nid = field_data_field_show_as.entity_id AND (field_data_field_show_as.entity_type = 'node' AND field_data_field_show_as.deleted = '0')
 LEFT JOIN {field_data_field_artists_featured} field_data_field_artists_featured ON node.nid = field_data_field_artists_featured.entity_id AND (field_data_field_artists_featured.entity_type = 'node' AND field_data_field_artists_featured.deleted = '0')
 LEFT JOIN {field_data_field_exibition_date} field_data_field_exibition_date ON node.nid = field_data_field_exibition_date.entity_id AND (field_data_field_exibition_date.entity_type = 'node' AND field_data_field_exibition_date.deleted = '0')
-WHERE (( (node.status = '1') AND (node.type IN  ('exhibition')) AND (field_data_field_show_as.field_show_as_tid = '35') AND (field_data_field_artists_featured.field_artists_featured_target_id = '".$artistId."') ))
-ORDER BY field_data_field_exibition_date_field_exibition_date_value ASC, node_changed ASC";
-   
+WHERE (( (node.status = '1') AND (node.type IN  ('exhibition'))  AND (field_data_field_artists_featured.field_artists_featured_target_id = '".$artistId."') ))
+ORDER BY nid DESC LIMIT 1";
   
     $data = array();
     $query = db_query($sql);
@@ -363,6 +478,8 @@ function sentius_getUserFollow($nid){
   return $data;
 }
 
+
+
 function sentius_mail_notifi($uid,$body){
   global $base_url;
   $user = user_load($uid);
@@ -384,11 +501,21 @@ function sentius_mail_notifi($uid,$body){
                   ),
                 );
 
-              //$system = drupal_mail_system($my_module);
-              //if ($system->mail($message)) {
-                // Success.
-              //}
+   	$sendmail =  variable_get('checking_sendmail',1);
+	if($sendmail != 2){
+		$system = drupal_mail_system($my_module);
+		
+		//drupal_mail('module_name', 'any_key', $email, language_default(), $params);
+		if ($system->mail($message)) {
+        	// insert to log
+        	$message['send'] = true;
+        	mail_logger_mail_alter($message);
+    	}
+    }
+             
+
 }
+
 //hook node insert
 function sentius_checkFavorites_folder($nid) {
   global $user;
@@ -397,7 +524,7 @@ function sentius_checkFavorites_folder($nid) {
   return $query;
 }
 // insert to custom table
-function sentius_insert_custom_notify($nid,$uid,$status=0){
+function sentius_insert_custom_notify($nid,$uid,$status=0,$sendbycronnow=false){
   
 
   if($status != 0){
@@ -406,16 +533,28 @@ function sentius_insert_custom_notify($nid,$uid,$status=0){
       'nid' => $nid,
       'daycreate'=>time(),
       'status'=> $status,
-      'sendat'=> ''
+      'sendat'=> '',
+      'sendnowbycron'=>'no',
     );
   }else{
      $data = array(
       'uid' => $uid,
       'nid' => $nid,
       'daycreate'=>time(),
-      'status'=> $status
+      'status'=> $status,
+      'sendnowbycron'=>'no',
     );
   }
+  if($sendbycronnow == true){
+  	$data = array(
+      'uid' => $uid,
+      'nid' => $nid,
+      'daycreate'=>time(),
+      'status'=> $status,
+      'sendnowbycron'=>'yes',
+    );
+  }
+
   return db_insert('notify_custom')
     ->fields($data)
     ->execute();
@@ -427,7 +566,7 @@ function sentius_get_all_node_create($day){
   $data = array();
   $dayAgo = strtotime('-'.$day.' days');
 
-  $sql = "SELECT * FROM {notify_custom} WHERE `daycreate` < '".$dayAgo."' AND `sendat` is null ";
+  $sql = "SELECT * FROM {notify_custom} WHERE `daycreate` < '".$dayAgo."' AND `status` = '0' AND `sendnowbycron` = 'no' AND `sendat` is null ";
  
   $query = db_query($sql);
   foreach($query as $row){
@@ -435,29 +574,48 @@ function sentius_get_all_node_create($day){
   }
   return $data;
 }
-function sentius_sendmail_remind($day,$uid){
+// get all node to send immidiately on user
+function sentius_get_all_node_send_immidiately($day){
+  $data = array();
+  $sql = "SELECT * FROM {notify_custom} WHERE `sendnowbycron` = 'yes' AND `status` = '0'  AND `sendat` is null ";
+  $query = db_query($sql);
+  foreach($query as $row){
+    $data[] = $row;
+  }
+  return $data;
+}
+function sentius_sendmail_remind($day,$uid,$sendnow = false){
   $body = '';
-  $nodes = sentius_get_all_node_create($day);
-
-
+  if($sendnow == false){
+  	$nodes = sentius_get_all_node_create($day);
+  }
+  
+ 
   global $base_url;
   if(count($nodes)>0){
     foreach($nodes as $row){
-    
+     
       $node  = node_load($row->nid);
-      $url  = $base_url.url('node/'.$row->nid);
-      $create = date('d-m-Y H:i:s',$node->created);
-      $artist = node_load($node->field_artist['und'][0]['nid']);
-      $artistTitle = $artist->title;
-      $body .= "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
-      db_update('notify_custom') // Table name no longer needs {}
-                ->fields(array('status' => 1,'sendat'=>time()))
-                ->condition('uid', $uid, '=')
-                ->condition('nid', $row->nid, '=')
-                ->execute();
 
+      if(count($node)>0){
+
+        if($node->field_send_email_notification['und'][0]['value'] == 1){
+            $url  = $base_url.url('node/'.$row->nid);
+            $create = date('d-m-Y H:i:s',$node->created);
+            $artist = node_load($node->field_artist['und'][0]['nid']);
+            $artistTitle = $artist->title;
+            $body .= "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
+
+            db_update('notify_custom') // Table name no longer needs {}
+                      ->fields(array('status' => 1,'sendat'=>time()))
+                      ->condition('nid', $row->nid, '=')
+                      ->execute();
+        }
+      }
     }
   }
+  
+
   return $body;
 }
 // get all log
@@ -507,7 +665,10 @@ function sentius_get_day($user){
                 break;
             case "4":
                $day = 0;
-               
+
+            case "1":
+            	$day = 1;  
+
                
                 break;
         }
@@ -524,8 +685,12 @@ function sentius_node_insert($node) {
     if($node->type == 'exhibition'){
 
         if(count($node->field_artists_featured)>0){
+         
+
           foreach($node->field_artists_featured['und'] as $row){
                 $artist = $row['target_id'];
+                sentius_update_all_user($artist,'exhibition');
+
                 $listuser = sentius_getUserFollow($artist);
                 
                 if(count($listuser)>0){
@@ -546,18 +711,21 @@ function sentius_node_insert($node) {
                         $artist = node_load($node->field_artists_featured['und'][0]['nid']);
                         $artistTitle = $artist->title;
                         $body = "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
-                        if(count($user->field_send_notification)>0){
-                          if($user->field_send_notification['und'][0]['value'] != 4){
-                            //sentius_mail_notifi($row,$body);
-                            //sentius_insert_custom_notify($node->nid,$row,'1');
-                          }
-                        }
 
-                      }else{
-                        if($user->field_send_notification['und'][0]['value'] != 4){
-                          //sentius_insert_custom_notify($node->nid,$row,'0');
-                        }
-                      }
+                        // if user choose send mail immediately
+                        $sendmail =  variable_get('checking_sendmail',1);
+         				if($sendmail == 2){
+	         				if($node->field_send_email_notification['und'][0]['value'] == 1){
+	         						sentius_insert_custom_notify($node->nid,$row,'0',true);
+	         					}
+	         				}else{
+	         					sentius_mail_notifi($row,$body);
+	         				}
+                      	}else{
+	                       	if($user->field_send_notification['und'][0]['value'] != 4){
+	                          sentius_insert_custom_notify($node->nid,$row,'0');
+	                        }
+	                    }
                     }
                   }
                 }
@@ -573,7 +741,9 @@ function sentius_node_insert($node) {
 
         $artist = $node->field_artist['und'][0]['nid'];
        // echo $artist;
-        //sentius_update_all_user($artist);
+
+        sentius_update_all_user($artist,$node->type);
+
         // update all user;
         $listuser = sentius_getUserFollow($artist);
         
@@ -597,14 +767,29 @@ function sentius_node_insert($node) {
                 $artist = node_load($node->field_artist['und'][0]['nid']);
                 $artistTitle = $artist->title;
                 $body = "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
+                if($node->field_send_email_notification['und'][0]['value'] == 1){
+                $sendmail =  variable_get('checking_sendmail',1);
+                    if($sendmail == 2){
+                      // insert to wait
 
-                if(count($user->field_send_notification)>0){
-                  if($user->field_send_notification['und'][0]['value'] != 4){
-                   // sentius_mail_notifi($row,$body);
-                  //  sentius_insert_custom_notify($node->nid,$row,'1');
-                  }
-                }
-                
+                      if($node->field_send_email_notification['und'][0]['value'] == 1){
+                        sentius_insert_custom_notify($node->nid,$row,'0',true);
+                      }
+                    }else{
+                      sentius_mail_notifi($row,$body);
+                    }
+                        
+                    }else{
+                      
+                      sentius_insert_custom_notify($node->nid,$row,'0');
+              }
+
+
+				
+
+
+
+
 
               }else{
                 if($user->field_send_notification['und'][0]['value'] != 4){
@@ -629,28 +814,94 @@ function sentius_node_insert($node) {
  *   Boolean 
  */
 
-function sentius_update_all_user($artistId){
+
+function sentius_update_all_user($artistId , $type){
   // get all user
   $users = entity_load('user');
+  $node = node_load($artistId);
+  $node->changed = strtotime("now");
+  node_save($node);
+  
+  // get ex 
+  $exid = sentius_getExByAid($artistId);
+  $exidnew  = '';
+  if(count($exid)>0){
+    $exidnew  = $exid[0]->nid;
+  }
+
+  // get newsid
+  $newsNode = sentius_NewsNode($artistId);
+  $newid = '';
+  if(count($newsNode)>0){
+     $newid = $newsNode[0]->nid;
+  }
+
+
   foreach($users as $user){
-     
-      if($user->uid){
+    if($user->uid){
+
         $count = 0 ;
+        
+
         foreach($user->field_access['und'] as $row){
-          if($row['value'] == $artistId){
+          $nodereplace =  node_load($row['value']);
+
+            if($type == 'news'){
+              if($row['value'] == $newid){
+                  if($count == 0 ){
+                    $user->field_access = array();
+                  }else{
+                    unset($user->field_access['und'][$count]);
+                  }
+                user_save($user);
+              }
+            }
+              
+            if($type == 'art'){
+                if($row['value'] == $artistId){
+                  if($count == 0 ){
+                    $user->field_access = array();
+                  }else{
+                    unset($user->field_access['und'][$count]);
+                  }
+
+                  user_save($user);
+                }
+                
+            }
+
+            if($type == 'exhibition'){
+               if($row['value'] == $exidnew){
+                  if($count == 0 ){
+                    $user->field_access = array();
+                  }else{
+                    unset($user->field_access['und'][$count]);
+                  }
+                  user_save($user);
+                }
+
+            }
+          
+          
+          /*
+          if($row['value'] == $exidnew){
+
             if($count == 0 ){
               $user->field_access = array();
             }else{
               unset($user->field_access['und'][$count]);
             }
             user_save($user);
-            
-          }
-          $count ++ ;
-        }
-      }
-  }
 
+          }*/
+
+          $count ++ ;
+
+        }
+
+
+    }
+  }
 
 }
 // hook theme
@@ -686,7 +937,10 @@ function sentius_theme() {
 
 // send mail cron
   function sentius_send_mail_cron(){
-       $userData = sentius_get_user();
+
+
+
+      $userData = sentius_get_user();
       if(count($userData)>0){
           foreach($userData as $row){
             $uid = $row;
@@ -694,12 +948,26 @@ function sentius_theme() {
               continue;
             }
 
+
             $day = sentius_get_day($uid);
+            
             if($day != 0 ){
-              // $body = sentius_sendmail_remind($day,$uid);
-              // send mail to user;
-              // sentius_mail_notifi($uid,$body);
+
+            	if($day == 1){
+            		
+            	}else{
+            	  $body = sentius_sendmail_remind($day,$uid);
+	              // send mail to user;
+	               if($body){
+	                  sentius_mail_notifi($uid,$body);
+	               }
+            	}
+
+               
+              //sentius_mail_notifi($uid,$body);
               // update after send mail;
+
+
           }
         }
       }

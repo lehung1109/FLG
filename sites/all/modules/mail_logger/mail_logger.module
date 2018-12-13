@@ -99,6 +99,8 @@ function mail_logger_module_implements_alter(&$implementations, $hook) {
  * Purpose of this function is to log all outgoing mail
  */
 function mail_logger_mail_alter(&$message) {
+ 
+
   if (!empty($message['send'])) {
     $system = drupal_mail_system($message['module'], $message['key']);
     $mail_system = get_class($system);
