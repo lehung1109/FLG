@@ -161,7 +161,7 @@
 					?>
 					<div class="art-list">
 						<a nid="<?php echo $artist['nid']?> " href="<?php echo url('node/' . $artist['nid']) ?>/contemporary">
-							<img src="<? echo $thumbnailImage ?>" alt="<?php echo $title ?>" width="110" height="57">
+							<img src="<?php echo $thumbnailImage ?>" alt="<?php echo $title ?>" width="110" height="57">
 						</a>
 						<a href="<?php echo url('node/' . $artist['nid']) ?>/contemporary" class="title"><?php echo $title ?></a>
 					</div>
