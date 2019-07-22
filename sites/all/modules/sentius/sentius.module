@@ -738,9 +738,8 @@ function sentius_node_insert($node) {
       if(count($node->field_artist)>0){
 
 
-
-        //$artist = $node->field_artist['und'][0]['nid'];
-        $artist = $node->nid;
+        $artist = $node->field_artist['und'][0]['nid'];
+        //$artist = $node->nid;
        // echo $artist;
 
         sentius_update_all_user($artist,$node->type);
