@@ -1096,3 +1096,12 @@ function sentius_category_form_submit($form, &$form_state) {
     taxonomy_term_save($newterm);
    
 }
+
+/**
+ * hook_node_access
+ */
+function sentius_node_access($node, $op, $account) {
+  if($node->nid == 4415 && empty($account->uid)) {
+    return NODE_ACCESS_DENY;  
+  }
+}
