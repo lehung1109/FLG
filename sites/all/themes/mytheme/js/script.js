@@ -574,13 +574,14 @@ function loadTaxo(){
 
     });
     (jQuery)('#mailsendSubmit').click(function(){
-    	var email = (jQuery)("#mailsend").val();
+			var email = (jQuery)("#mailsend").val();
+			var note = (jQuery)("#note").val();
     	var tid = (jQuery)("#tid").val();
     	if(email !=''){
     		if (validateEmail(email)) {
     			(jQuery)("#mailsend").removeClass('error');
     			var htmlSend = (jQuery)('.view-my-artworks').html();
-    			(jQuery).get( "/sentiusajax",{tid:tid,email:email,action:'sendmail'}, function( data ) {
+    			(jQuery).get( "/sentiusajax",{tid:tid,email:email, note:note ,action:'sendmail'}, function( data ) {
     				//alert(data);
 					if(data == 'success'){
 						(jQuery)('.result-send').html('<p>Email was sent.</p>');

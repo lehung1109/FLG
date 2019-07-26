@@ -24,7 +24,7 @@ function sentius_menu(){
       'title' => t('Archive'),
       'page callback' => '_sentius_archives',
       'page arguments' => array(1),
-      'access callback' => TRUE,
+      'access arguments' => array('administration'),
       'type' => MENU_LOCAL_TASK,
     );
   return $items;
@@ -235,10 +235,12 @@ LIMIT 50 OFFSET 0";
 
       
       $email = $_GET['email'];
+      $note = !empty($_GET['note']) ? $_GET['note'] : '';
       $tid  = $_GET['tid'];
       // '<p>My favorites folder from flg.com.au </p>' .  $html ;
       $data = sentius_getALlFavorites($tid,$user->uid);
       $data['name'] = taxonomy_term_load($tid)->name;
+      $data['note'] = $note;
       $body = theme('share_templates', array('data' => $data));
      
       $from = $user->mail;
@@ -710,7 +712,7 @@ function sentius_node_insert($node) {
                         $create = date('d-m-Y H:i:s',$node->created);
                         $artist = node_load($node->field_artists_featured['und'][0]['nid']);
                         $artistTitle = $artist->title;
-                        $body = "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
+                        $body = "An upcoming solo exhibition by one of your favourite artists has been added to the FLG website.<br />Please <a href='$url'>click here</a> to view.";
 
                         // if user choose send mail immediately
                         $sendmail =  variable_get('checking_sendmail',1);
@@ -766,7 +768,11 @@ function sentius_node_insert($node) {
                
                 $artist = node_load($node->field_artist['und'][0]['nid']);
                 $artistTitle = $artist->title;
-                $body = "An new artwork by ".$artistTitle." <a href='".$url."'>".$node->title."</a> has been created at ".$create."<br/>";
+                if ($node->type =='news') {
+                  $body = "A new artwork by one of your favourite artists has been added to the FLG website.<br />Please <a href='$url'>click here</a> to view.";
+                } else {
+                  $body = "One of your favourite artists has some news to share with you!<br />Please <a href='$url'>click here</a> to view on the FLG website.";
+                }
                 if($node->field_send_email_notification['und'][0]['value'] == 1){
                 $sendmail =  variable_get('checking_sendmail',1);
                     if($sendmail == 2){
@@ -1104,4 +1110,11 @@ function sentius_node_access($node, $op, $account) {
   if($node->nid == 4415 && empty($account->uid)) {
     return NODE_ACCESS_DENY;  
   }
+}
+
+/**
+ * hook hook_menu_alter
+ */
+function sentius_menu_alter(&$items) {
+  $items['user/%user/view']['title'] = 'Dashboard';
 }

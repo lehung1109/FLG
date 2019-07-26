@@ -5152,3 +5152,14 @@ margin-bottom: 20px;
 	}
 
 }
+
+.logged-in .newFolder, .logged-in .shareFolder {
+text-transform: uppercase;
+}
+ 
+.logged-in .form-sharemail .form-text.form-textarea {
+    height: auto;
+    resize: none;
+    padding: 10px;
+}
+ 

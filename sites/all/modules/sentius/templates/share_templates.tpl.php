@@ -1,5 +1,6 @@
 <?php 
 	$name = $data['name'];
+	$note = $data['note'];
 global $base_url;
 
 	?>
@@ -58,3 +59,4 @@ global $base_url;
 				<?php }?>
 			<?php }?>
 		<?php } ?>
+<p>Note: <?php echo $note; ?></p>

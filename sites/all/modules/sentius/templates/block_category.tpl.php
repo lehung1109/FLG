@@ -69,7 +69,7 @@
 
 
 		<div class="sharethis-custom"> 
-			<p>Share Folder</p>
+			<p class="shareFolder">Share Folder</p>
 			<a id="sharemail">EMAIL</a>
 			<?php
 				$options = array(
@@ -93,6 +93,11 @@
 				<label>E-Mail to share</label>
 				<input type="text" class="form-text" required="true" id="mailsend" />
 				<input type="hidden" value="<?php echo $tid?>" id="tid" />
+			</div>
+
+			<div class="form-item">
+				<label for="note">Note</label>
+				<textarea name="note" id="note" type="text" class="form-text form-textarea" required="true" rows="4"></textarea>
 			</div>
 			<input type="button" value="Send" class="form-submit" id="mailsendSubmit" />
 
