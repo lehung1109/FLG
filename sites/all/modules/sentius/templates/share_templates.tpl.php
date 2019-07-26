@@ -4,6 +4,9 @@
 global $base_url;
 
 	?>
+<?php if(!empty($note)): ?>
+	<p>Note: <?php echo $note; ?></p>
+<?php endif; ?>
 <div class="content-right view-right art-<?php echo $tid?>">
 		<div class="title">
 			<?php echo $name ?>
@@ -59,4 +62,3 @@ global $base_url;
 				<?php }?>
 			<?php }?>
 		<?php } ?>
-<p>Note: <?php echo $note; ?></p>

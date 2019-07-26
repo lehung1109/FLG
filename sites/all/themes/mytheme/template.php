@@ -191,7 +191,7 @@ function mytheme_form_alter(&$form, $form_state, $form_id) {
 	}
 	if($form_id == 'user_profile_form'){
 		$form['text']= array(
-		  '#markup' => '<p><a href="/user/password">Request new password</a></p>',
+		  '#markup' => '<p>Request new password</p>',
 		  '#weight' => -100
 		);
 		//unset($form['account']['pass']);

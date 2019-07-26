@@ -768,7 +768,7 @@ function sentius_node_insert($node) {
                
                 $artist = node_load($node->field_artist['und'][0]['nid']);
                 $artistTitle = $artist->title;
-                if ($node->type =='news') {
+                if ($node->type =='art') {
                   $body = "A new artwork by one of your favourite artists has been added to the FLG website.<br />Please <a href='$url'>click here</a> to view.";
                 } else {
                   $body = "One of your favourite artists has some news to share with you!<br />Please <a href='$url'>click here</a> to view on the FLG website.";
@@ -1117,4 +1117,21 @@ function sentius_node_access($node, $op, $account) {
  */
 function sentius_menu_alter(&$items) {
   $items['user/%user/view']['title'] = 'Dashboard';
+}
+/**
+ * implements hook_form_FORM_ID_alter
+ */
+
+ function sentius_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
+  $form['account']['pass']['#process'] = array(
+    'form_process_password_confirm',
+    'sentius_form_process_password_confirm',
+    'user_form_process_password_confirm'
+  );
+ }
+
+ function sentius_form_process_password_confirm($element) {
+  $element['pass1']['#title'] = t('Change your password');
+  $element['pass2']['#title'] = t('Confirm new password');
+  return $element;
 }

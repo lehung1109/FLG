@@ -2609,7 +2609,7 @@ margin-bottom: 20px;
     }
 
     .view-my-followed-artists .views-row{
-        width: 49%;
+        width: 48%;
         margin-bottom: 20px;
         padding: 0px;
     }
@@ -5161,5 +5161,21 @@ text-transform: uppercase;
     height: auto;
     resize: none;
     padding: 10px;
+}
+
+.logged-in .form-sharemail .form-text {
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+.logged-in .form-sharemail .form-item label {
+    display: block;
+}
+
+.view-my-followed-artists .view-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
  
