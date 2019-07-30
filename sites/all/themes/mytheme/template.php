@@ -189,14 +189,14 @@ function mytheme_form_alter(&$form, $form_state, $form_id) {
 			drupal_goto('/member-login');
 		}
 	}
-	if($form_id == 'user_profile_form'){
-		$form['text']= array(
-		  '#markup' => '<p>Request new password</p>',
-		  '#weight' => -100
-		);
+	// if($form_id == 'user_profile_form'){
+	// 	$form['text']= array(
+	// 	  '#markup' => '<p>Request new password</p>',
+	// 	  '#weight' => -100
+	// 	);
 		//unset($form['account']['pass']);
 		
-	}
+	// }
 	if($form_id == 'user_pass'){
 
 		//$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_user_pass';

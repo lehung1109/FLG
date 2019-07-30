@@ -5178,4 +5178,40 @@ text-transform: uppercase;
     flex-wrap: wrap;
     justify-content: space-between;
 }
- 
+
+.view-my-artworks .art > a {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    box-sizing: border-box;
+    padding: 5px 5px 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-my-artworks .art > a img {
+    max-height: 100%;
+    width: auto;
+}
+
+.view-my-artworks .views-row {
+    float: none;
+    margin-bottom: 0;
+    height: auto;
+}
+
+.view-my-artworks > ul,
+.view-my-artworks > div,
+.view-my-artworks #dragthis {
+    display: flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+}
+
+.view-my-artworks > ul > .views-row,
+.view-my-artworks > div > .views-row {
+    margin-bottom: 20px;
+}
