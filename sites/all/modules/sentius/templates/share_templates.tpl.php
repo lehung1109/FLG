@@ -26,11 +26,13 @@ global $base_url;
 			$imageUrl  = '';
 			if(count($artNode->field_art_preview_image)){
 				
-				$imageUrl = image_style_url('artworks',$artNode->field_art_preview_image['und'][0]['uri'] ); 
+				// $imageUrl = image_style_url('artworks',$artNode->field_art_preview_image['und'][0]['uri'] ); 
+				$imageUrl = file_create_url($artNode->field_art_preview_image['und'][0]['uri']);
 			}else {
 				if(count($artNode->field_art_image)>0){
 					$imageRef = $artNode->field_art_image['und'][0]['uri'];
-					$imageUrl = image_style_url('artworks',$imageRef );
+					// $imageUrl = image_style_url('artworks',$imageRef );
+					$imageUrl = file_create_url($imageRef);
 				}
 			}
 			$url = url('node/' . $artNode->nid);
@@ -42,7 +44,7 @@ global $base_url;
 				<div class="views-row favorites-<?php echo $artNode->nid?>">
 					<div class="art <?php echo $artNodeId['target_id'];?> <?php echo count($artNode)?>">
 							
-						<a href="<?php echo $base_url?><?php echo $url?>"><img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>"></a>
+						<a href="<?php echo $base_url?><?php echo $url?>"><img style="max-width: 200px;" src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>"></a>
 						
 						<div class='art-detail'>
 							<?php if($user->uid == $_GET['uid']){?> <div class="heart-wrapper"><div class="heart <?php echo $classGray?>" tid="<?php echo $_GET['tid']?>"  nid="<?php echo $artNode->nid?>" title="Click to remove"></div></div><?php }?>
