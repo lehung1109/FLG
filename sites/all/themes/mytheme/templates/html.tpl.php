@@ -53,8 +53,23 @@
 
 <script src="https://use.typekit.net/wca4amy.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
 </head>
-<body class="<?php print $classes; ?>" <?php print $attributes;?>>
+<body class="<?php print $classes; ?>" <?php if(arg(1) == '4415'){?>onunload="" <?php }?> <?php print $attributes;?>>
+<?php if(arg(1) == '4415'){?>
+	<script type="text/javascript">
+		window.onpageshow = function (event) {
+	        if (event.persisted) {
+	            window.location.reload();
+	        }
+	    };
+	    if(performance.navigation.type == 2){
+		   location.reload(true);
+		}
+
+	</script>
+
+<?php }?>
 	<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

@@ -164,7 +164,7 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 			</div>
 			<?php if($user->uid > 0){$list = sentius_getTaxonomy();?> 
 			<div class="favourite">
-				<p>Add this art to folder : <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add" id="buttonAdd" nid="<?php echo $_GET['nodeId']?>" /><p>
+				<p>Add this art to folder: <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add" id="buttonAdd" nid="<?php echo $_GET['nodeId']?>" /><p>
 			</div>
 		<?php }?>
 

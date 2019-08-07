@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_update_N().
+ */
+function sentius_update_7001(&$sandbox) {
+  $result = db_query('ALTER TABLE {notify_custom} ADD "sendnowbycron" VARCHAR(255) NOT NULL AFTER "sendat"');
+}

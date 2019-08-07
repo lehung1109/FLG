@@ -27,7 +27,7 @@ foreach ($view->result as $key => $value) {
 			<?php if(!empty($node->field_exhibition_pdf['und'][0]['uri'])){ ?>
 				<a href="<?php echo $fileUrl ?>" target="_blank">
 			<?php } ?>
-				<img src="<? echo $thumbnailImage ?>" alt="<?php echo $title ?>" width="110" height="57">
+				<img src="<?php echo $thumbnailImage ?>" alt="<?php echo $title ?>" width="110" height="57">
 			<?php if(!empty($node->field_exhibition_pdf['und'][0]['uri'])){ ?>
 				</a>
 			<?php } ?>

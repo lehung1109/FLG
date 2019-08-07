@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  deploy_staging:
+    docker:
+      - image: circleci/php
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "9f:87:e7:fe:e9:0d:be:5d:77:ff:35:92:13:be:e4:25"
+      - run:
+          name: Login to Staging server & Pull code
+          command: ./.circleci/deploy_staging.sh
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy_staging:
+          filters:
+            branches:
+              only: master
+

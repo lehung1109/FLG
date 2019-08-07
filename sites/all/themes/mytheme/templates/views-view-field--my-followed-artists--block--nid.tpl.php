@@ -1,17 +1,19 @@
 <?php 
 	$node = node_load($output);
 	
-	$newWorks = sentius_checkNewestNode($output);
-	$urlNewWorks = '#';
+	//$newWorks = sentius_checkNewestNode($output);
+	
+
+	//$urlNewWorks = '#';
 	$classWork = '';
-	if(count($newWorks)>0){
+	//if(count($newWorks)>0){
 		$urlNewWorks = url('node/'.$output);
 		$check = false;
-		$check = _sentius_check_access($output);
+		$check = _sentius_check_access($output,$output);
 		if($check){
 			$classWork = 'blue';
 		}
-	}
+	//}
 
 	$urlNews = "/news";
 	$classNews = '';
@@ -19,7 +21,7 @@
 	if(count($newsNode)>0){
 		$check = false;
 		$urlNews ="/news/".$newsNode[0]->nid;
-		$check = _sentius_check_access($newsNode[0]->nid);
+		$check = _sentius_check_access($newsNode[0]->nid,$output);
 		if($check){
 			$classNews = 'blue';
 		}
@@ -27,12 +29,14 @@
 
 
 	$newEx = sentius_getExByAid($output);
+	
+
 	$urlnewEx = '#';
 	$classEx  ='';
 	if(count($newEx)>0){
 		$urlnewEx = url('node/'.$newEx[0]->nid);
 		$check = false;
-		$check = _sentius_check_access($newEx[0]->nid);
+		$check = _sentius_check_access($newEx[0]->nid,$output);
 		if($check){
 			$classEx = 'blue';
 		}
