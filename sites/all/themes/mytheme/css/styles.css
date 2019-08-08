@@ -5215,3 +5215,27 @@ text-transform: uppercase;
 .view-my-artworks > div > .views-row {
     margin-bottom: 20px;
 }
+
+#google_recaptcha_user_register_form > div > div {
+    transform: scale(0.73, 0.77);
+    position: relative;
+    right: 41px;
+    bottom: 9px;
+}
+
+#google_recaptcha_user_pass {
+    margin-bottom: 15px;
+}
+
+.error, .messages--error {
+    position: relative;
+    z-index: 2;
+}
+
+@media only screen and (max-width: 375px) {
+    #google_recaptcha_user_pass {
+        transform: scale(0.9);
+        position: relative;
+        right: 13px;
+    }
+}
