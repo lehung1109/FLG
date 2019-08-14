@@ -147,7 +147,12 @@ text-transform: uppercase;
 .view-my-followed-artists .view-content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+}
+
+@media only screen and (max-width: 991px) {
+    .view-my-followed-artists .view-content {
+        justify-content: space-between;
+    }
 }
 
 .view-my-artworks .art > a {
