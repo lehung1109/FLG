@@ -211,7 +211,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 	<?php }else if($context== 'aboriginal'){ ?>
 	<h1><a href="/aboriginal">ABORIGINAL ART STOCKROOM</a>  <?php echo $artistNode->title ?></h1>
 	<?php }else if($context== 'contemporary'){ ?>
-	<h1><a href="/contemporary">CONTEMPORARY ART STOCKROOM</a>  <?php echo $artistNode->title ?></h1>
+	<h1><a href="<?php echo url('node/267'); ?>">CONTEMPORARY ART STOCKROOM</a>  <?php echo $artistNode->title ?></h1>
 	<?php }else{ ?>
 
 
