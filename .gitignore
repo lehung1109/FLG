@@ -2,32 +2,5 @@
 sites/*/settings*.php
 
 # Ignore paths that contain user-generated content.
+sites/*/files
 sites/*/private
-
-# Folders
-.ftpquota
-.well-known
-cache
-/stats
-__MACOSX
-cgi-bin
-/private
-/sites/default/files/advagg_css
-/sites/default/files/advagg_js
-/sites/default/files/css
-/sites/default/files/ctools
-/sites/default/files/js
-/sites/default/files/minify
-/sites/default/files/styles
-/sites/default/files/xmlsitemap
-tmp
-temp
-
-#files
-/.htaccess
-/robots.txt
-error_log
-
-archive
-archive.flg.com.au
-sites/default/files

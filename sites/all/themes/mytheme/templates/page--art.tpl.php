@@ -164,7 +164,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 	<?php endif; ?>
 	<?php
 		   $block =block_load('block',5);
-		   $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
+		   $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));
 		   print $output;
 		?>
 	<?php if ($secondary_menu): ?>
@@ -220,16 +220,16 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 	<?php } ?>
 </div>
 <div class="right-follow">
-				<?php 
-				
+				<?php
+
 				if(count($node->field_artist['und'])) {
 
 						$follow = $node->field_artist['und'][0]['nid'];
-					
+
 					}
-					?>	
+					?>
 					<div class="follow">
-					
+
 						<?php print flag_create_link('artist',$follow); ?>
 					</div>
 			</div>
@@ -325,12 +325,12 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 			<?php if($node->field_sale_status['und'][0]['tid'] == '27'){?>
 				<span class='sold'>Sold</span>
 			<?php }?>
-			
+
 		<?php }?>
-		
+
 		<a class='title' href='<?php echo url('node/' . $node->nid); ?>'><?php echo $node->title; ?></a>
 		<?php echo $comma_separated ?>
-		
+
 
 	</div>
 
@@ -343,25 +343,25 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 	?>
 
 	<div class="links">
-		
+
 		<a class="link-title" href="<?php echo $mailToUrl ?>">Enquire about work</a>
 		<div class="share-add">
-			
+
 			<a class="link-title share-control" >Share</a>
-		
+
 		</div>
-		
+
 
 		<?php if($node->field_category['und'][0]['tid'] == '24')  { ?>
 		<a href="<?php echo url('node/' . $artistNode->nid); ?>" class="link-title">View artist profile</a>
 		<?php }else{ ?>
 		<a href="<?php echo url('node/' . $artistNode->nid); ?><?php if($context == 'exhibition' || $context == 'contemporary') {?>/contemporary<?php } ?>" class="link-title">View artist profile</a>
 		<?php } ?>
-		
-		
+
+
 
 		<?php if($context == 'aboriginal') {?>
-		
+
 
 			<?php
 
@@ -370,23 +370,23 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
 			 ?>
 			<a href="<?php echo $base_url . '/' . $taxonomy_term_url ?>" class="link-title">Back to Community</a>
-		
-		<?php } ?>	
+
+		<?php } ?>
 	</div>
 	<div class="share-add-wrapper">
 		<div class="share">
 			<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
 		</div>
 	</div>
-	<?php if($user->uid > 0){$list = sentius_getTaxonomy();?> 
+	<?php if($user->uid > 0){$list = sentius_getTaxonomy();?>
 			<div class="favourite">
 				<p>Add this art to folder: <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add" id="buttonAdd" nid="<?php echo arg(1)?>" /><p>
 			</div>
 		<?php }?>
-	
+
 </div>
 <?php
-	
+
 ?>
 <div class="art-in-situ">
 	<?php
@@ -484,16 +484,16 @@ if(isset($artistNode->nid)){
 
 		$exhibitionNid = $exhibitionNids->nid;
 		$nodeexhibition = node_load($exhibitionNid);
-		
+
 		foreach($exhibitionArtworks as $art) {
 			array_push($allExhibitionArtworks, array('target_id' => $art['raw']['target_id']));
 			array_push($exhibitionWorks, $art['raw']['target_id']);
 		}
 	}
 
-	
-	
-	
+
+
+
 	foreach($artNodes as $artNode) {
 		if(in_array($artNode->nid, $allExhibitionArtworks)) continue;
 		if($artNode->nid == $currentNodeId) continue;
@@ -501,14 +501,14 @@ if(isset($artistNode->nid)){
 		array_push($artNids,array('target_id'=> $artNode->nid));
 	}
 	$sql = "SELECT node.nid AS nid, node.title AS node_title, weight_weights.weight AS weight_weights_weight, 'node' AS field_data_field_artist_node_entity_type FROM  {node} node INNER JOIN {field_data_field_contemporary_stock} field_data_field_contemporary_stock ON node.nid = field_data_field_contemporary_stock.entity_id AND (field_data_field_contemporary_stock.entity_type = 'node' AND field_data_field_contemporary_stock.deleted = '0') LEFT JOIN {field_data_field_artist} field_data_field_artist ON node.nid = field_data_field_artist.entity_id AND (field_data_field_artist.entity_type = 'node' AND field_data_field_artist.deleted = '0') LEFT JOIN {weight_weights} weight_weights ON node.nid = weight_weights.entity_id WHERE (( (field_data_field_artist.field_artist_nid = '".$artistNode->nid."' ) )AND(( (node.status = '1') AND (node.type IN  ('art')) AND (field_data_field_contemporary_stock.field_contemporary_stock_value = '1') ))) ORDER BY weight_weights_weight ASC";
-	
+
 	$query = db_query($sql);
 	//echo '<pre>';
 	$count = 0;
 	foreach($query as $row){
-		
+
 		if(in_array($row->nid, $artNids)) continue;
-		
+
 		array_push($artNids,array('target_id'=> $row->nid));
 		$count ++;
 	}
@@ -519,21 +519,21 @@ if(isset($artistNode->nid)){
 			?>
 
 		<div class="exhibition-preview preview-art-container als-container als-small" data-offset="<?php echo $activeIndex ?>">
-			
+
 			<h3><?php echo ucwords($context)?> pieces by <a href="<?php echo url('node/' . $artistNode->nid) ?>/<?php echo $context ?>"><?php echo $artistNode->title ?></a> in stockroom</h3>
 			<a class="more" style="z-index: 100;" href="<?php echo url('node/' . $artistNode->nid) ?>/<?php echo $artistArg ?>">Go to Stockroom Page</a>
 
 
 			<?php
-			
-			
+
+
 			renderArtList($artNids, null,$context);
 			?>
 		</div>
 			<?php  }else{ ?>
 			<?php if($node->field_category['und'][0]['tid'] == '24')  { ?>
-				
-				
+
+
 			<div class="exhibition-preview preview-art-container preview-art-full-width als-container als-full" data-offset="<?php echo $activeIndex ?>">
 				<h3>Other pieces by <a href="<?php echo url('node/' . $artistNode->nid) ?>"><?php echo $artistNode->title ?></a> in stockroom</h3>
 				<?php
@@ -542,8 +542,8 @@ if(isset($artistNode->nid)){
 				?>
 			</div>
 				<?php }else { ?>
-					
-					
+
+
 			<div class="exhibition-preview preview-art-container preview-art-full-width als-container als-full" data-offset="<?php echo $activeIndex ?>">
 				<h3>Contemporary pieces by <a href="<?php echo url('node/' . $artistNode->nid) ?>/contemporary"><?php echo $artistNode->title ?></a> in stockroom</h3>
 				<?php
@@ -558,9 +558,9 @@ if(isset($artistNode->nid)){
 }
 
 if($context== 'contemporary'){
-	
-	
-	if(!empty($allExhibitionArtworks)) { 
+
+
+	if(!empty($allExhibitionArtworks)) {
 		$show = true;
 		if(count($nodeexhibition)>0){
 			if(count($nodeexhibition->field_show_as)>0){
@@ -568,12 +568,12 @@ if($context== 'contemporary'){
 					$show = false;
 				}
 			}
-			
+
 		}
-		
+
 		if($show == true){
 		?>
-		
+
 	<div class="exhibition-preview preview-art-container als-container als-small" data-offset="<?php echo $activeIndex ?>">
 		<h3>Exhibition pieces by <a href="<?php echo url('node/' . $exhibitionNid) ?>"><?php echo $artistNode->title ?></a></h3>
 		<?php
@@ -601,6 +601,6 @@ if($context== 'contemporary'){
 		}
 	}
 
-	
+
 ?>
 <?php print render($page['bottom']); ?>
