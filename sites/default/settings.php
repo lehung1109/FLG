@@ -212,23 +212,7 @@
  *   );
  * @endcode
  */
-if (isset($_ENV['PANTHEON_ENVIRONMENT'])):
-$databases = array (
-  'default' => 
-  array (
-    'default' => 
-    array (
-      'database' => $_ENV['DB_NAME'],
-      'username' => $_ENV['DB_USER'],
-      'password' => $_ENV['DB_PASSWORD'],
-      'host' => $_ENV['DB_HOST'],
-      'port' => $_ENV['DB_PORT'],
-      'driver' => 'mysql',
-      'prefix' => 'gcd_',
-    ),
-  ),
-);
-endif;
+
 /**
  * Access control for update.php script.
  *
@@ -580,6 +564,31 @@ $conf['404_fast_html'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
  * Remove the leading hash signs to disable.
  */
 # $conf['allow_authorize_operations'] = FALSE;
+
+// Load environmental config, if present.
+if (isset($_SERVER['PRESSFLOW_SETTINGS'])) {
+  $pressflow_settings = json_decode($_SERVER['PRESSFLOW_SETTINGS'], TRUE);
+  foreach ($pressflow_settings as $key => $value) {
+    // One level of depth should be enough for $conf and $database.
+    if ($key == 'conf') {
+      foreach($value as $conf_key => $conf_value) {
+        $conf[$conf_key] = $conf_value;
+      }
+    }
+    elseif ($key == 'databases') {
+      // Protect default configuration but allow the specification of
+      // additional databases. Also, allows fun things with 'prefix' if they
+      // want to try multisite.
+      if (!isset($databases) || !is_array($databases)) {
+        $databases = array();
+      }
+      $databases = array_replace_recursive($databases, $value);
+    }
+    else {
+      $$key = $value;
+    }
+  }
+}
 
 $local_conf_file_path = __DIR__ . '/settings.local.php';
 if (file_exists($local_conf_file_path)) {
