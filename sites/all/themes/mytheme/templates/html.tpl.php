@@ -81,6 +81,6 @@
 <?php print $page_top; ?>
 <?php print $page ?>
 <?php print $page_bottom; ?>
-
+<script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us4.list-manage.com","uuid":"0804d859d8c877bca13ad6835","lid":"ec5f2c3470","uniqueMethods":true}) })</script>
 </body>
 </html>
