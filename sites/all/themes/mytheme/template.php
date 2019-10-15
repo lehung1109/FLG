@@ -136,13 +136,13 @@ function truncate($string, $length, $dots = "...") {
     return (strlen($string) > $length) ? substr($string, 0, $length - strlen($dots)) . $dots : $string;
 }
 function get_node_past(){
-	// SELECT * FROM `gcd_field_data_field_move_art_to_artist` 
+	// SELECT * FROM {field_data_field_move_art_to_artist} 
 	//$query = db_query("SELECT * FROM `{field_data_field_show_as}` WHERE `bundle` = 'exhibition' AND `field_show_as_tid` = '35' ORDER BY `entity_id` DESC");
 	$query = db_query("SELECT DISTINCT (
 d.`entity_id` 
 )
-FROM `gcd_field_data_field_show_as` g
-JOIN `gcd_field_data_field_exibition_date` d ON g.`entity_id` = d.`entity_id`
+FROM {field_data_field_show_as} g
+JOIN {field_data_field_exibition_date} d ON g.`entity_id` = d.`entity_id`
 WHERE g.`bundle` = 'exhibition'
 AND g.`field_show_as_tid` = '34'
 ORDER BY d.`field_exibition_date_value2` DESC ");
