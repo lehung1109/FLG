@@ -105,7 +105,24 @@ if($category == 19) {
 			<?php endif; ?>
 
 			<aside class="sidebar">
-				
+				<?php
+					// get view for current exhibitions
+					$view = views_get_view('exhibitions');
+					$view->set_display('artist_current_exhibition');
+					$arguments = array($node->nid);
+					$view->set_arguments($arguments);
+					$view->execute();
+					print $view->render();
+
+
+					// get view for upcoming exhibitions
+					$view = views_get_view('exhibitions');
+					$view->set_display('artist_upcoming_exhibition');
+					$arguments = array($node->nid);
+					$view->set_arguments($arguments);
+					$view->execute();
+					print $view->render();
+				?>
 				<div class="description">
 					<?php
 
@@ -124,25 +141,6 @@ if($category == 19) {
 				<div class="read-more-mobile">Read More</div>
 
 				<?php
-
-				// get view for current exhibitions
-				$view = views_get_view('exhibitions');
-				$view->set_display('artist_current_exhibition');
-				$arguments = array($node->nid);
-				$view->set_arguments($arguments);
-				$view->execute();
-				print $view->render();
-
-
-				// get view for upcoming exhibitions
-				$view = views_get_view('exhibitions');
-				$view->set_display('artist_upcoming_exhibition');
-				$arguments = array($node->nid);
-				$view->set_arguments($arguments);
-				$view->execute();
-				print $view->render();
-
-				
 				//past exhibitions attached to the node
 				$pastExhibitionsNodeIdArray = $node->field_past_exhibitions['und'];
 
