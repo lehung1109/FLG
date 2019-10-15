@@ -643,7 +643,7 @@ a.link-button {
 }
 .contemporary .column {
   float: left;
-  width: 695px;
+  width: 100%;
   padding-top: 20px;
   overflow: hidden;
 }
@@ -657,7 +657,8 @@ a.link-button {
   float: left;
   margin-bottom: 20px;
   margin-left: 4px;
-  min-height: 110px;
+	min-height: 110px;
+	width: calc(33% - 4px);
 }
 .contemporary .art-listing .art-list a.title {
   display: block;
@@ -1288,7 +1289,7 @@ img{
 	}
 	
 	.page-node-267 #content{
-		width: 69%;
+		/* width: 69%; */
 		clear: none;
 	}
 	
@@ -1583,7 +1584,7 @@ img{
 	}
 	
 	.page-node-267 #content {
-	    width: 63%;
+	    /* width: 63%; */
 	}
 	
 	.page-node-contemporary .main-content {
@@ -1816,7 +1817,7 @@ img{
 	}
 	
 	.page-node-267 .art-listing{
-		width: 460px;
+		/* width: 460px; */
 		margin: auto;
 	}
 	
@@ -1913,7 +1914,7 @@ img{
 	}
 	
 	.page-node-267 .art-listing {
-	    width: 345px;
+	    /* width: 345px; */
 	}
 	
 	.exhibitions .exhibition-list.large .row .info{
@@ -1932,6 +1933,11 @@ img{
 	 {
 	    max-width: 345px;
 	}
+}
+
+.page-node-267 .contemporary .art-listing .art-list img {
+	width: 100%;
+	height: auto;
 }
 
 @media screen and (min-width: 0px) and (max-width: 480px) {
@@ -1986,9 +1992,9 @@ img{
 	}
 	
 	.page-node-267 .contemporary .art-listing .art-list{
-	    width: 49%;
-	    text-align: center;
-		    margin-left: 0;
+		width: calc(50% - 4px);
+    text-align: center;
+    margin-left: 4px;
 	}
 	
 	.sidebar .media .item {
@@ -2037,5 +2043,11 @@ img{
 	.press-list ul li.views-row {
     	height: 300px;
     	width: 46%;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.contemporary .art-listing .art-list {
+		width: calc(25% - 4px);
 	}
 }

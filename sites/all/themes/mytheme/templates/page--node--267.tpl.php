@@ -51,35 +51,6 @@
 		<div class="heading">
 			<h1>CONTEMPORARY ART STOCKROOM</h1>
 		</div>
-
-		<aside class="sidebar">
-			<?php
-
-			//current
-			$view = views_get_view('exhibitions');
-			if (!$view) {
-				return;
-			}
-
-			$view->set_display('current_exhibitions_small');
-			$view->execute();
-
-			print $view->render();
-
-			//upcoming
-
-			$view = views_get_view('exhibitions');
-			if (!$view) {
-				return;
-			}
-			$view->set_display('upcoming_exhibitions_small');
-			$view->execute();
-
-			print $view->render();
-
-			?>
-			<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
-		</aside>
 		
 		<div id="content" class="column">
 			<?php 
