@@ -104,7 +104,11 @@
 					'nid' => $artistNode->nid,
 					'field_artist_image' => $artistNode->field_artist_image,
 				);
-				$surname[] = $results[3];
+				if($artistNode->nid == 940) {
+					$surname[] = $results[4];
+				} else {
+					$surname[] = $results[3];
+				}
 				array_push($artists, $artist);
 			}
 			array_multisort($surname,SORT_STRING,$artists);
@@ -126,7 +130,13 @@
 					$title = $artistNode->title;
 					$imageRef = $artistNode->field_artist_image['und'][0]['uri'];
 					$thumbnailImage = file_create_url($imageRef);
-					$title = strtoupper(implode("</br>", preg_split('/(\s)/', $title, 2)));
+					if($artist['nid'] == 940) {
+						$title = preg_split('/(\s)/', $title);
+						$title[count($title) - 1] = '<br />'.$title[count($title) - 1];
+						$title = strtoupper(implode(' ', $title));
+					} else {
+						$title = strtoupper(implode("</br>", preg_split('/(\s)/', $title, 2)));
+					}
 					if(count($artistNode->field_artist_image)>0){
 
 					?>
