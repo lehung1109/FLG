@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Act after a new subscriber has been created.
+ *
+ * @ingroup subscriber
+ */
+function simplenews_mailchimp_simplenews_subscriber_insert($subscriber) {
+  $mail = $subscriber->mail;
+  mailchimp_subscribe('fe39119af6', $mail, NULL, array(), true);
+  watchdog('test', $mail);
+}

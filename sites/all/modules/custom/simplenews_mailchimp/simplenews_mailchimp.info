@@ -1,0 +1,3 @@
+name = Simplenews mailchimp
+description = A module that add mailchimp.
+core = 7.x
