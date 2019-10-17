@@ -341,6 +341,7 @@ body {
     position: relative;
     text-align: center;
     width: 224px;
+    margin-bottom: 22px;
 }
  #webform-client-form-3740{
      border: 1px solid #DBDBDB;
@@ -349,6 +350,7 @@ body {
      position: relative;
      text-align: center;
      width: 224px;
+     margin-bottom: 22px;
 }
 #block-simplenews-1  #webform-client-form-3740{
     border:none;

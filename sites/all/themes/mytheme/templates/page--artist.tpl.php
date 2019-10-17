@@ -105,6 +105,12 @@ if($category == 19) {
 			<?php endif; ?>
 
 			<aside class="sidebar">
+				<div id="block-simplenews-1">
+					<?php
+					$block = module_invoke('simplenews', 'block_view', '1');
+					print $block['content'];
+					?>
+				</div>
 				<?php
 					// get view for current exhibitions
 					$view = views_get_view('exhibitions');
@@ -224,16 +230,6 @@ if($category == 19) {
 				</div>
 
 				<?php } ?>
-
-				
-				<div id="block-simplenews-1">
-					<?php
-					$block = module_invoke('simplenews', 'block_view', '1');
-					print $block['content'];
-					?>
-				</div>
-
-
 			</aside>
 			<div class="main-content">
 				<div class="art-showcase">

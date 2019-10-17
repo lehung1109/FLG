@@ -80,6 +80,13 @@
 
 			<aside class="sidebar">
 
+				<div id="block-simplenews-1">
+					<?php
+					//$block = module_invoke('simplenews', 'block_view', '1');
+					$block = module_invoke('webform', 'block_view', 'client-block-3740');
+					print $block['content'];
+					?>
+				</div>
 
 				<div class="description">
 					<?php
@@ -113,14 +120,6 @@
 					</div>
 					<?php } ?>
 					<div class="sharethis-wrapper"> <div class="sharethis-inline-share-buttons"></div></div>
-
-				<div id="block-simplenews-1">
-					<?php
-					//$block = module_invoke('simplenews', 'block_view', '1');
-					$block = module_invoke('webform', 'block_view', 'client-block-3740');
-					print $block['content'];
-					?>
-				</div>
 			</aside>
 			<div class="main-content">
 				<div class="art-showcase">

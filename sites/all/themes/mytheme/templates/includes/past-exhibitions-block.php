@@ -72,6 +72,17 @@ rsort($years);
 
 ?>
 
+<div id="block-simplenews-1">
+
+	<?php
+	//$block = module_invoke('simplenews', 'block_view', '1');
+	//print $block['content'];
+	$block = module_invoke('webform', 'block_view', 'client-block-3740');
+	print $block['content'];
+	
+	?>
+</div>
+
 
 <div class="past-exhibitions-block">
 	<h2 <?php if($node->nid == 259){ ?> class="active"<?php } ?>><a href="<?php echo url('node/259')?>">Current Exhibitions</a></h2>
@@ -96,14 +107,3 @@ rsort($years);
 	</select>
 	
 </div>
-
-	<div id="block-simplenews-1">
-	
-		<?php
-		//$block = module_invoke('simplenews', 'block_view', '1');
-		//print $block['content'];
-		$block = module_invoke('webform', 'block_view', 'client-block-3740');
-		print $block['content'];
-		
-		?>
-	</div>
