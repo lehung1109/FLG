@@ -2358,9 +2358,9 @@ p.newFolder.addMinus:after{
 }
 .form-submit{
 
-    width: 170px;
+    width: 192px;
     display: block;
-
+    margin: auto;
     height: 33px;
     background: #ecebe9;
     border: none;

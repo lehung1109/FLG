@@ -678,7 +678,8 @@ a.link-button {
   border-style: none none solid solid;
   border-width: medium medium 1px 1px;
   padding: 10px 54px;
-  text-transform: uppercase;
+	text-transform: uppercase;
+	width: 181px;
 }
 .artist .sidebar .list ul.current-exhibitions li a {
   font-size: 16px;
