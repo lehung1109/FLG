@@ -19,11 +19,21 @@
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>
-		 <?php
-       $block =block_load('block',5);
-       $output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
-       print $output;
-    ?>
+		<div class="header-right">
+			<?php
+				$block =block_load('block',5);
+				$output = drupal_render(_block_get_renderable_array(_block_render_blocks(array($block))));        
+				print $output;
+			?>
+
+			<div id="block-simplenews-1">
+				<?php
+				//$block = module_invoke('simplenews', 'block_view', '1');
+				$block = module_invoke('webform', 'block_view', 'client-block-3740');
+				print $block['content'];
+				?>
+			</div>
+		</div>
 		<?php if ($secondary_menu): ?>
 		<nav class="header__secondary-menu" id="secondary-menu" role="navigation">
 			<?php print theme('links__system_secondary_menu', array(

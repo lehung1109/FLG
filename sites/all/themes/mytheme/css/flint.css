@@ -1718,6 +1718,11 @@ img{
 	
 	#block-simplenews-1{
 		margin: auto;
+		width: 224px;
+	}
+
+	#block-block-5{
+			text-align: center;
 	}
 	
 	.read-more-mobile{
@@ -1849,11 +1854,6 @@ img{
 	.contemporary-artist .heading h1 a,
 	.page-node-contemporary .heading h1 a{
 		display: block;
-	}
-	
-	.node-type-exhibitions #block-simplenews-1,
-	.node-type-past-exhibitions #block-simplenews-1{
-		display: none;
 	}
 	
 	.exhibitions .sidebar{

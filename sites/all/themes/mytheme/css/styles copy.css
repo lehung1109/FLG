@@ -1511,12 +1511,6 @@ a.reset {
 		margin-left: 20px;
 		margin-right: 20px;
 	}
-	.header__logo{
-		display: block;
-		margin: 0 auto;
-		float: none;
-		text-align: center;
-	}
 	.view-news .item-list ul li{
 		margin: 0 auto;
 		float: none;
@@ -1531,6 +1525,13 @@ a.reset {
 	}
 	.show-on-mobile{
 		display: none;
+    }
+
+	.header__logo{
+		display: block;
+		margin: 0 auto;
+		float: none;
+		text-align: center;
 	}
 	
 }
