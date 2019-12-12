@@ -6,3 +6,18 @@
 function sentius_update_7001(&$sandbox) {
   $result = db_query('ALTER TABLE {notify_custom} ADD "sendnowbycron" VARCHAR(255) NOT NULL AFTER "sendat"');
 }
+
+/**
+ * Disable and uninstall views_hack module
+ */
+function sentius_update_7002() {
+  if (module_exists('views_composite_exposed_form')) {
+    module_disable(array('views_composite_exposed_form'));
+    drupal_uninstall_modules(array('views_composite_exposed_form'));
+  }
+
+  if (module_exists('views_filters_selective')) {
+    module_disable(array('views_filters_selective'));
+    drupal_uninstall_modules(array('views_filters_selective'));
+  }
+}
