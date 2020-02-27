@@ -523,7 +523,7 @@ function artDetail($artNode, $cm = true,$hidePrice = false) {
 
 
 
-function renderArtList($nids, $individualGallery = false, $context = '', $minLimit = 4) {
+function renderArtList($nids, $individualGallery = false, $context = '', $minLimit = 4, $append_uri = '') {
 
 	global $base_url;
 
@@ -542,7 +542,7 @@ function renderArtList($nids, $individualGallery = false, $context = '', $minLim
 				foreach($nids as $row_nid) {
 					$searchNode = node_load($row_nid['target_id']);
 					$activeClass = ($count == 0) ? ' active' : '';
-					$itemUrl = url('node/'.$row_nid['target_id']) ;
+					$itemUrl = url('node/'.$row_nid['target_id']) . '/' . $append_uri ;
 					$imageRef = $searchNode->field_art_image['und'][0]['uri'];
 					$imageUrl = image_style_url('art-thumbnail-slider',$imageRef);
 					?>
@@ -569,7 +569,7 @@ function renderArtList($nids, $individualGallery = false, $context = '', $minLim
 				?>
 
 				<li class="item">
-					<a class="art" href="<?php echo url('node/' . $artNode->nid) . '/' . $context ?>">
+					<a class="art" href="<?php echo url('node/' . $artNode->nid) . '/' . $context . '/' . $append_uri ?>">
 
 						<img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>">
 					</a>

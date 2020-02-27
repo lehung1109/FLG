@@ -453,7 +453,7 @@ if(isset($associatedExhibition)) {
 		<h3>Part of the <?php echo $associatedExhibition->title ?> Exhibition</h3>
 		<a class="more" href="<?php echo  url('node/' . $associatedExhibition->nid) ?> " style="z-index:1000">More from this exhibition</a>
 		<?php
-		renderArtList($associatedExhibitionArtPiecesNids, null,'exhibition');
+		renderArtList($associatedExhibitionArtPiecesNids, null,'exhibition', 4, 'exhibition');
 		?>
 	</div>
 		<?php
