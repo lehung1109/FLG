@@ -569,7 +569,7 @@ function renderArtList($nids, $individualGallery = false, $context = '', $minLim
 				?>
 
 				<li class="item">
-					<a class="art" href="<?php echo url('node/' . $artNode->nid) . '/' . $context . '/' . $append_uri ?>">
+					<a class="art" href="<?php echo url('node/' . $artNode->nid) . '/' . $context ?>">
 
 						<img src="<?php echo $imageUrl ?>" alt="<?php echo $artNode->title ?>">
 					</a>
