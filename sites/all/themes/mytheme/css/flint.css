@@ -118,7 +118,8 @@
 }
 #views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-medium'],
 #views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-genre'],
-#views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-orientation'] {
+#views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-orientation'],
+#views-exposed-form-better-search-search-block .views-exposed-widget label[for='edit-colour-tones'] {
   font-size: 14px;
   padding: 15px 0;
   font-weight: normal;
@@ -127,14 +128,15 @@
 }
 #views-exposed-form-better-search-search-block #edit-medium-wrapper,
 #views-exposed-form-better-search-search-block #edit-genre-wrapper,
-#views-exposed-form-better-search-search-block #edit-orientation-wrapper {
+#views-exposed-form-better-search-search-block #edit-orientation-wrapper,
+#views-exposed-form-better-search-search-block #edit-colour-tones-wrapper {
   border-top: 1px solid #F5F2F2;
   padding-top: 10px;
 }
 #views-exposed-form-better-search-search-block .bef-checkboxes {
   margin-bottom: 10px;
 }
-#views-exposed-form-better-search-search-block #edit-orientation-wrapper {
+#views-exposed-form-better-search-search-block #edit-colour-tones-wrapper {
   border-bottom: 1px solid #F5F2F2;
 }
 #views-exposed-form-better-search-search-block #edit-category-wrapper {
@@ -1339,7 +1341,7 @@ img{
 		margin: 0 auto;
 	}
 	#edit-sale-status-wrapper,#edit-category-wrapper,#edit-medium-wrapper .views-widget,#edit-genre-wrapper .views-widget,
-	#edit-orientation-wrapper .views-widget,#edit-width-wrapper , #edit-height-wrapper,#edit-art-price-wrapper{
+	#edit-orientation-wrapper .views-widget,#edit-width-wrapper , #edit-height-wrapper,#edit-art-price-wrapper, #edit-colour-tones-wrapper .views-widget{
 		display: none;
 		
 	}
@@ -1352,7 +1354,7 @@ img{
 	#block-block-2 {
 		margin-bottom: 0px;
 	}
-	#edit-medium-wrapper label,#edit-medium-wrapper label,#edit-genre-wrapper label,#edit-orientation-wrapper label{
+	#edit-medium-wrapper label,#edit-medium-wrapper label,#edit-genre-wrapper label,#edit-orientation-wrapper label,#edit-colour-tones-wrapper label{
 		cursor: pointer;
 		width: 100%;
 		clear: both;
@@ -1438,7 +1440,14 @@ img{
 		content: "\f068";
 		font-family: FontAwesome;
 	}
-	
+	label[for='edit-colour-tones']:after{
+		content: "\f067";
+		font-family: FontAwesome;
+	}
+	label[for='edit-colour-tones'].showplus:after{
+		content: "\f068";
+		font-family: FontAwesome;
+	}
 	.channel-selector .image-container a.image-link-container{
 		position: relative;
 	}
@@ -1756,10 +1765,10 @@ img{
 		text-align: center;
 	}
 	
-	 {
+	 /* {
 	    max-width: 460px;
 	    margin: auto;
-	}
+	} */
 	
 	.sidebar, .main-content {
 	    width: 100% !important;
@@ -1931,9 +1940,9 @@ img{
 		width: 100%;
 	}
 	
-	 {
+	 /* {
 	    max-width: 345px;
-	}
+	} */
 }
 
 .page-node-267 .contemporary .art-listing .art-list img {

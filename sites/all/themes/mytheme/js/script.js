@@ -446,6 +446,18 @@ function loadTaxo(){
 			}
 			
 		});
+
+		(jQuery)('#edit-colour-tones-wrapper label').each(function(){
+			var attr = (jQuery)(this).attr('for');
+			if(attr == 'edit-colour-tones'){
+				(jQuery)(this).click(function(){
+					(jQuery)('#edit-colour-tones-wrapper .views-widget').toggle();
+					(jQuery)(this).toggleClass('showplus');	
+				});
+				
+			}
+			
+		});
 		
 		(jQuery)('#edit-orientation-wrapper label').each(function(){
 			var attr = (jQuery)(this).attr('for');
