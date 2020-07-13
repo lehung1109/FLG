@@ -45,7 +45,7 @@ drupal_add_js('https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.m
 				<?php
 				//$block = module_invoke('simplenews', 'block_view', '1');
 				$block = module_invoke('webform', 'block_view', 'client-block-3740');
-				print $block['content'];
+				print render($block['content']);
 				?>
 			</div>
 		</div>

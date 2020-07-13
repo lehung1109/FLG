@@ -62,7 +62,7 @@ if($category == 19) {
 			<div id="block-simplenews-1">
 				<?php
 				$block = module_invoke('simplenews', 'block_view', '1');
-				print $block['content'];
+				print render($block['content']);
 				?>
 			</div>
 		</div>
