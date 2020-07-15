@@ -7,6 +7,6 @@
  */
 function simplenews_mailchimp_simplenews_subscriber_insert($subscriber) {
   $mail = $subscriber->mail;
-  mailchimp_subscribe('fe39119af6', $mail, NULL, array(), true);
+  mailchimp_subscribe('ec5f2c3470', $mail, array('FNAME' => $mail), array(), true);
   watchdog('test', $mail);
 }

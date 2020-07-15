@@ -35,7 +35,7 @@ global $base_url;
 				<?php
 				//$block = module_invoke('simplenews', 'block_view', '1');
 				$block = module_invoke('webform', 'block_view', 'client-block-3740');
-				print $block['content'];
+				print render($block['content']);
 				?>
 			</div>
 		</div>
