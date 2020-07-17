@@ -261,7 +261,9 @@ function image_field_update($entity_type, $entity, $field, $instance, $langcode,
  * Implements hook_field_delete().
  */
 function image_field_delete($entity_type, $entity, $field, $instance, $langcode, &$items) {
-  file_field_delete($entity_type, $entity, $field, $instance, $langcode, $items);
+  if($entity_type != 'node') {
+    file_field_delete($entity_type, $entity, $field, $instance, $langcode, $items);
+  }
 }
 
 /**
