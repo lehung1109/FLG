@@ -19,7 +19,7 @@ define('FEEDS_DELETE_NON_EXISTENT', 'delete');
 
 // Default limit for creating items on a page load, not respected by all
 // processors.
-define('FEEDS_PROCESS_LIMIT', 50);
+define('FEEDS_PROCESS_LIMIT', 1);
 
 /**
  * Thrown if a validation fails.
