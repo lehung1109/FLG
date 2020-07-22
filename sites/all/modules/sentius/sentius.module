@@ -1050,7 +1050,29 @@ function sentius_form_alter(&$form, &$form_state, $form_id){
     $form['name']['#title'] = 'E-mail address';
    
   }
-  
+
+  if ($form_id == 'user_admin_settings') {
+    // set mailchimp list
+    $form['mailchimp_list'] = array(
+      '#type'   => 'fieldset',
+      '#title'  => 'Mailchimp list',
+      '#weight' => -1
+    );
+
+    $form['mailchimp_list']['sentius_mclist_ids'] = array(
+      '#type'       => 'select',
+      '#title'      => 'mailchimp list',
+      '#default_value'    => variable_get('sentius_mclist_ids')
+    );
+
+    // get list mailchimp
+    $form['mailchimp_list']['sentius_mclist_ids']['#options'] = array();
+    $mailchimp_list = mailchimp_get_lists();
+
+    foreach ($mailchimp_list as $list_id => $list_name) {
+      $form['mailchimp_list']['sentius_mclist_ids']['#options'][$list_id] = $list_name->name;
+    }
+  }
 }
 
 
@@ -1183,7 +1205,10 @@ function sentius_user_register_submit($form, &$form_state) {
   // Add plain text password into user account to generate mail tokens.
   $account->password = $pass;
 
-  mailchimp_subscribe('9390598ec8', $form_state['values']['mail'], array('FNAME' => $form_state['values']['field_first_name']['und'][0]['value'], 'LNAME' => $form_state['values']['field_last_name']['und'][0]['value']));
+  $list_id = variable_get('sentius_mclist_ids');
+  if($list_id) {
+    mailchimp_subscribe($list_id, $form_state['values']['mail'], array('FNAME' => $form_state['values']['field_first_name']['und'][0]['value'], 'LNAME' => $form_state['values']['field_last_name']['und'][0]['value']));
+  }
 
   // New administrative account without notification.
   $uri = entity_uri('user', $account);
