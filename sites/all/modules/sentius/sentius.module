@@ -1183,6 +1183,8 @@ function sentius_user_register_submit($form, &$form_state) {
   // Add plain text password into user account to generate mail tokens.
   $account->password = $pass;
 
+  mailchimp_subscribe('9390598ec8', $form_state['values']['mail'], array('FNAME' => $form_state['values']['field_first_name']['und'][0]['value'], 'LNAME' => $form_state['values']['field_last_name']['und'][0]['value']));
+
   // New administrative account without notification.
   $uri = entity_uri('user', $account);
   if ($admin && !$notify) {
