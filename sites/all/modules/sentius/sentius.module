@@ -1205,8 +1205,9 @@ function sentius_user_register_submit($form, &$form_state) {
   // Add plain text password into user account to generate mail tokens.
   $account->password = $pass;
 
+  $is_subcriber_to_mailchimp = $form_state['values']['field_subcriber_to_mailchimp']['und'][0]['value'];
   $list_id = variable_get('sentius_mclist_ids');
-  if($list_id) {
+  if($list_id && $is_subcriber_to_mailchimp) {
     mailchimp_subscribe($list_id, $form_state['values']['mail'], array('FNAME' => $form_state['values']['field_first_name']['und'][0]['value'], 'LNAME' => $form_state['values']['field_last_name']['und'][0]['value']));
   }
 

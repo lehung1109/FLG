@@ -203,7 +203,7 @@ function mytheme_form_alter(&$form, $form_state, $form_id) {
 	}
 	if($form_id == 'user_register_form'){
 		//print_r($form);
-		$form['captcha_questions_answer_given']['#weight'] = 100;
+		$form['captcha_questions_answer_given']['#weight'] = 51;
 	}
 	if($form_id == 'views_form_author_block_1'){
 		$form['actions']['submit']['#submit'][] = 'mytheme_submit_handle_form_og';

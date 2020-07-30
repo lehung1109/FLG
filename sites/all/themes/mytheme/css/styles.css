@@ -5262,3 +5262,10 @@ text-transform: uppercase;
         margin: 25px 0 15px;
     }
 }
+#block-formblock-user-register .form-type-checkbox {
+    display: flex;
+}
+#block-formblock-user-register .form-type-checkbox label {
+    display: inline;
+    margin-left: 6px;
+}
