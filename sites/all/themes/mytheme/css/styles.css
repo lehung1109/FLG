@@ -5269,3 +5269,6 @@ text-transform: uppercase;
     display: inline;
     margin-left: 6px;
 }
+#block-formblock-user-register .form-type-checkbox .tooltip {
+    display: none;
+}
