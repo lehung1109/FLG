@@ -1055,7 +1055,7 @@ function sentius_form_alter(&$form, &$form_state, $form_id){
     // set mailchimp list
     $form['mailchimp_list'] = array(
       '#type'   => 'fieldset',
-      '#title'  => 'Mailchimp list',
+      '#title'  => 'Mailchimp',
       '#weight' => -1
     );
 
@@ -1063,6 +1063,13 @@ function sentius_form_alter(&$form, &$form_state, $form_id){
       '#type'       => 'select',
       '#title'      => 'mailchimp list',
       '#default_value'    => variable_get('sentius_mclist_ids')
+    );
+
+    $form['mailchimp_list']['sentius_mc_tag'] = array(
+      '#type'       => 'textfield',
+      '#description' => 'Tag is separated by commas',
+      '#title'      => 'mailchimp tag',
+      '#default_value'    => variable_get('sentius_mc_tag')
     );
 
     // get list mailchimp
@@ -1209,6 +1216,37 @@ function sentius_user_register_submit($form, &$form_state) {
   $list_id = variable_get('sentius_mclist_ids');
   if($list_id && $is_subcriber_to_mailchimp) {
     mailchimp_subscribe($list_id, $form_state['values']['mail'], array('FNAME' => $form_state['values']['field_first_name']['und'][0]['value'], 'LNAME' => $form_state['values']['field_last_name']['und'][0]['value']));
+
+    // get mailchimp object
+    try {
+      $mc_lists = mailchimp_get_api_object('MailchimpLists');
+      $segments = mailchimp_get_segments($list_id, true);
+      $tags = variable_get('sentius_mc_tag');
+      $tags = explode(',', $tags);
+      array_walk($tags, 'trim');
+  
+      // update or create tag(segment)
+      foreach ($tags as $tag) {
+        $tag_exist = false;
+        foreach ($segments as $segment) {
+          if($segment->name == $tag) {
+            $mc_lists->addSegmentMember($list_id, $segment->id, $form_state['values']['mail']);
+            $tag_exist = true;
+          }
+        }
+      
+        if(empty($tag_exist)) {
+          $mc_lists->addSegment($list_id, $tag, array(
+            'type' => 'static',
+            'static_segment' => array($form_state['values']['mail'])
+          ));
+        }
+      }
+    } catch (\Throwable $th) {
+      watchdog('mailchimp', 'An error occurred requesting add tag from MailChimp. "%message"', array(
+        '%message' => $th->getMessage(),
+      ), WATCHDOG_ERROR);
+    }
   }
 
   // New administrative account without notification.
