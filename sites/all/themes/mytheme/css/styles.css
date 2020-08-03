@@ -5264,6 +5264,7 @@ text-transform: uppercase;
 }
 #block-formblock-user-register .form-type-checkbox {
     display: flex;
+    align-items: flex-start;
 }
 #block-formblock-user-register .form-type-checkbox label {
     display: inline;
