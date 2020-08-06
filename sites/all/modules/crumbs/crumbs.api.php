@@ -4,7 +4,8 @@
 /**
  * A hook to register crumbs plugins.
  *
- * @param crumbs_InjectedAPI_hookCrumbsPlugins $api
+ * @param $api
+ *   :crumbs_InjectedAPI_hookCrumbsPlugins
  *   An object with methods to register plugins.
  *   See the class definition of crumbs_InjectedAPI_hookCrumbsPlugins, which
  *   methods are available.
@@ -26,29 +27,29 @@ function hook_crumbs_plugins($api) {
 interface crumbs_MonoPlugin_example extends crumbs_MonoPlugin {
 
   /**
-   * @param string $path
+   * Specify if this plugin is disabled by default,
+   * instead of inheriting from the next matching wildcard rule.
+   *
+   * @return :boolean
+   *   TRUE, if the plugin is disabled by default.
+   */
+  function disabledByDefault();
+
+  /**
+   * @param $path
    *   System path that we want to find a parent for.
-   * @param array $item
+   * @param $item
    *   Router item, as returned by menu_get_item(), but with a few convenience
    *   additions added in crumbs_get_router_item().
    *
    * @return
    *   The parent path suggested by this plugin.
    */
-  function findParent($path, $item);
+  function findParent();
 
   /**
    * Same signature as findParent()
    * Only called for router path node/%
-   *
-   * @param string $path
-   *   System path that we want to find a parent for.
-   * @param array $item
-   *   Router item, as returned by menu_get_item(), but with a few convenience
-   *   additions added in crumbs_get_router_item().
-   *
-   * @return
-   *   The parent path suggested by this plugin.
    */
   function findParent__node_x($path, $item);
 
@@ -67,15 +68,6 @@ interface crumbs_MonoPlugin_example extends crumbs_MonoPlugin {
   /**
    * Same signature as findTitle()
    * Only called for router path node/%
-   *
-   * @param $path
-   *   System path of the breadcrumb item that we want to find a link text for.
-   * @param $item
-   *   Router item, as returned by menu_get_item(), but with a few convenience
-   *   additions added in crumbs_get_router_item().
-   *
-   * @return
-   *   A string link text.
    */
   function findTitle__node_x($path, $item);
 }
@@ -90,6 +82,16 @@ interface crumbs_MonoPlugin_example extends crumbs_MonoPlugin {
  * documentation, no class actually implements it.
  */
 interface crumbs_MultiPlugin_example extends crumbs_MultiPlugin {
+
+  /**
+   * Specify if some of the rules from describe() are disabled by default,
+   * instead of inheriting from the next matching wildcard rule.
+   *
+   * @return :array
+   *   Regular array, where the values identify crumbs rules or wildcards.
+   *   Rule keys are relative to the plugin key.
+   */
+  function disabledByDefault();
 
   /**
    * @param $path
@@ -128,17 +130,6 @@ interface crumbs_MultiPlugin_example extends crumbs_MultiPlugin {
   /**
    * Same signature as findParent()
    * Only called for router path node/%
-   *
-   * @param $path
-   *   System path of the breadcrumb item that we want to find a link text for.
-   * @param $item
-   *   Router item, as returned by menu_get_item(), but with a few convenience
-   *   additions added in crumbs_get_router_item().
-   *
-   * @return
-   *   A key-value array, where the keys identify crumbs rules, and the values
-   *   are candidates for the link title.
-   *   Rule keys are relative to the plugin key.
    */
   function findTitle__node_x($path, $item);
 }

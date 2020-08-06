@@ -3,8 +3,6 @@
 
 /**
  * Implements hook_crumbs_plugins().
- *
- * @param crumbs_InjectedAPI_hookCrumbsPlugins $api
  */
 function forum_crumbs_plugins($api) {
 
@@ -12,7 +10,6 @@ function forum_crumbs_plugins($api) {
   $api->monoPlugin('forumTermName');
   $api->monoPlugin('forumThread');
   $api->monoPlugin('forumThreadCreate');
-  $api->monoPlugin('forumThreadCreateTitle');
 }
 
 
@@ -21,11 +18,8 @@ function forum_crumbs_plugins($api) {
 
 class forum_CrumbsMonoPlugin_forumTerm implements crumbs_MonoPlugin {
 
-  /**
-   * @inheritdoc
-   */
   function describe($api) {
-    $api->titleWithLabel(t('The parent forum'), t('Parent'));
+    return t('Let /forum/123 be the parent path of /forum/456, if 123 is the parent of 456.');
   }
 
   /**
@@ -43,6 +37,7 @@ class forum_CrumbsMonoPlugin_forumTerm implements crumbs_MonoPlugin {
     $term = is_numeric($term) ? taxonomy_term_load($term) : $term;
 
     $parents = taxonomy_get_parents($term->tid);
+    $result = array();
     foreach ($parents as $parent_tid => $parent_term) {
       if ($parent_term->vocabulary_machine_name == $term->vocabulary_machine_name) {
         // The parent forum
@@ -60,11 +55,8 @@ class forum_CrumbsMonoPlugin_forumTerm implements crumbs_MonoPlugin {
 
 class forum_CrumbsMonoPlugin_forumTermName implements crumbs_MonoPlugin {
 
-  /**
-   * @inheritdoc
-   */
   function describe($api) {
-    $api->titleWithLabel(t('The forum\'s term name'), t('Title'));
+    return t('Let /forum/123 be the parent path of /forum/456, if 123 is the parent of 456.');
   }
 
   /**
@@ -92,11 +84,8 @@ class forum_CrumbsMonoPlugin_forumTermName implements crumbs_MonoPlugin {
 
 class forum_CrumbsMonoPlugin_forumThread implements crumbs_MonoPlugin {
 
-  /**
-   * @inheritdoc
-   */
   function describe($api) {
-    $api->titleWithLabel(t('The forum the node belongs to'), t('Parent'));
+    return t('Let /forum/456 be the parent path of /node/789, if node 789 is a thread in this forum.');
   }
 
   /**
@@ -117,22 +106,16 @@ class forum_CrumbsMonoPlugin_forumThread implements crumbs_MonoPlugin {
 // -----------------------------------------------------------------------------
 
 
-class forum_CrumbsMonoPlugin_forumThreadCreate implements crumbs_MonoPlugin_FindParentInterface {
+class forum_CrumbsMonoPlugin_forumThreadCreate implements crumbs_MonoPlugin {
 
-  /**
-   * @inheritdoc
-   */
   function describe($api) {
-    $api->titleWithLabel(t('node/add/*/* in a forum'), t('Path'));
-    $api->titleWithLabel(t('The forum where the node is going to be created.'), t('Parent'));
+    return t('Let /forum/456 be the parent path of /node/789, if node 789 is a thread in this forum.');
   }
 
   /**
    * Set a parent path for e.g. node/add/(type)/(tid), where
    * - (type) a forum-enabled node type, e.g. "forum".
    * - (tid) is the forum term tid.
-   *
-   * @inheritdoc
    */
   function findParent($path, $item) {
     if (
@@ -155,25 +138,11 @@ class forum_CrumbsMonoPlugin_forumThreadCreate implements crumbs_MonoPlugin_Find
       }
     }
   }
-}
-
-
-class forum_CrumbsMonoPlugin_forumThreadCreateTitle implements crumbs_MonoPlugin_FindTitleInterface {
-
-  /**
-   * @inheritdoc
-   */
-  function describe($api) {
-    $api->titleWithLabel(t('node/add/*/* in a forum'), t('Path'));
-    $api->titleWithLabel('"' . t('New topic') . '"', t('Title'));
-  }
 
   /**
    * Set a breadcrumb item title for e.g. node/add/(type)/(tid), where
    * - (type) a forum-enabled node type, e.g. "forum".
    * - (tid) is the forum term tid.
-   *
-   * @inheritdoc
    */
   function findTitle($path, $item) {
     if (

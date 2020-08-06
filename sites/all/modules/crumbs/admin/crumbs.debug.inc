@@ -3,33 +3,14 @@
 
 function crumbs_debug_page() {
   drupal_set_title('Crumbs debug');
-
-  $path_to_test = '';
-  if (isset($_GET['path_to_test'])) {
-    $path_to_test = $_GET['path_to_test'];
-  }
-  elseif (!empty($_SESSION['crumbs.admin.debug.history'])) {
-    foreach ($_SESSION['crumbs.admin.debug.history'] as $path => $true) {
-      if ('admin' !== substr($path, 0, 5)) {
-        $path_to_test = $path;
-      }
-      elseif ('admin/structure/crumbs' !== substr($path, 0, 22)) {
-        $admin_path_to_test = $path;
-      }
-    }
-    if (empty($path_to_test) && !empty($admin_path_to_test)) {
-      $path_to_test = $admin_path_to_test;
-    }
-  }
-
-  $path_checked = check_plain($path_to_test);
+  $path = isset($_GET['path_to_test']) ? $_GET['path_to_test'] : '';
+  $path_checked = check_plain($path);
   $form_action = url('admin/structure/crumbs/debug');
 
   $input_html = <<<EOT
-<input id="crumbs-admin-debug-path" type="text" class="form-text" size="40" name="path_to_test" value="$path_checked" />
-<input type="submit" value="Go" class="form-submit" />
+<input id="path" type="text" class="form-text" size="40" name="path_to_test" value="$path_checked"/>
 EOT;
-  $input_html = t('Breadcrumb for: !text_field', array('!text_field' => $input_html));
+  $input_html = t('Path: !text_field', array('!text_field' => $input_html));
   $text = <<<EOT
 <p>This page allows to have a look "behind the scenes", so you can analyse
 which crumbs plugins and rules are responsible for the "crumbs parent" to a
@@ -47,102 +28,131 @@ EOT;
       <label for="path">$input_html</label>
     </form>
 EOT;
+  if (strlen($path)) {
+    crumbs_benchmark();
+    $log = array();
 
-  if (strlen($path_to_test)) {
-    $path_to_test = drupal_get_normal_path($path_to_test);
-    $html .= _crumbs_admin_debug_matrix($path_to_test);
-  }
+    $path = drupal_get_normal_path($path);
 
-  if (!empty($_SESSION['crumbs.admin.debug.history'])) {
-    $recently_visited = '';
-    foreach (array_reverse($_SESSION['crumbs.admin.debug.history']) as $path => $true) {
-      if ('admin/structure/crumbs/debug' !== substr($path, 0, 28)) {
-        // We can't use l() directly, since this would add an "active" class.
-        $url = url('admin/structure/crumbs/debug', array('query' => array('path_to_test' => $path)));
-        $link = l($path, $url, array('external' => TRUE));
-        $recently_visited .= '<li>' . $link . '</li>';
+    $log[] = crumbs_benchmark('drupal_get_normal_path()');
+
+    $item = crumbs_get_router_item($path);
+
+    $log[] = crumbs_benchmark('crumbs_get_router_item("' . $path . '")');
+
+    $engine = crumbs_get_plugin_engine();
+
+    $log[] = crumbs_benchmark('crumbs_get_plugin_engine()');
+
+    $op = new crumbs_PluginOperation_findTitle($path, $item, array());
+    $engine->invokeAll_find($op);
+    $title = $op->getValue();
+    $title_candidates = $op->getLoggedCandidates();
+    $title_candidate_key = $op->getCandidateKey();
+
+    $log[] = crumbs_benchmark('find title');
+
+    $op = new crumbs_PluginOperation_findParent($path, $item, array());
+    $engine->invokeAll_find($op);
+    $parent_path = $op->getValue();
+    $parent_path_candidates = $op->getLoggedCandidates();
+    $parent_path_candidate_key = $op->getCandidateKey();
+    $parent_path = drupal_get_normal_path($parent_path);
+    $parent_item = crumbs_get_router_item($parent_path);
+
+    $log[] = crumbs_benchmark('find parent');
+
+    if (!empty($parent_item)) {
+      $op = new crumbs_PluginOperation_findTitle($parent_path, $parent_item, array());
+      $engine->invokeAll_find($op);
+      $parent_title = $op->getValue();
+      $parent_title_candidates = $op->getLoggedCandidates();
+      $parent_title_candidate_key = $op->getCandidateKey();
+    }
+
+    $log[] = crumbs_benchmark('find parent title');
+
+    $log_html = implode('<br/>', $log);
+
+    $default_row = array(
+      '',
+      '(default)',
+      $item['title'],
+      crumbs_reduce_path($path),
+      $parent_item['title'],
+    );
+
+    $sort = array();
+    $rule_found = FALSE;
+    foreach (array('title', 'parent_path', 'parent_title') as $i => $k) {
+      if (!isset(${$k . '_candidates'})) {
+        continue;
+      }
+      if (!isset($$k)) {
+        $default_row[$i + 2] = '<strong>' . $default_row[$i + 2] . '</strong>';
+      }
+      foreach (${$k . '_candidates'} as $key => $x) {
+        list($candidate, $weight) = $x;
+        if (FALSE === $weight) {
+          // This one is disabled. Continue.
+          $weight = 'FALSE';
+        }
+        elseif (is_null($weight)) {
+          $weight = '';
+        }
+        elseif (!is_numeric($weight)) {
+          $weight = '?';
+        }
+        if (!isset($sort[$weight][$key])) {
+          $sort[$weight][$key] = array(
+            $weight,
+            $key,
+            '',
+            '',
+            '',
+          );
+        }
+        if (FALSE === $candidate) {
+          $candidate = 'FALSE';
+        }
+        elseif (is_null($candidate)) {
+          $candidate = '-';
+        }
+        if ($key === ${$k . '_candidate_key'}) {
+          $candidate = '<strong>' . check_plain($candidate) . '</strong>';
+        }
+        $sort[$weight][$key][$i + 2] = $candidate;
       }
     }
-    if ($recently_visited) {
-      $html .= t('Recently visited') . ':<ol>' . $recently_visited . '</ol>';
-    }
-  }
 
+    ksort($sort);
+    $all = array();
+    foreach ($sort as $weight => $rows) {
+      foreach ($rows as $key => $row) {
+        $all[] = $row;
+      }
+    }
+
+    // Default row.
+    $all[] = $default_row;
+
+    $head = array(
+      'Weight',
+      'Key',
+      'Title candidate',
+      'Parent path candidate',
+      'Parent title candidate',
+    );
+    $table = theme('table', array(
+      'header' => $head,
+      'rows' => $all,
+    ));
+
+    $html .= <<<EOT
+      <p>$text</p>
+      <p>$log_html</p>
+      $table
+EOT;
+  }
   return $html;
-}
-
-function _crumbs_admin_debug_matrix($path_to_test) {
-
-  // Create a local version of the service factory.
-  $service_factory = new crumbs_ServiceFactory();
-  $services = new crumbs_Container_LazyServices($service_factory);
-  $candidate_logger = new crumbs_Debug_CandidateLogger();
-  $services->pluginEngine->setCandidateLogger($candidate_logger);
-  $page_info = $services->page;
-  $page_info->set('path', $path_to_test);
-  // Trigger breadcrumb calculation.
-  $trail = $page_info->trail;
-  $breadcrumb_items = $page_info->rawBreadcrumbItems;
-  $titles = array();
-  foreach ($breadcrumb_items as $item) {
-    $path = $item['link_path'];
-    if (isset($trail[$path]) && isset($item['title'])) {
-      $titles[$path] = $item['title'];
-    }
-  }
-
-  list($matrix, $best_cells, $weights) = $candidate_logger->getAsMatrix(array_reverse($trail));
-
-  $matrix_thead_tr_first = '<td></td><td></td>';
-  $matrix_thead_tr_second = '<td></td><td></td>';
-  $matrix_thead_tr_third = '<th>' . t('Candidate key') . '</th><th>' . t('Weight') . '</th>';
-
-  foreach (array_reverse(array_keys($trail)) as $i => $path) {
-    $title = isset($titles[$path]) ? l($titles[$path], $path) : FALSE;
-    $separator = ($i > 0) ? '&laquo;' : ':';
-    $matrix_thead_tr_first .= '<td rowspan="' . (count($matrix) + 3) . '">' . $separator . '</td>';
-    $matrix_thead_tr_third .= '<th>' . t('Title') . '</th>';
-
-    if ($i + 1 < count($trail)) {
-      $td_opening = '<td colspan="2"';
-      $path_eff = $path;
-      $matrix_thead_tr_third .= '<th>' . t('Parent') . '</th>';
-    }
-    else {
-      $td_opening = '<td';
-      $path_eff = '<front>';
-    }
-
-    if (FALSE !== $title) {
-      $matrix_thead_tr_first .= $td_opening . '>' . $title . '</td>';
-      $matrix_thead_tr_second .= $td_opening . '><code>' . check_plain($path_eff) . '</code></td>';
-    }
-    else {
-      $matrix_thead_tr_first .= $td_opening . ' rowspan="2"><strike><code>' . l($path_eff, $path_eff) . '</code></strike></td>';
-    }
-  }
-  $matrix_thead = '<tr>' . $matrix_thead_tr_first . '</tr>';
-  $matrix_thead .= '<tr>' . $matrix_thead_tr_second . '</tr>';
-  $matrix_thead .= '<tr>' . $matrix_thead_tr_third . '</tr>';
-
-  $matrix_tbody = '';
-  $odd = TRUE;
-  foreach ($matrix as $key => $row_cells) {
-    $row_html = '<td>' . $key . '</td><td>' . $weights[$key] . '</td>';
-    foreach ($row_cells as $col_key => $cell) {
-      if (':parent' === substr($col_key, -7)) {
-        $cell = '<code>' . $cell . '</code>';
-      }
-      if (!empty($best_cells[$key][$col_key])) {
-        $cell = '<strong>' . $cell . '</strong>';
-      }
-      $row_html .= '<td>' . $cell . '</td>';
-    }
-    $class = $odd ? 'odd' : 'even';
-    $odd = !$odd;
-    $matrix_tbody .= '<tr class="' . $class . '">' . $row_html . '</tr>';
-  }
-
-  $table = '<table>' . $matrix_thead . $matrix_tbody . '</table>';
-  return '<div style="overflow-x: auto;">' . $table . '</div>';
 }

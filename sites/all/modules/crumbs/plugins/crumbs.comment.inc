@@ -3,8 +3,6 @@
 
 /**
  * Implements hook_crumbs_plugins().
- *
- * @param crumbs_InjectedAPI_hookCrumbsPlugins $api
  */
 function comment_crumbs_plugins($api) {
   $api->monoPlugin('reply');
@@ -16,10 +14,10 @@ function comment_crumbs_plugins($api) {
 class comment_CrumbsMonoPlugin_reply implements crumbs_MonoPlugin {
 
   /**
-   * @inheritdoc
+   * Describe this plugin for the configuration form.
    */
   function describe($api) {
-    $api->titleWithLabel(t("The comment's node"), t('Parent'));
+    return t('Make node/% the parent for comment/reply/%');
   }
 
   /**
@@ -37,10 +35,10 @@ class comment_CrumbsMonoPlugin_reply implements crumbs_MonoPlugin {
 class comment_CrumbsMonoPlugin_comment implements crumbs_MonoPlugin {
 
   /**
-   * @inheritdoc
+   * Describe this plugin for the configuration form.
    */
   function describe($api) {
-    $api->titleWithLabel(t("The comment's node"), t('Parent'));
+    return t('Make node/% the parent for comment/%');
   }
 
   /**
@@ -59,7 +57,7 @@ class comment_CrumbsMonoPlugin_comment implements crumbs_MonoPlugin {
 class comment_CrumbsMonoPlugin_skip implements crumbs_MonoPlugin {
 
   /**
-   * @inheritdoc
+   * Describe this plugin for the configuration form.
    */
   function describe($api) {
     return t('Skip comment/% in the breadcrumb.');

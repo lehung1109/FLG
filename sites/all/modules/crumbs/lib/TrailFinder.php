@@ -3,44 +3,20 @@
 
 class crumbs_TrailFinder {
 
-  /**
-   * @var crumbs_ParentFinder
-   */
   protected $parentFinder;
 
-  /**
-   * @var crumbs_Router;
-   */
-  protected $router;
-
-  /**
-   * @param crumbs_ParentFinder $parent_finder
-   * @param crumbs_Router $router
-   */
-  function __construct($parent_finder, $router) {
+  function __construct($parent_finder) {
     $this->parentFinder = $parent_finder;
-    $this->router = $router;
-  }
-
-  /**
-   * @param string $path
-   * @return array
-   */
-  function getForPath($path) {
-    return $this->buildTrail($path);
   }
 
   /**
    * Build the raw trail.
-   *
-   * @param string $path
-   * @return array
    */
   function buildTrail($path) {
-    $path = $this->router->getNormalPath($path);
+    $path = drupal_get_normal_path($path);
     $trail_reverse = array();
-    $front_normal_path = $this->router->getFrontNormalPath();
-    $front_menu_item = $this->router->getRouterItem($front_normal_path);
+    $front_normal_path = drupal_get_normal_path(variable_get('site_frontpage', 'node'));
+    $front_menu_item = crumbs_get_router_item($front_normal_path);
     $front_menu_item['href'] = '<front>';
     while (strlen($path) && $path !== '<front>' && $path !== $front_normal_path) {
       if (isset($trail_reverse[$path])) {
@@ -51,12 +27,12 @@ class crumbs_TrailFinder {
         }
         break;
       }
-      $item = $this->router->getRouterItem($path);
+      $item = crumbs_get_router_item($path);
       // If this menu item is a default local task and links to its parent,
       // skip it and start the search from the parent instead.
       if ($item && ($item['type'] & MENU_LINKS_TO_PARENT)) {
         $path = $item['tab_parent_href'];
-        $item = $this->router->getRouterItem($item['tab_parent_href']);
+        $item = crumbs_get_router_item($item['tab_parent_href']);
       }
 
       // For a path to be included in the trail, it must resolve to a valid
