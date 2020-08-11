@@ -1,0 +1,16 @@
+; ------------------------------------------------------------------------------
+; Custom commerce shipping
+; ------------------------------------------------------------------------------
+name = FLG Commerce Shipping
+description = Custom Commerce shipping.
+package = Custom
+core = 7.x
+version = 7.x-1.0
+project = Custom
+
+; ------------------------------------------------------------------------------
+; Dependencies
+; ------------------------------------------------------------------------------
+dependencies[] = flg_commerce
+dependencies[] = commerce_shipping
+dependencies[] = commerce_shipping_ui

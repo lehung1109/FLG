@@ -1,3 +1,4 @@
 name = Custom Module
 description = A module that add js behaviors.
 core = 7.x
+package = Custom

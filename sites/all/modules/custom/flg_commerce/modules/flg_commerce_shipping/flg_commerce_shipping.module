@@ -1,0 +1,161 @@
+<?php
+
+/**
+ * @file
+ * Defines an shipping method.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function flg_commerce_shipping_menu() {
+  $items = array();
+
+  $items['admin/commerce/config/shipping/postcode'] = array(
+    'title' => 'Postcode Range',
+    'description' => 'Manage postcode.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('flg_commerce_shipping_postcode_form'),
+    'access arguments' => array('administer shipping'),
+    'weight' => 15,
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+/**
+ * Postcode argument callbacks.
+ */
+function flg_commerce_shipping_postcode_form($form, &$form_state) {
+  $form['postcode_fieldset'] = array(
+    '#type'         => 'fieldset',
+    '#title'        => t('Postcode Range'),
+    '#weight'       => 0,
+    '#collapsible'  => TRUE,
+    '#collapsed'    => TRUE,
+  );
+
+  // get postcode range data
+  $header = array('Postcode Range', 'Price');
+  $rows = array();
+  $result = db_select('postcode_range', 'p')
+  ->fields('p')
+  ->execute()
+  ->fetchAll(PDO::FETCH_ASSOC);
+
+  if(!empty($result)) {
+    foreach($result as $data) {
+      $rows[] = array(
+        $data['postcode_range_start'] . ' - ' . $data['postcode_range_end'],
+        $data['price']
+      );
+    }
+  }
+
+  $form['postcode_fieldset']['postcode_range'] = array(
+    '#type' => 'item',
+    '#markup' => theme('table', array('header' => $header, 'rows' => $rows)),
+    '#weight' => 0,
+  );
+
+  $form['postcode_upload'] = array(
+    '#type' => 'file',
+    '#title' => t('input text'),
+    '#size' => 60, 
+  );
+
+  $form['postcode_import'] = array(
+    '#type' => 'submit',
+    '#value' => t('Import'),
+    '#weight' => 2,
+    '#ajax' => array(
+      'callback' => 'flg_commerce_shipping_postcode_form_import',
+    )
+  );
+  return $form;
+}
+
+/**
+ * Menu callback for AJAX additions. Import postcode range
+ */
+function flg_commerce_shipping_postcode_form_import($form, $form_state) {
+  if($_FILES['files']['tmp_name']['postcode_upload']) {
+    $handle = fopen($_FILES['files']['tmp_name']['postcode_upload'], 'r');
+
+    if($handle !== FALSE) {
+      db_query("DELETE FROM {postcode_range} WHERE 1");
+      $header = fgetcsv($handle, 0);
+
+      while(1) {
+        $row = fgetcsv($handle, 0);
+
+        if($row !== FALSE) {
+          $postcode_range = array_map('trim', explode('-', $row[0]));
+          db_insert('postcode_range')
+          ->fields(array(
+            'price' => $row[1],
+            'postcode_range_start' => $postcode_range[0],
+            'postcode_range_end' => $postcode_range[1],
+          ))
+          ->execute();
+        } else {
+          break;
+        }
+      }
+    }
+
+    return array('#type' => 'ajax', '#commands' => array('command' => 'reloadPage'));
+  }
+  return;
+}
+
+/**
+ * Implements hook_commerce_shipping_method_info().
+ */
+function flg_commerce_shipping_commerce_shipping_method_info() {
+  return array(
+    'flat_rate_shipping_method' => array(
+      'title' => t('Flat rate'),
+      'description' => t('Lets you create flat rate services, specifying their base rates and using custom code to apply additional rate calculation logic.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_commerce_shipping_service_info
+ */
+function flg_commerce_shipping_commerce_shipping_service_info()
+{
+  $shipping_services = array();
+
+  $shipping_services['flat_rate_shipping_service'] = array(
+    'title' => t('Flat Rate shipping service'),
+    'description' => t(''),
+    'display_title' => t('Shipping'),
+    'shipping_method' => 'flat_rate_shipping_method',
+    'price_component' => 'shipping',
+    'callbacks' => array(
+      'rate' => 'flg_commerce_shipping_flat_rate_shipping_service_rate',
+    ),
+  );
+
+  return $shipping_services;
+}
+
+/**
+ * shipping service callbacks
+ * 
+ * Returns a base price array for a shipping service
+ * calculated for the given order.
+ */
+function flg_commerce_shipping_flat_rate_shipping_service_rate(Type $var = null)
+{
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+  return array(
+    'amount' => 2000,
+    'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
+    'data' => array(),
+  );
+}

@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Contains update hooks for the commerce_shipping module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function flg_commerce_shipping_schema() {
+  $schema = array();
+
+  $schema['postcode_range'] = array(
+    'description' => 'Generic postcode table for shipping.',
+    'fields' => array(
+      'pid' => array(
+        'description' => 'Primary Key: Unique postcode ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+      ),
+      'area_slug' => array(
+        'description' => 'Area of post code.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => ''
+      ),
+      'postcode_range_start' => array(
+        'description' => '',
+        'type' => 'int',
+        'not null' => FALSE,
+        'unsigned' => TRUE,
+      ),
+      'postcode_range_end' => array(
+        'description' => '',
+        'type' => 'int',
+        'not null' => FALSE,
+        'unsigned' => TRUE,
+      ),
+      'price' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => ''
+      ),
+    ),
+    'primary key' => array('pid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Add address field for the commerce_shipping customer profile.
+ */
+function flg_commerce_shipping_update_7000(&$sandbox) {
+  $profile_types = commerce_shipping_commerce_customer_profile_type_info();
+  commerce_customer_configure_customer_profile_type($profile_types['shipping']);
+  return t('Address field added to commerce shipping customer profile.');
+}
