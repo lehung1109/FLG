@@ -126,6 +126,10 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 				<a class='title' href='<?php echo url('node/' . $node->nid); ?>'><?php echo $node->title; ?></a>
 				<?php echo $comma_separated ?>
 			</div>
+
+			<div class="btn-add-to-cart">
+				<button class="btn">Add to cart</button>
+			</div>
 			<?php
 
 			$title = $node->title;
@@ -164,7 +168,7 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 			</div>
 			<?php if($user->uid > 0){$list = sentius_getTaxonomy();?> 
 			<div class="favourite">
-				<p>Add this art to folder: <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add" id="buttonAdd" nid="<?php echo $_GET['nodeId']?>" /><p>
+				<p>Add this art to folder: <select id="tid"><?php foreach($list as $row){?><option value="<?php echo $row->tid?>"><?php echo $row->taxonomy_term_data_name?></option><?php }?></select><input type="button" value="Add to cart" id="buttonAdd" nid="<?php echo $_GET['nodeId']?>" /><p>
 			</div>
 		<?php }?>
 
@@ -225,9 +229,5 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 				<a class="previous-page page-link search-item <?php echo $nextClass ?>" href="<?php echo $nextPageUrl ?>"><span>next ></span></a>
 			</div>
 		</div>
-
-
-
-
 	</div>
 </div>

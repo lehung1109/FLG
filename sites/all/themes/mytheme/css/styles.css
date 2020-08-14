@@ -192,14 +192,25 @@ body {
 #block-block-1{
     font-size: 11px;
     line-height: 1.5em;
+}
+
+#block-block-1 .footer__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#block-block-1 .footer-payment {
+    text-align: left;
+}
+
+#block-block-1 .footer-text {
     text-align: right;
 }
 
 #navigation .links li, #navigation .menu li {
-
     padding:0;
 }
-
 
 #content, .region-sidebar-first, .region-sidebar-second, #footer {
     
@@ -207,7 +218,6 @@ body {
     padding-right: 0px;
     word-wrap: break-word;
 }
-
 
 .panels-flexible-region-1-center {
     float: left;
@@ -355,8 +365,7 @@ body {
 }
 #block-simplenews-1  #webform-client-form-3740{
     border:none;
-    padding:0px;
-    margin:0px;
+    margin:auto;
 }
 
  #webform-client-form-3740 #edit-submitted-email{
@@ -1503,7 +1512,12 @@ a.reset {
 #block-block-5 a{
     display: inline-block;
     text-transform: uppercase;
-    margin-right: 20px;
+    margin-right: 15px;
+}
+@media screen and (max-width: 767px) {
+    #block-block-5 .cart {
+        margin-right: 0;
+    }
 }
 
 #views-form-author-block-1 .tabledrag-toggle-weight-wrapper{
@@ -2376,13 +2390,18 @@ p.newFolder.addMinus:after{
 	max-width: 280px;
 }
 #buttonAdd{
-        width: auto;
+    width: auto;
+    padding: 6px 20px;
+    border-radius: 0;
+    border: 1px solid black;
     display: inline-block;
-    height: 22px;
-    background: #ecebe9;
-    border: none;
     cursor: pointer;
     margin-left: 10px;
+}
+#buttonAdd:hover{
+	border: 1px solid #30a5b9;
+	background-color: #30a5b9;
+	color: white;
 }
 
 .form-item{

@@ -395,7 +395,6 @@ h3 {
   overflow: hidden;
 }
 .artwork .art-image .art-detail {
-  float: left;
   font-size: 12px;
   text-align: left;
 }
@@ -403,6 +402,19 @@ h3 {
   color: black;
   display: inline-block;
   margin: 0;
+}
+.btn-add-to-cart {
+	text-align: right;
+}
+.btn-add-to-cart button{
+	padding: 6px 20px;
+	border-radius: 0;
+	border: 1px solid black;
+}
+.btn-add-to-cart button:hover{
+	border: 1px solid #30a5b9;
+	background-color: #30a5b9;
+	color: white;
 }
 .artwork .art-image a.link-button {
   float: right;
@@ -1728,7 +1740,7 @@ img{
 	
 	#block-simplenews-1{
 		margin: auto;
-		width: 224px;
+		width: 262px;
 	}
 
 	#block-block-5{
