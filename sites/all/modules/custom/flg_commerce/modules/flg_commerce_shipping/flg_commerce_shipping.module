@@ -237,21 +237,33 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
   $customer_shipping_profile_postcode = $customer_shipping_profile_data->commerce_customer_address['und'][0]['postal_code'];
 
   // get shipping price base locality and postcode
+  $price = flg_commerce_shipping_get_price($customer_shipping_profile_locality, $customer_shipping_profile_postcode);
+
+  if(empty($price)) {
+    return FALSE;
+  } else {
+    return array(
+      'amount' => $price,
+      'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
+      'data' => array(),
+    );
+  }
+}
+
+/**
+ * get price base on locality and postcode
+ */
+function flg_commerce_shipping_get_price($locality, $postcode) {
   $result = db_select('postcode_shipping', 'p')
   ->fields('p')
-  ->condition('local', $customer_shipping_profile_locality,'=')
-  ->condition('postcode', $customer_shipping_profile_postcode,'=')
+  ->condition('local', $locality,'=')
+  ->condition('postcode', $postcode,'=')
   ->execute()
   ->fetchAll(PDO::FETCH_ASSOC);
 
   if(empty($result[0]['price'])) {
     return FALSE;
   } else {
-    return array(
-      'amount' => $result[0]['price'],
-      'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
-      'data' => array(),
-    );
-
+    return $result[0]['price'];
   }
 }
