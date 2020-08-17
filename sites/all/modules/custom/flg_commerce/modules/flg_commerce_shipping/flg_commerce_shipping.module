@@ -203,51 +203,28 @@ function flg_commerce_shipping_postcode_form_callback($form, $form_state) {
 }
 
 /**
- * Implements hook_commerce_shipping_method_info().
- */
-// function flg_commerce_shipping_commerce_shipping_method_info() {
-//   return array(
-//     'flat_rate_shipping_method' => array(
-//       'title' => t('Flat rate'),
-//       'description' => t('Lets you create flat rate services, specifying their base rates and using custom code to apply additional rate calculation logic.'),
-//     ),
-//   );
-// }
-
-/**
  * Implements hook_commerce_shipping_service_info
  */
-// function flg_commerce_shipping_commerce_shipping_service_info()
-// {
-//   $shipping_services = array();
+function flg_commerce_shipping_commerce_shipping_service_info()
+{
+  $shipping_services = array();
 
-//   $shipping_services['flat_rate_shipping_service'] = array(
-//     'title' => t('Flat Rate'),
-//     'description' => t(''),
-//     'display_title' => t('Flat Rate'),
-//     'shipping_method' => 'flat_rate_shipping_method',
-//     'price_component' => 'shipping',
-//     'callbacks' => array(
-//       'rate' => 'flg_commerce_shipping_flat_rate_shipping_service_rate',
-//     ),
-//   );
+  $shipping_services['flat_rate_shipping_service'] = array(
+    'title' => t('Shipping'),
+    'description' => t(''),
+    'display_title' => t('Shipping'),
+    'shipping_method' => 'flat_rate',
+    'price_component' => 'shipping',
+    'callbacks' => array(
+      'rate' => 'flg_commerce_shipping_flat_rate_shipping_service_rate',
+    ),
+  );
 
-//   $shipping_services['free_shipping_service'] = array(
-//     'title' => t('Free Shipping'),
-//     'description' => t(''),
-//     'display_title' => t('Free Shipping'),
-//     'shipping_method' => 'flat_rate_shipping_method',
-//     'price_component' => 'shipping',
-//     'callbacks' => array(
-//       'rate' => 'flg_commerce_shipping_free_shipping_service_rate',
-//     ),
-//   );
-
-//   return $shipping_services;
-// }
+  return $shipping_services;
+}
 
 /**
- * shipping service callbacks
+ * Flat rate service callbacks
  * 
  * Returns a base price array for a shipping service
  * calculated for the given order.
@@ -257,23 +234,24 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
   $customer_shipping_profile_id = $order_wrapper->commerce_customer_shipping->profile_id->value();
   $customer_shipping_profile_data = commerce_customer_profile_load($customer_shipping_profile_id);
   $customer_shipping_profile_locality = $customer_shipping_profile_data->commerce_customer_address['und'][0]['locality'];
+  $customer_shipping_profile_postcode = $customer_shipping_profile_data->commerce_customer_address['und'][0]['postal_code'];
 
-  return array(
-    'amount' => 2000,
-    'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
-    'data' => array(),
-  );
-}
+  // get shipping price base locality and postcode
+  $result = db_select('postcode_shipping', 'p')
+  ->fields('p')
+  ->condition('local', $customer_shipping_profile_locality,'=')
+  ->condition('postcode', $customer_shipping_profile_postcode,'=')
+  ->execute()
+  ->fetchAll(PDO::FETCH_ASSOC);
 
-/**
- * Free shipping service callbacks
- */
-function flg_commerce_shipping_free_shipping_service_rate($shipping_service, $order) {
-  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+  if(empty($result[0]['price'])) {
+    return FALSE;
+  } else {
+    return array(
+      'amount' => $result[0]['price'],
+      'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
+      'data' => array(),
+    );
 
-  return array(
-    'amount' => 0000,
-    'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
-    'data' => array(),
-  );
+  }
 }

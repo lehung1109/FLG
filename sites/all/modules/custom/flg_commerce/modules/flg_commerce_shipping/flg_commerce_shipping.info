@@ -14,3 +14,4 @@ project = Custom
 dependencies[] = flg_commerce
 dependencies[] = commerce_shipping
 dependencies[] = commerce_shipping_ui
+dependencies[] = commerce_flat_rate
