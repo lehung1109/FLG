@@ -21,6 +21,16 @@ function flg_commerce_shipping_menu() {
     'type' => MENU_LOCAL_TASK,
   );
 
+  $items['admin/commerce/config/shipping/postcode/progress/%'] = array(
+    'title' => t('Import progress'),
+    'page callback' => 'flg_commerce_shipping_postcode_form_progress',
+    'page arguments' => array(
+      6,
+    ),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
   return $items;
 }
 
@@ -28,6 +38,14 @@ function flg_commerce_shipping_menu() {
  * Postcode argument callbacks.
  */
 function flg_commerce_shipping_postcode_form($form, &$form_state) {
+  $form_state['time'] = REQUEST_TIME;
+
+  // We make a DIV which the progress bar can occupy. You can see this in use
+  // in ajax_example_progressbar_callback().
+  $form['status'] = array(
+    '#markup' => '<div id="progress-status"></div>',
+  );
+
   $form['postcode_fieldset'] = array(
     '#type'         => 'fieldset',
     '#title'        => t('Postcode Range'),
@@ -37,9 +55,9 @@ function flg_commerce_shipping_postcode_form($form, &$form_state) {
   );
 
   // get postcode range data
-  $header = array('Postcode Range', 'Price');
+  $header = array('Postcode Range', 'Locality', 'Price');
   $rows = array();
-  $result = db_select('postcode_range', 'p')
+  $result = db_select('postcode_shipping', 'p')
   ->fields('p')
   ->execute()
   ->fetchAll(PDO::FETCH_ASSOC);
@@ -47,7 +65,8 @@ function flg_commerce_shipping_postcode_form($form, &$form_state) {
   if(!empty($result)) {
     foreach($result as $data) {
       $rows[] = array(
-        $data['postcode_range_start'] . ' - ' . $data['postcode_range_end'],
+        $data['postcode'],
+        $data['local'],
         $data['price']
       );
     }
@@ -55,13 +74,13 @@ function flg_commerce_shipping_postcode_form($form, &$form_state) {
 
   // create table with pager
   if (!empty($rows)) {
-    $limit = 10;
+    $limit = 30;
     $page = pager_default_initialize(count($rows), $limit, 0);
     $offset = $limit * $page;
     $output = array(
       array(
-        '#theme' => 'item_list',
-        '#items' => array_slice($rows, $offset, $limit),
+        '#type' => 'markup',
+        '#markup' => theme('table', array('header' => $header, 'rows' => array_slice($rows, $offset, $limit))),
       ),
       array(
         '#theme' => 'pager',
@@ -69,7 +88,7 @@ function flg_commerce_shipping_postcode_form($form, &$form_state) {
     );
   }
 
-  $form['postcode_fieldset']['postcode_range'] = array(
+  $form['postcode_fieldset']['postcode_shipping'] = array(
     '#type' => 'item',
     '#markup' => render($output),
     '#weight' => 0,
@@ -86,42 +105,99 @@ function flg_commerce_shipping_postcode_form($form, &$form_state) {
     '#value' => t('Import'),
     '#weight' => 2,
     '#ajax' => array(
-      'callback' => 'flg_commerce_shipping_postcode_form_import',
+      'progress' => array(
+        'type' => 'bar',
+        'url' => url('admin/commerce/config/shipping/postcode/progress/' . $form_state['time']),
+        'message' => t('Importing...'),
+        'interval' => '1000'
+      ),
+      'wrapper' => 'progress-status',
+      'callback' => 'flg_commerce_shipping_postcode_form_callback',
     )
   );
   return $form;
 }
 
 /**
+ * get progress percentage
+ */
+function flg_commerce_shipping_postcode_form_progress($time) {
+  $progress = array(
+    'message' => t('Starting execute...'),
+    'percentage' => -1,
+  );
+
+  $completed_percentage = variable_get('example_progressbar_' . $time, 0);
+
+  if ($completed_percentage) {
+    $progress['message'] = t('Executing...');
+    $progress['percentage'] = $completed_percentage;
+  }
+
+  drupal_json_output($progress);
+}
+
+/**
  * Menu callback for AJAX additions. Import postcode range
  */
-function flg_commerce_shipping_postcode_form_import($form, $form_state) {
+function flg_commerce_shipping_postcode_form_callback($form, $form_state) {
   if($_FILES['files']['tmp_name']['postcode_upload']) {
     $handle = fopen($_FILES['files']['tmp_name']['postcode_upload'], 'r');
 
     if($handle !== FALSE) {
-      db_query("DELETE FROM {postcode_range} WHERE 1");
+      $variable_name = 'example_progressbar_' . $form_state['time'];
+      $commands = array();
+
+      db_query("DELETE FROM {postcode_shipping} WHERE 1");
       $header = fgetcsv($handle, 0);
 
+      // get index for each item
+      foreach($header as $index => $value) {
+        switch ($value) {
+          case 'postcode':
+            $postcode_index = $index;
+            break;
+          case 'locality':
+            $local_index = $index;
+            break;
+          case 'cost':
+            $price_index = $index;
+            break;
+          default:
+            break;
+        }
+      }
+
+      $i = 0;
       while(1) {
+        $i++;
         $row = fgetcsv($handle, 0);
 
+        if($i % 100 === 0) {
+          variable_set($variable_name, min( round( ( ftell( $handle ) / filesize( $_FILES['files']['tmp_name']['postcode_upload'] ) ) * 100 ), 100 ) );
+          sleep(1);
+        }
+
         if($row !== FALSE) {
-          $postcode_range = array_map('trim', explode('-', $row[0]));
-          db_insert('postcode_range')
+          $postcode = $row[0];
+          db_insert('postcode_shipping')
           ->fields(array(
-            'price' => $row[1],
-            'postcode_range_start' => $postcode_range[0],
-            'postcode_range_end' => $postcode_range[1],
+            'price' => $row[$price_index],
+            'local' => $row[$local_index],
+            'postcode' => $row[$postcode_index],
           ))
           ->execute();
         } else {
           break;
         }
       }
+
+      variable_del($variable_name);
+
+      return  '<div id="console" class="clearfix"><div class="messages status messageclose-processed"><a href="#" class="messageclose" title="close">×</a><h2 class="element-invisible">Status message</h2>Executed.</div></div>';
     }
 
-    return array('#type' => 'ajax', '#commands' => array('command' => 'reloadPage'));
+    return;
   }
   return;
 }

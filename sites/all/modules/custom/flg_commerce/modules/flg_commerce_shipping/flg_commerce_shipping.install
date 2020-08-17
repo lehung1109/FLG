@@ -11,7 +11,7 @@
 function flg_commerce_shipping_schema() {
   $schema = array();
 
-  $schema['postcode_range'] = array(
+  $schema['postcode_shipping'] = array(
     'description' => 'Generic postcode table for shipping.',
     'fields' => array(
       'pid' => array(
@@ -20,6 +20,13 @@ function flg_commerce_shipping_schema() {
         'not null' => TRUE,
         'unsigned' => TRUE,
       ),
+      'local' => array(
+        'description' => '',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => FALSE,
+        'default' => ''
+      ),
       'area_slug' => array(
         'description' => 'Area of post code.',
         'type' => 'varchar',
@@ -27,13 +34,7 @@ function flg_commerce_shipping_schema() {
         'not null' => FALSE,
         'default' => ''
       ),
-      'postcode_range_start' => array(
-        'description' => '',
-        'type' => 'int',
-        'not null' => FALSE,
-        'unsigned' => TRUE,
-      ),
-      'postcode_range_end' => array(
+      'postcode' => array(
         'description' => '',
         'type' => 'int',
         'not null' => FALSE,
