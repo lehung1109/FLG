@@ -2073,3 +2073,97 @@ img{
 		width: calc(25% - 4px);
 	}
 }
+
+/* PAGE CART ----------------------------------------*/
+table.views-table {
+	width: 100%;
+}
+form th {
+	text-align: center;
+	padding-right: 0;
+}
+tr td {
+	vertical-align: middle;
+	text-align: center;
+}
+th.views-field.views-field-line-item-title,
+td.views-field.views-field-line-item-title {
+	text-align: left;
+	padding-left: 10px;
+}
+td.views-field.views-field-edit-quantity input {
+	border: none;
+	background: transparent;
+	text-align: center;
+}
+td.views-field.views-field-edit-delete input {
+	width: 100%;
+	background: transparent;
+}
+tr:nth-child(even) td {
+	border-bottom: 1px solid #eee;
+}
+.line-item-total {
+	padding: 20px;
+}
+div#edit-actions input,
+input#edit-continue {
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+}
+div#edit-actions input:hover,
+input#edit-continue:hover {
+	background: #fff;
+}
+input#edit-continue {
+	margin-top: 10px;
+}
+
+/* PAGE CHECKOUT ------------------------------------------ */
+form#commerce-checkout-form-checkout .form-item {
+	display: block;
+}
+.form-item label,
+.form-item input {
+	display: block;
+}
+.form-item input {
+	width: calc(100% - 10px);
+	height: 20px;
+}
+.form-item select {
+	width: 250px;
+	height: 26px;
+}
+@media screen and (max-width: 480px) {
+	.form-item input,
+	.form-item select {
+		margin-top: 2px;
+		margin-bottom: 2px;
+		padding-bottom: 2px;
+		width: 310px;
+	}
+}
+div.addressfield-container-inline > div.form-item {
+	float: none;
+	margin-right: 0;
+}
+@media screen and (min-width: 992px) {
+	.addressfield-container-inline.locality-block {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.addressfield-container-inline.locality-block  div {
+		width: 30%;
+	}
+	.addressfield-container-inline.locality-block  input {
+		width: 100%;
+	}
+}
+
+input#edit-customer-profile-shipping-commerce-customer-profile-copy {
+	width: unset;
+	float: left;
+	margin: 0 5px 0 0;
+}
