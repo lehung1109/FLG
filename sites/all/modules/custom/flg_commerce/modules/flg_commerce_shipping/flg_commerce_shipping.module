@@ -31,7 +31,29 @@ function flg_commerce_shipping_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['admin/commerce/config/shipping/quote'] = array(
+    'title' => 'Shipping Quote',
+    'description' => '',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('flg_commerce_shipping_quote'),
+    'access arguments' => array('administer shipping'),
+    'weight' => 16,
+    'type' => MENU_LOCAL_TASK,
+  );
+
   return $items;
+}
+
+/**
+ * shipping quote callbacks.
+ */
+function flg_commerce_shipping_quote($form, &$form_state) {
+  $form['shipping_quote'] = array(
+    '#type' => 'textarea',
+    '#default_value' => variable_get('shipping_quote')
+  );
+
+  return system_settings_form($form);
 }
 
 /**
@@ -238,16 +260,13 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
 
   // get shipping price base locality and postcode
   $price = flg_commerce_shipping_get_price($customer_shipping_profile_locality, $customer_shipping_profile_postcode);
+  $price = empty($price) ? 0 : $price;
 
-  if(empty($price)) {
-    return FALSE;
-  } else {
-    return array(
-      'amount' => $price,
-      'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
-      'data' => array(),
-    );
-  }
+  return array(
+    'amount' => $price,
+    'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
+    'data' => array(),
+  );
 }
 
 /**
@@ -265,5 +284,26 @@ function flg_commerce_shipping_get_price($locality, $postcode) {
     return FALSE;
   } else {
     return $result[0]['price'];
+  }
+}
+
+/**
+ * @hook hook_form_alter()
+ */
+function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
+  global $user;
+  $user_id = $user->uid;
+  $order = commerce_cart_order_load($user_id);
+
+  switch ($form_id) {
+    case 'commerce_checkout_form_shipping':
+      $form['commerce_shipping']['shipping_service']['#options']['pickup_in_store'] = 'Pickup In Store';
+      $price = $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['amount'];
+
+      if($price === 0) {
+        $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = 'Shipping Quote Demo.';
+      }
+    default:
+      break;
   }
 }
