@@ -127,9 +127,6 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
 				<?php echo $comma_separated ?>
 			</div>
 
-			<div class="btn-add-to-cart">
-				<button class="btn">Add to cart</button>
-			</div>
 			<?php
 
 			$title = $node->title;

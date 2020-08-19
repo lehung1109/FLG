@@ -403,18 +403,15 @@ h3 {
   display: inline-block;
   margin: 0;
 }
-.btn-add-to-cart {
-	text-align: right;
-}
-.btn-add-to-cart button{
-	padding: 6px 20px;
-	border-radius: 0;
-	border: 1px solid black;
-}
-.btn-add-to-cart button:hover{
+form#commerce-cart-add-to-cart-form-199  input.form-submit {
 	border: 1px solid #30a5b9;
 	background-color: #30a5b9;
 	color: white;
+}
+form#commerce-cart-add-to-cart-form-199  input.form-submit:hover {
+	border: 1px solid #30a5b9;
+	background-color: white;
+	color: #30a5b9;
 }
 .artwork .art-image a.link-button {
   float: right;
