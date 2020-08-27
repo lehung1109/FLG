@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Empty module file.
+ */
+
+include_once('flg_feeds_import.features.inc');
+
+/**
+ * implements hook_init
+ */
+function flg_feeds_import_init() {
+  // add or update a product type
+  $art_product = commerce_product_type_load('product');
+
+  $art_product['name'] = t('Art Product');
+  $art_product['description'] = '';
+  commerce_product_ui_product_type_save($art_product, FALSE);
+
+  // add or remove product_reference field when need
+  $field = field_info_field('product_reference');
+  $instance = field_info_instance('node', 'product_reference', 'art');
+  if(empty($field)) {
+    $field = array(
+      'field_name' => 'product_reference',
+      'type' => 'commerce_product_reference',
+      'cardinality' => 1
+    );
+    field_create_field($field);
+  }
+  if(empty($instance)) {
+    $instance = array(
+      'field_name' => 'product_reference',
+      'entity_type' => 'node',
+      'label' => 'Product Reference',
+      'bundle' => 'art',
+      'widget' => array(
+        'type' => 'inline_entity_form'
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'settings' => array(
+            'type' => 'commerce_cart_add_to_cart_form',
+          )
+        )
+      ),
+      'settings' => array(
+        'instance_settings' => array(
+          'referenceable_types' => array(
+            'art'
+          )
+        )
+      )
+    );
+    field_create_instance($instance);
+  }
+}
