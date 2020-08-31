@@ -440,7 +440,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
   <div class="links">
 
     <a class="link-title" href="<?php echo $mailToUrl ?>"><?php if($node->field_sale_status['und'][0]['tid'] == '32') 
-  echo render(node_view($node)['field_product_reference']); else echo 'Enquire about work'; ?></a>
+  echo render(node_view($node)['product_reference']); else echo 'Enquire about work'; ?></a>
     <div class="share-add">
 
       <a class="link-title share-control" >Share</a>

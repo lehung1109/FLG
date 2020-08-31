@@ -257,15 +257,24 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
   $customer_shipping_profile_data = commerce_customer_profile_load($customer_shipping_profile_id);
   $customer_shipping_profile_locality = $customer_shipping_profile_data->commerce_customer_address['und'][0]['locality'];
   $customer_shipping_profile_postcode = $customer_shipping_profile_data->commerce_customer_address['und'][0]['postal_code'];
+  $data = array();
 
   // get shipping price base locality and postcode
   $price = flg_commerce_shipping_get_price($customer_shipping_profile_locality, $customer_shipping_profile_postcode);
   $price = empty($price) ? 0 : $price;
 
+  if(empty($price)) {
+    $data['shipping'] = 'quote';
+  }
+
+  if($order_wrapper->commerce_order_total->amount->value() >= 10000) {
+    $price = 0;
+  }
+
   return array(
     'amount' => $price,
     'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
-    'data' => array(),
+    'data' => $data,
   );
 }
 
@@ -283,7 +292,7 @@ function flg_commerce_shipping_get_price($locality, $postcode) {
   if(empty($result[0]['price'])) {
     return FALSE;
   } else {
-    return $result[0]['price'];
+    return $result[0]['price'] * 100;
   }
 }
 
@@ -297,11 +306,13 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
 
   switch ($form_id) {
     case 'commerce_checkout_form_shipping':
-      $form['commerce_shipping']['shipping_service']['#options']['pickup_in_store'] = 'Pickup In Store';
-      $price = $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['amount'];
+      $form['commerce_shipping']['shipping_service']['#options']['pickup_in_store'] = t('Pickup In Store');
+      $price = (float) $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['amount'];
 
-      if($price === 0) {
-        $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = 'Shipping Quote Demo.';
+      if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['shipping']) && $price === (float) 0) {
+        $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
+      } elseif($price === (float) 0) {
+        $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = t('Free Shipping');
       }
     default:
       break;

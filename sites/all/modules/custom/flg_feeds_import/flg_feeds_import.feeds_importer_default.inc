@@ -34,7 +34,7 @@ function flg_feeds_import_feeds_importer_default() {
       'config' => array(
         'bundle' => 'art',
         'update_existing' => 2,
-        'insert_new' => 1,
+        'insert_new' => 0,
         'expire' => '-1',
         'mappings' => array(
           0 => array(
@@ -100,9 +100,24 @@ function flg_feeds_import_feeds_importer_default() {
             'target' => 'title',
             'unique' => FALSE,
           ),
-          3 => array(
-            'source' => 'Art Price',
+          2 => array(
+            'source' => 'Price',
             'target' => 'commerce_price:amount',
+            'unique' => FALSE,
+          ),
+          3 => array(
+            'source' => 'Sale Price',
+            'target' => 'field_commerce_saleprice:amount',
+            'unique' => FALSE,
+          ),
+          4 => array(
+            'source' => 'Sale Price',
+            'target' => 'field_commerce_saleprice_on_sale',
+            'unique' => FALSE,
+          ),
+          5 => array(
+            'source' => 'Stock',
+            'target' => 'commerce_stock',
             'unique' => FALSE,
           ),
         ),

@@ -55,6 +55,58 @@ function flg_commerce_shipping_schema() {
 }
 
 /**
+ * Implements hook_install
+ */
+function flg_commerce_shipping_install() {
+  // allow anonymous user to access checkout
+  user_role_grant_permissions(
+    1,
+    array('access checkout')
+  );
+  user_role_grant_permissions(
+    2,
+    array('access checkout')
+  );
+
+  // create product shipping type field
+  $field = field_info_field('field_shipping_type9');
+  $instance = field_info_instance('node', 'field_shipping_type9', 'art');
+  if(empty($field)) {
+    $field = array(
+      'field_name' => 'field_shipping_type9',
+      'type' => 'list_text',
+      'cardinality' => 1,
+      'settings' => array(
+        'allowed_values' => array(
+          'quote' => 'quote'
+        )
+      )
+    );
+    field_create_field($field);
+  }
+  if(empty($instance)) {
+    $instance = array(
+      'field_name' => 'field_shipping_type9',
+      'entity_type' => 'node',
+      'label' => 'Product Shipping Type',
+      'bundle' => 'art',
+      'widget' => array(
+        'type' => 'options_select'
+      ),
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'settings' => array(
+            'type' => 'hidden',
+          )
+        )
+      )
+    );
+    field_create_instance($instance);
+  }
+}
+
+/**
  * Add address field for the commerce_shipping customer profile.
  */
 function flg_commerce_shipping_update_7000(&$sandbox) {
