@@ -261,10 +261,11 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
 
   // get shipping price base locality and postcode
   $price = flg_commerce_shipping_get_price($customer_shipping_profile_locality, $customer_shipping_profile_postcode);
-  $price = empty($price) ? 0 : $price;
+  $product_type = flg_commerce_shipping_get__shipping_type($order_wrapper->commerce_line_items->value());
 
-  if(empty($price)) {
+  if(empty($price) || $product_type == 'quote') {
     $data['shipping'] = 'quote';
+    $price = 0;
   }
 
   if($order_wrapper->commerce_order_total->amount->value() >= 10000) {
@@ -293,6 +294,22 @@ function flg_commerce_shipping_get_price($locality, $postcode) {
     return FALSE;
   } else {
     return $result[0]['price'] * 100;
+  }
+}
+
+/**
+ * get shipping type product
+ */
+function flg_commerce_shipping_get__shipping_type($line_items) {
+  foreach ($line_items as $line_item) {
+    if($line_item->type == 'product') {
+      $node_id = $line_item->data['context']['entity']['entity_id'];
+      $node = node_load($node_id);
+
+      if(isset($node->field_shipping_type) && isset($node->field_shipping_type['und'][0]['value'])) {
+        return $node->field_shipping_type['und'][0]['value'];
+      }
+    }
   }
 }
 

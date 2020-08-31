@@ -69,11 +69,11 @@ function flg_commerce_shipping_install() {
   );
 
   // create product shipping type field
-  $field = field_info_field('field_shipping_type9');
-  $instance = field_info_instance('node', 'field_shipping_type9', 'art');
+  $field = field_info_field('field_shipping_type');
+  $instance = field_info_instance('node', 'field_shipping_type', 'art');
   if(empty($field)) {
     $field = array(
-      'field_name' => 'field_shipping_type9',
+      'field_name' => 'field_shipping_type',
       'type' => 'list_text',
       'cardinality' => 1,
       'settings' => array(
@@ -86,7 +86,7 @@ function flg_commerce_shipping_install() {
   }
   if(empty($instance)) {
     $instance = array(
-      'field_name' => 'field_shipping_type9',
+      'field_name' => 'field_shipping_type',
       'entity_type' => 'node',
       'label' => 'Product Shipping Type',
       'bundle' => 'art',
