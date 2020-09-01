@@ -1,9 +1,9 @@
 <?php
 
 /**
- * implements hook_init
+ * implements hook_enable
  */
-function flg_commerce_init() {
+function flg_commerce_enable() {
   // create tax type
   $gst_tax_type = commerce_tax_type_load('gst');
   $installation_tax_type = commerce_tax_type_load('installation_fee');

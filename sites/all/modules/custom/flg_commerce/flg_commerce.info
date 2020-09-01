@@ -49,6 +49,7 @@ dependencies[] = commerce_product_reference
 dependencies[] = commerce_product_ui
 dependencies[] = commerce_tax
 dependencies[] = commerce_tax_ui
+dependencies[] = commerce_cart_expiration
 
 ; ------------------------------------------------------------------------------
 ; Other
