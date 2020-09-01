@@ -1,0 +1,54 @@
+<?php
+/**
+ * Implements hook_enable().
+ */
+function flg_checkout_panes_enable() {
+  $page = dc_co_pages_page_load('delivery_pick_up');
+  if(empty($page)) {
+    $page = array(
+      'id' => 'delivery_pick_up',
+      'title' => 'Delivery/Pick Up',
+      'help' => 'Delivery/Pick Up',
+      'status_cart' => '1',
+      'buttons' => '1',
+      'weight' => -10,
+    );
+
+    dc_co_pages_page_save($page);
+    dc_co_pages_page_save(array(
+      'id' => 'shipping',
+      'title' => 'Shipping',
+      'weight' => -9,
+      'status_cart' => '1',
+      'buttons' => '1',
+    ));
+    dc_co_pages_page_save(array(
+      'id' => 'review',
+      'title' => 'Review & Payment',
+      'weight' => -8,
+      'status_cart' => '1',
+      'buttons' => '1',
+    ));
+    dc_co_pages_page_save(array(
+      'id' => 'payment',
+      'title' => 'Payment',
+      'weight' => -7,
+      'status_cart' => '0',
+      'buttons' => '0',
+    ));
+    dc_co_pages_page_save(array(
+      'id' => 'complete',
+      'title' => 'Checkout complete',
+      'weight' => -6,
+      'status_cart' => '0',
+      'buttons' => '0',
+    ));
+    dc_co_pages_page_save(array(
+      'id' => 'checkout',
+      'title' => 'Checkout',
+      'weight' => -5,
+      'status_cart' => '1',
+      'buttons' => '1',
+    ));
+  }
+}

@@ -1,0 +1,10 @@
+<?php
+/**
+ * @file
+ */
+
+ /**
+  * implements hook_init
+  */
+function flg_checkout_panes_init() {
+}

@@ -1,0 +1,23 @@
+; ------------------------------------------------------------------------------
+; Custom created module for FLG website
+; ------------------------------------------------------------------------------
+name = FLG Commerce Checkout Pane
+description = Custom Commerce Checkout Pane.
+package = Custom
+core = 7.x
+version = 7.x-1.0
+project = Custom
+
+; ------------------------------------------------------------------------------
+; Dependencies
+; ------------------------------------------------------------------------------
+dependencies[] = flg_commerce
+dependencies[] = commerce_checkout_progress
+dependencies[] = dc_co_pages
+dependencies[] = commerce_authnet
+
+; ------------------------------------------------------------------------------
+; Other
+; ------------------------------------------------------------------------------
+; Configuration URL
+; configure = admin/config/boilerplate/settings
