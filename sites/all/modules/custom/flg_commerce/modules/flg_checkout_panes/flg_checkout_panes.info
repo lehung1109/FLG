@@ -14,7 +14,6 @@ project = Custom
 dependencies[] = flg_commerce
 dependencies[] = commerce_checkout_progress
 dependencies[] = dc_co_pages
-dependencies[] = commerce_authnet
 
 ; ------------------------------------------------------------------------------
 ; Other
