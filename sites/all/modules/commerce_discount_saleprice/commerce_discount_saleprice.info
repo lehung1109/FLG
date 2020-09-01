@@ -1,0 +1,30 @@
+name = Commerce Discount Sale Price
+description = Allows a product to be configured with a sale price that can be manually enabled/disabled and compatible with Commerce Discount.
+core = 7.x
+package = Commerce (contrib)
+php = 5.3
+
+dependencies[] = number
+dependencies[] = entity
+dependencies[] = list
+dependencies[] = options
+dependencies[] = entityreference
+dependencies[] = commerce
+dependencies[] = commerce_price
+dependencies[] = commerce_line_item
+dependencies[] = commerce_product_ui
+dependencies[] = commerce_product_reference
+dependencies[] = commerce_discount
+dependencies[] = rules
+
+test_dependencies[] = addressfield
+
+; Simple tests
+files[] = tests/commerce_discount_saleprice.test
+
+; Information added by Drupal.org packaging script on 2018-03-12
+version = "7.x-1.0"
+core = "7.x"
+project = "commerce_discount_saleprice"
+datestamp = "1520812984"
+

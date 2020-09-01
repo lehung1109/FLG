@@ -1,0 +1,239 @@
+<?php
+/**
+ * @file
+ */
+
+
+/**
+ * Implements hook_commerce_discount_offer_type_info().
+ */
+function commerce_discount_saleprice_commerce_discount_offer_type_info() {
+  $types = array();
+  
+  $types['product_saleprice'] = array(
+    'label' => t('Saleprice'),
+    'action' => 'commerce_discount_saleprice_discount',
+    'entity types' => array('commerce_line_item'),
+  );
+  $types['percentage_excl'] = array(
+    'label' => t('% off exl.'),
+    'action' => 'commerce_discount_saleprice_percentage_exclusive',
+    'entity types' => array('commerce_order'),
+  );
+  
+  return $types;
+}
+
+/**
+ * Checks if given line item has saleprice discount applied.
+ *
+ * @param EntityDrupalWrapper $line_item_wrapper
+ *
+ * @return bool
+ */
+function commerce_discount_saleprice_line_item_has_saleprice(EntityDrupalWrapper $line_item_wrapper) {
+  // Only for Line items with Product reference field.
+  if (!in_array('commerce_product', array_keys($line_item_wrapper->getPropertyInfo()))) {
+    return FALSE;
+  }
+
+  if (!in_array('field_commerce_saleprice_on_sale', array_keys($line_item_wrapper->commerce_product->getPropertyInfo()))) {
+    return FALSE;
+  }
+
+  $discount_active = $line_item_wrapper->commerce_product->field_commerce_saleprice_on_sale->value();
+  if (!$discount_active) {
+    return FALSE;
+  }
+
+  $discount_price_value = $line_item_wrapper->commerce_product->field_commerce_saleprice->amount->value();
+  return !empty($discount_price_value);
+}
+
+/**
+ * @param string $entity_type
+ * @param object $entity
+ * @param array $form
+ */
+function commerce_discount_saleprice_field_attach_form($entity_type, $entity, &$form) {
+  if ($entity_type === 'commerce_product') {
+    _commerce_discount_add_saleprice_fields_form_states($form);
+  }
+  elseif ($entity_type === 'commerce_discount' && $entity->name !== 'discount_saleprice') {
+    _commerce_discount_hide_saleprice_offer_from_discounts($form);
+  }
+}
+
+/**
+ * Hides Saleprice value form item when saleprice is turned off by corresponding checkbox.
+ *
+ * @param array $form
+ */
+function _commerce_discount_add_saleprice_fields_form_states(&$form) {
+  $field_lang = isset($form['field_commerce_saleprice_on_sale']['#language']) ? $form['field_commerce_saleprice_on_sale']['#language'] : '';
+  if ($field_lang === '' || !isset($form['field_commerce_saleprice_on_sale'][$field_lang])) {
+    return;
+  }
+
+  $full_field_name = _commerce_discount_saleprice_get_full_field_name($form['field_commerce_saleprice_on_sale'][$field_lang]);
+  $form['field_commerce_saleprice']['#states'] = array(
+    'invisible' => array(
+      ":input[name='{$full_field_name}']" => array('checked' => FALSE),
+    ),
+  );
+}
+
+/**
+ * @param array $form
+ */
+function _commerce_discount_hide_saleprice_offer_from_discounts(&$form) {
+  $field_lang = isset($form['commerce_discount_offer']['#language']) ? $form['commerce_discount_offer']['#language'] : '';
+  if ($field_lang === '' || !isset($form['commerce_discount_offer'][$field_lang])) {
+    return;
+  }
+
+  unset($form['commerce_discount_offer'][$field_lang]['form']['type']['#options']['product_saleprice']);
+}
+
+/**
+ * Gets proper 'name' attribute of fields resulted html element.
+ *
+ * @param array $field
+ *  Field to get name of.
+ *
+ * @return string
+ *  'name' attributes value.
+ */
+function _commerce_discount_saleprice_get_full_field_name(array $field) {
+  $parents = $field['#field_parents'];
+  $parents[] = $field['#field_name'];
+  $parents[] = $field['#language'];
+
+  return array_shift($parents) .'[' . implode('][', $parents) . ']';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Disable alteration of built-in discount.
+ *
+ * Adds validation for "% excl" offer.
+ */
+function commerce_discount_saleprice_form_commerce_discount_form_alter(&$form, $form_state) {
+  if ($form_state['commerce_discount']->name == 'discount_saleprice') {
+    drupal_set_message(t('This is built-in discount of "Commerce Discount Saleprice" module. Edit mindfully.'), 'warning');
+
+    $form['name']['#disabled'] = TRUE;
+    $form['commerce_discount_type']['#disabled'] = TRUE;
+    $form['commerce_discount_fields']['commerce_discount_offer']['#disabled'] = TRUE;
+    if (isset($form['coupons'])) {
+      unset($form['coupons']);
+    }
+
+    $form['actions']['delete']['#disabled'] = TRUE;
+  }
+  else {
+    $form['#validate'][] = '_commerce_discount_saleprice_discount_form_validate';
+  }
+}
+
+/**
+ * Rules action: Apply Saleprice discount.
+ */
+function commerce_discount_saleprice_discount(EntityDrupalWrapper $wrapper, $discount_name) {
+  if ($wrapper->type() != 'commerce_line_item') {
+    return;
+  }
+
+  // Check whether this discount was already added as a price component.
+  $price_data = $wrapper->commerce_unit_price->data->value();
+  foreach ($price_data['components'] as $component) {
+    if (!empty($component['price']['data']['discount_name']) && $component['price']['data']['discount_name'] == $discount_name) {
+      return;
+    }
+  }
+
+  $saleprice_value = $wrapper->commerce_product->field_commerce_saleprice->value();
+  $line_item_price = $wrapper->commerce_unit_price->value();
+  $discount_price = array(
+    'amount' => $saleprice_value['amount'] - $line_item_price['amount'],
+    'currency_code' => $line_item_price['currency_code'],
+  );
+
+  commerce_discount_add_price_component($wrapper, $discount_name, $discount_price);
+}
+
+/**
+ * Rules action: Apply Percentage Exclusive discount.
+ * 
+ * Mostly copy-pasted from commerce_discount_percentage().
+ */
+function commerce_discount_saleprice_percentage_exclusive(EntityDrupalWrapper $wrapper, $discount_name) {
+  if ($wrapper->type() != 'commerce_order') {
+    return;
+  }
+  // Exit if there are no line items or the wrapper doesn't contain
+  // the commerce_discounts property.
+  if (!isset($wrapper->commerce_discounts) || !$wrapper->commerce_line_items->value()) {
+    return;
+  }
+
+  $discount_wrapper = entity_metadata_wrapper('commerce_discount', $discount_name);
+  $rate = $discount_wrapper->commerce_discount_offer->commerce_percentage->value() / 100;
+  // Get the line item types to apply the discount to.
+  $line_item_types = variable_get('commerce_discount_line_item_types', array('product' => 'product'));
+
+  // Set reference to the discount.
+  // @todo: It doesn't work with the wrapper.
+  $order = $wrapper->value();
+  $delta = $wrapper->commerce_discounts->count();
+  $order->commerce_discounts[LANGUAGE_NONE][$delta]['target_id'] = $discount_wrapper->discount_id->value();
+
+  $calculated_discount = 0;
+  // Loop the line items of the order and calculate the total discount.
+  foreach ($wrapper->commerce_line_items as $line_item_wrapper) {
+    $line_item_type = $line_item_wrapper->getBundle();
+    if (in_array($line_item_type, $line_item_types, TRUE) && !commerce_discount_saleprice_line_item_has_saleprice($line_item_wrapper)) {
+      $line_item_total = commerce_price_wrapper_value($line_item_wrapper, 'commerce_total', TRUE);
+      $calculated_discount += $line_item_total['amount'] * $rate;
+    }
+  }
+
+  if ($calculated_discount) {
+    $is_offer_limit_set = in_array('commerce_fixed_amount', array_keys($discount_wrapper->commerce_discount_offer->getPropertyInfo()))
+            && $discount_wrapper->commerce_discount_offer->commerce_fixed_amount->value();
+    if ($is_offer_limit_set) {
+      $discount_limit = $discount_wrapper->commerce_discount_offer->commerce_fixed_amount->amount->value();
+      if ($discount_limit && $calculated_discount > $discount_limit) {
+        $calculated_discount = $discount_limit;
+      }
+    }
+    $discount_amount = array(
+      'amount' => $calculated_discount * -1,
+      'currency_code' => $wrapper->commerce_order_total->currency_code->value(),
+    );
+
+    // Modify the existing discount line item or add a new line item
+    // if that fails.
+    if (!commerce_discount_set_existing_line_item_price($wrapper, $discount_name, $discount_amount)) {
+      commerce_discount_add_line_item($wrapper, $discount_name, $discount_amount);
+    }
+
+    // Update the total order price, for the next rules condition (if any).
+    commerce_order_calculate_total($order);
+  }
+}
+
+/**
+ * Form API validation callback for the type form.
+ */
+function _commerce_discount_saleprice_discount_form_validate($form, &$form_state) {
+  // Check if this is a percentage offer.
+  if (isset($form_state['values']['commerce_discount_fields']['commerce_discount_offer'][LANGUAGE_NONE]['form']['type']) &&
+          $form_state['values']['commerce_discount_fields']['commerce_discount_offer'][LANGUAGE_NONE]['form']['type'] == 'percentage_excl') {
+    $discount_limit = $form_state['values']['commerce_discount_fields']['commerce_discount_offer'][LANGUAGE_NONE]['form']['commerce_fixed_amount'][LANGUAGE_NONE][0]['amount'];
+    if ($discount_limit === '' || $discount_limit < 0) {
+      form_set_error('commerce_discount_fields][commerce_discount_offer][' . LANGUAGE_NONE . '][form][commerce_fixed_amount', t('Discount limit should be a positive number or zero.'));
+    }
+  }
+}

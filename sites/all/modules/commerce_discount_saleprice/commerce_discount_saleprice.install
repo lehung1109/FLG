@@ -1,0 +1,245 @@
+<?php
+
+/**
+ * @file
+ * commerce_discount_saleprice.install
+ */
+
+/**
+ * Implements hook_install().
+ */
+function commerce_discount_saleprice_install() {
+  if (!field_info_field('field_commerce_saleprice_on_sale')) {
+    $field = array(
+      'field_name' => 'field_commerce_saleprice_on_sale',
+      'type' => 'list_boolean',
+      'cardinality' => 1,
+      'active' => TRUE,
+      'deleted' => FALSE,
+      'entity_types' => array(),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => t('No'),
+          1 => t('Yes'),
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => FALSE,
+    );
+    field_create_field($field);
+  }
+  if (!field_info_field('field_commerce_saleprice')) {
+    $field = array(
+      'field_name' => 'field_commerce_saleprice',
+      'type' => 'commerce_price',
+      'cardinality' => 1,
+      'active' => TRUE,
+      'deleted' => FALSE,
+      'entity_types' => array(),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'currency_price' => array(
+          0 => 'amount',
+          1 => 'currency_code',
+        ),
+      ),
+      'module' => 'commerce_price',
+      'settings' => array(),
+      'translatable' => FALSE,
+    );
+    field_create_field($field);
+  }
+
+  $product_types = commerce_product_types();
+  foreach (array_keys($product_types) as $type) {
+    _commerce_discount_saleprice_install_fields_instances($type);
+  }
+
+  module_disable(array('commerce_saleprice'));
+
+  _commerce_discount_saleprice_create_discount();
+
+  if (!field_info_instance('commerce_discount_offer', 'commerce_percentage', 'percentage_excl')) {
+    $instance = array(
+      'field_name' => 'commerce_percentage',
+      'entity_type' => 'commerce_discount_offer',
+      'bundle' => 'percentage_excl',
+      'label' => t('Percentage Exclusive'),
+      'settings' => array(
+        'suffix' => '%',
+      ),
+      'required' => TRUE,
+    );
+    field_create_instance($instance);
+  }
+  _commerce_discount_saleprice_install_discount_limit();
+}
+
+function _commerce_discount_saleprice_install_discount_limit() {
+  if (!field_info_instance('commerce_discount_offer', 'commerce_fixed_amount', 'percentage_excl')) {
+    $instance = array(
+      'field_name' => 'commerce_fixed_amount',
+      'entity_type' => 'commerce_discount_offer',
+      'bundle' => 'percentage_excl',
+      'label' => t('Discount limit'),
+      'required' => FALSE,
+    );
+    field_create_instance($instance);
+  }
+}
+
+function _commerce_discount_saleprice_install_fields_instances($product_type) {
+  if (!field_info_instance('commerce_product', 'field_commerce_saleprice_on_sale', $product_type)) {
+    $instance = array(
+      'field_name' => 'field_commerce_saleprice_on_sale',
+      'entity_type' => 'commerce_product',
+      'bundle' => $product_type,
+      'label' => 'On sale',
+      'required' => FALSE,
+      'commerce_cart_settings' => array(
+        'attribute_field' => 0,
+        'attribute_widget' => 'select',
+      ),
+      'default_value' => array(
+        0 => array(
+          'value' => 0,
+        ),
+      ),
+      'deleted' => FALSE,
+      'description' => 'If checked, the <em>Sale price</em> value will be used rather than the normal price.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 1,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => TRUE,
+        'module' => 'options',
+        'settings' => array(
+          'display_label' => TRUE,
+        ),
+        'type' => 'options_onoff',
+        'weight' => 4,
+      ),
+    );
+    field_create_instance($instance);
+  }
+  if (!field_info_instance('commerce_product', 'field_commerce_saleprice', $product_type)) {
+    $instance = array(
+      'field_name' => 'field_commerce_saleprice',
+      'entity_type' => 'commerce_product',
+      'bundle' => $product_type,
+      'label' => 'Sale price',
+      'required' => FALSE,
+      'default_value' => NULL,
+      'deleted' => FALSE,
+      'description' => 'This price will be used if the <em>On sale</em> checkbox is checked.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 2,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => TRUE,
+        'module' => 'commerce_price',
+        'settings' => array(
+          'currency_code' => 'default',
+        ),
+        'type' => 'commerce_price_simple',
+        'weight' => 5,
+      ),
+    );
+    field_create_instance($instance);
+  }
+}
+
+function _commerce_discount_saleprice_create_discount() {
+  $saleprice_discount = '{
+  "name" : "discount_saleprice",
+  "label" : "Built-in Saleprice Discount",
+  "type" : "product_discount",
+  "status" : "1",
+  "component_title" : "Discount",
+  "sort_order" : "1",
+  "commerce_discount_offer" : { "type" : "product_saleprice" },
+  "inline_conditions" : { "und" : [
+      {
+        "condition_name" : "commerce_discount_product_has_saleprice",
+        "condition_settings" : { "dummy" : "1", "condition_logic_operator" : null },
+        "condition_negate" : 0
+      }
+    ]
+  },
+  "commerce_compatibility_strategy" : { "und" : [ { "value" : "any" } ] },
+  "commerce_compatibility_selection" : [],
+  "commerce_discount_date" : [],
+  "discount_usage_per_person" : [],
+  "discount_usage_limit" : []
+}';
+
+  $imported_entity = entity_import('commerce_discount', $saleprice_discount);
+  $imported_entity->export_status = ENTITY_IN_CODE;
+  entity_save('commerce_discount', $imported_entity);
+}
+
+/**
+ * Implements hook_install().
+ */
+function commerce_discount_saleprice_uninstall() {
+  $discount_wrapper = entity_metadata_wrapper('commerce_discount', 'discount_saleprice');
+  $discount_wrapper->delete();
+
+  module_load_include('module', 'commerce');
+  // Drop percentage_excl bundle attached to commerce_discount_offer.
+  field_attach_delete_bundle('commerce_discount_offer', 'percentage_excl');
+}
+
+/**
+ * Adds discount limit field to "Percentage Exclusive" offer.
+ */
+function commerce_discount_saleprice_update_7000() {
+  _commerce_discount_saleprice_install_discount_limit();
+}
