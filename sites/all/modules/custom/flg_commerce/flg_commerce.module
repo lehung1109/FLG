@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * implements hook_init
+ */
+function flg_commerce_init() {
+  // create tax type
+  $gst_tax_type = commerce_tax_type_load('gst');
+  $installation_tax_type = commerce_tax_type_load('installation_fee');
+  if(empty($gst_tax_type)) {
+    $tax_type = commerce_tax_ui_tax_type_new();
+    $tax_type['title'] = 'GST';
+    $tax_type['name'] = 'gst';
+    $tax_type['display_title'] = 'GST';
+
+    commerce_tax_ui_tax_type_save($tax_type);
+  }
+  if(empty($installation_tax_type)) {
+    $tax_type = commerce_tax_ui_tax_type_new();
+    $tax_type['title'] = 'Installation Fee';
+    $tax_type['name'] = 'installation_fee';
+    $tax_type['display_title'] = 'Installation Fee';
+
+    commerce_tax_ui_tax_type_save($tax_type);
+  }
+
+  // create tax rate
+  $gst_tax_rate = commerce_tax_rate_load('gst');
+  $installation_tax_rate = commerce_tax_rate_load('installation_fee');
+  if(empty($gst_tax_rate)) {
+    $tax_rate = commerce_tax_ui_tax_rate_new();
+    $tax_rate['name'] = 'gst';
+    $tax_rate['title'] = 'GST';
+    $tax_rate['display_title'] = 'GST';
+    $tax_rate['rate'] = .1;
+    $tax_rate['type'] = 'gst';
+
+    commerce_tax_ui_tax_rate_save($tax_rate);
+  }
+  if(empty($installation_tax_rate)) {
+    $tax_rate = commerce_tax_ui_tax_rate_new();
+    $tax_rate['name'] = 'installation_fee';
+    $tax_rate['title'] = 'Installation Fee';
+    $tax_rate['display_title'] = 'Installation Fee';
+    $tax_rate['type'] = 'installation_fee';
+    $tax_rate['rate'] = 0;
+
+    commerce_tax_ui_tax_rate_save($tax_rate);
+  }
+}
+
+/**
+ * implements hook_commerce_tax_rate_info_alter()
+ */
+function flg_commerce_commerce_tax_rate_info_alter(&$tax_rates) {
+  $tax_rates['installation_fee']['calculation_callback'] = 'flg_commerce_tax_rate_calculate';
+}
+
+
+/**
+ * Calculates a price array for the tax on the unit price of a line item.
+ *
+ * @param $tax_rate
+ *   The tax rate array for the tax to calculate.
+ * @param $line_item_wrapper
+ *   An entity_metadata_wrapper() for the line item whose unit price should be
+ *     used in the tax calculation.
+ *
+ * @return
+ *   The tax price array or FALSE if the tax is already applied.
+ */
+function flg_commerce_tax_rate_calculate($tax_rate, $line_item_wrapper) {
+  if($line_item_wrapper->getBundle() == 'product') {
+    return array(
+      'amount' => '9000',
+      'currency_code' => $line_item_wrapper->commerce_unit_price->currency_code->value(),
+      'data' => array(
+        'tax_rate' => $tax_rate,
+      ),
+    );
+  } else {
+    return FALSE;
+  }
+}
