@@ -1,0 +1,19 @@
+<?php
+/**
+ * Implements hook_commerce_cart_product_add
+ */
+function flg_cart_commerce_cart_product_add($order, $product, $quantity, $line_item) {
+  // if($line_item->type == 'product') {
+  //   $art_id = $line_item->data['context']['entity']['entity_id'];
+  //   $result = db_query('SELECT field.entity_id FROM {field_data_field_art_showcase} field WHERE field.field_art_showcase_target_id = :art_id AND field.bundle = :bundle', array(':art_id' => $art_id, ':bundle' => 'exhibition'))->fetchAll();
+  // }
+  // kint($order);
+  // kint($product);
+  // kint($quantity);
+  // kint($line_item);
+  // kint($node);
+  // kint($artist);
+  // kint($result);
+  // kint($art_id);
+  // die;
+}
