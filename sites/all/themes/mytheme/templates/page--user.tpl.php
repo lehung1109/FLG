@@ -9,7 +9,7 @@
  global $user;
  if($user->uid > 0){
   $path = current_path();
-  if (strpos($path,'edit') !== false) {
+  if (strpos($path,'edit') !== false || strpos($path, 'orders')) {
      
   }else if(strpos($path,'password') !== false){
 
