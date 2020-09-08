@@ -347,18 +347,40 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
   global $user;
   $user_id = $user->uid;
   $order = commerce_cart_order_load($user_id);
-
-  switch ($form_id) {
-    case 'commerce_checkout_form_shipping':
-      $form['commerce_shipping']['shipping_service']['#options']['pickup_in_store'] = t('Pickup In Store');
-      $price = (float) $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['amount'];
-
-      if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['shipping']) && $price === (float) 0) {
-        $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
-      } elseif($price === (float) 0) {
-        $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = t('Free Shipping');
-      }
-    default:
-      break;
+  try {
+    switch ($form_id) {
+      case 'commerce_checkout_form_shipping':
+        $form['commerce_shipping']['shipping_service']['#options']['pickup_in_store'] = t('Pickup In Store');
+        $price = (float) $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['amount'];
+  
+        if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['shipping']) && $price === (float) 0) {
+          $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
+        } elseif($price === (float) 0) {
+          $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = t('Free Shipping');
+        }
+        break;
+  
+      case 'commerce_checkout_form_delivery_pick_up':
+        global $user;
+        $checkout_page_id = substr($form_id, 23);
+  
+        foreach (commerce_checkout_panes(array('enabled' => TRUE, 'page' => $checkout_page_id)) as $pane_id => $checkout_pane) {
+          if($pane_id == 'customer_profile_shipping') {
+            $field = field_info_field('commerce_customer_shipping');
+            $profiles = commerce_customer_profile_load_multiple(array(), array('type' => 'shipping', 'uid' => $user->uid, 'status' => TRUE));
+  
+            if($profiles) {
+              $profiles = array_pop($profiles);
+              $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address'] = $profiles->commerce_customer_address['und'][0];
+            }
+          }
+        }
+        break;
+      default:
+        break;
+    }
+  } catch (\Throwable $th) {
+    //throw $th;
   }
+
 }
