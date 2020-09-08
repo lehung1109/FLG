@@ -289,10 +289,15 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
   // get shipping price base locality and postcode
   $price = flg_commerce_shipping_get_price($customer_shipping_profile_locality, $customer_shipping_profile_postcode);
   $product_type = flg_commerce_shipping_get_shipping_type($order_wrapper->commerce_line_items->value());
+  $exhibition_ids = flg_commerce_get_referencing_node_id($order_wrapper->commerce_line_items->value());
 
   if(empty($price) || $product_type == 'quote') {
     $data['shipping'] = 'quote';
     $price = 0;
+  }
+
+  if(!empty($exhibition_ids)) {
+    $data['exhibition'] = $exhibition_ids;
   }
 
   if($order_wrapper->commerce_order_total->amount->value() >= 1000000) {
@@ -325,6 +330,35 @@ function flg_commerce_shipping_get_price($locality, $postcode) {
 }
 
 /**
+ * get node by product id
+ */
+function flg_commerce_get_referencing_node_id($line_items) {
+  foreach ($line_items as $line_item) {
+    if($line_item->type == 'product') {
+      $node_id = $line_item->data['context']['entity']['entity_id'];
+      $results = db_select('field_data_field_art_showcase', 'e')
+      ->condition('field_art_showcase_target_id', $node_id)
+      ->fields('e', array('entity_id'))
+      ->execute()
+      ->fetchAll(PDO::FETCH_ASSOC);
+      $exhibition_ids = array();
+
+      if(!empty($results)) {
+        foreach ($results as $result) {
+          $node_exhibition = node_load($result['entity_id']);
+
+          if(!empty($node_exhibition->field_exibition_date['und'][0]['value2']) && time() < strtotime($node_exhibition->field_exibition_date['und'][0]['value2']) || empty($node_exhibition->field_exibition_date['und'][0]['value2'])) {
+            $exhibition_ids[$node_id] = $result['entity_id'];
+          }
+        }
+      }
+
+      return $exhibition_ids;
+    }
+  }
+}
+
+/**
  * get shipping type product
  */
 function flg_commerce_shipping_get_shipping_type($line_items) {
@@ -352,6 +386,8 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
       case 'commerce_checkout_form_shipping':
         $form['commerce_shipping']['shipping_service']['#options']['pickup_in_store'] = t('Pickup In Store');
         $price = (float) $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['amount'];
+        kint($form['commerce_shipping']);
+        kint($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']);
   
         if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['shipping']) && $price === (float) 0) {
           $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
