@@ -363,7 +363,9 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
       case 'commerce_checkout_form_delivery_pick_up':
         global $user;
         $checkout_page_id = substr($form_id, 23);
-  
+
+        if($user->uid === 0) break;
+
         foreach (commerce_checkout_panes(array('enabled' => TRUE, 'page' => $checkout_page_id)) as $pane_id => $checkout_pane) {
           if($pane_id == 'customer_profile_shipping') {
             $field = field_info_field('commerce_customer_shipping');
