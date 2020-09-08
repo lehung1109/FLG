@@ -439,8 +439,11 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
   <div class="links">
 
-    <a class="link-title" href="<?php echo $mailToUrl ?>"><?php if($node->field_sale_status['und'][0]['tid'] == '32') 
-  echo render(node_view($node)['product_reference']); else echo 'Enquire about work'; ?></a>
+  <?php if($node->field_sale_status['und'][0]['tid'] == '32'): ?>
+    <a class="link-title"><?php echo render(node_view($node)['product_reference']); ?></a>
+  <?php else: ?>
+    <a class="link-title"  href="<?php echo $mailToUrl ?>"><?php echo 'Enquire about work'; ?></a>
+  <?php endif; ?>
     <div class="share-add">
 
       <a class="link-title share-control" >Share</a>

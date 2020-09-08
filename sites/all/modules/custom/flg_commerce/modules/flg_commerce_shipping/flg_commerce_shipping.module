@@ -295,7 +295,7 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
     $price = 0;
   }
 
-  if($order_wrapper->commerce_order_total->amount->value() >= 10000) {
+  if($order_wrapper->commerce_order_total->amount->value() >= 1000000) {
     $price = 0;
   }
 
