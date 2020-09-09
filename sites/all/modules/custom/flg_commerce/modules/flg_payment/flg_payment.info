@@ -11,3 +11,4 @@ project = Custom
 ; Dependencies
 ; ------------------------------------------------------------------------------
 dependencies[] = commerce_payment_ui
+dependencies[] = commerce_order_ui
