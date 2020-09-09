@@ -291,7 +291,7 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
   $product_type = flg_commerce_shipping_get_shipping_type($order_wrapper->commerce_line_items->value());
   $exhibition_ids = flg_commerce_get_referencing_node_id($order_wrapper->commerce_line_items->value());
 
-  if(empty($price) || $product_type == 'quote') {
+  if(empty($price) || !empty($product_type)) {
     $data['shipping'] = 'quote';
     $price = 0;
   }
