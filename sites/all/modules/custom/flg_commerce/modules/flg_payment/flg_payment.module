@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Provides payments method for Drupal Commerce
+ */
+
+
+/**
+ * Implements hook_commerce_payment_method_info().
+ */
+function flg_payment_commerce_payment_method_info() {
+  $payment_methods = array();
+
+  $payment_methods['direct_deposit'] = array(
+    'title' => t('Direct Deposit'),
+    'description' => '',
+    'active' => TRUE,
+  );
+
+  $payment_methods['art_money'] = array(
+    'title' => t('Art money'),
+    'description' => '',
+    'active' => TRUE,
+  );
+
+  $payment_methods['labuy '] = array(
+    'title' => t('Labuy'),
+    'description' => '',
+    'active' => TRUE,
+  );
+
+  return $payment_methods;
+}
