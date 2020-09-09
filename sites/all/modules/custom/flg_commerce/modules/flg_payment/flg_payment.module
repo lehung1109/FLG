@@ -32,3 +32,22 @@ function flg_payment_commerce_payment_method_info() {
 
   return $payment_methods;
 }
+
+/**
+ * Implements hook_cron
+ */
+function flg_payment_cron() {
+  try {
+    $orders = commerce_order_load_multiple(array(), array('status' => array('canceled', 'completed')), TRUE);
+  
+    foreach($orders as $order) {
+      if(time() - $order->created >= 48 * 60 * 60) {
+        $order_updated = commerce_order_status_update($order, 'payment_expire');
+      }
+    }
+
+    watchdog('flg_payment', 'cron run success');
+  } catch (\Throwable $th) {
+    watchdog('flg_payment', 'cron run error !mess', array('!mess' => $th->getMessage()));
+  }
+}
