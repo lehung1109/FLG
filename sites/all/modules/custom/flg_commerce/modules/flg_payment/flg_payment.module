@@ -41,7 +41,7 @@ function flg_payment_cron() {
     $orders = commerce_order_load_multiple(array(), array('status' => array('labuy', 'art_money', 'direct_deposit')), TRUE);
 
     foreach($orders as $order) {
-      if(time() - $order->created >= 48 * 60 * 60) {
+      if(time() - $order->created >= 5 * 60) {
         $order_updated = commerce_order_status_update($order, 'payment_expire');
       }
     }
