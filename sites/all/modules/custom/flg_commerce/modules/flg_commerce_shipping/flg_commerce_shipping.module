@@ -386,8 +386,17 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
       case 'commerce_checkout_form_shipping':
         $form['commerce_shipping']['shipping_service']['#options']['pickup_in_store'] = t('Pickup In Store');
         $price = (float) $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['amount'];
-        kint($form['commerce_shipping']);
-        kint($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']);
+        $form['commerce_shipping']['shipping_service']['#title'] = '';
+
+        if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['exhibition'])) {
+          $exhibition_ids = $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['exhibition'];
+          foreach($exhibition_ids as $exhibition_id => $art_id) {
+            $node_exhibition = node_load($exhibition_id);
+            $node_art = node_load($art_id);
+            $form['commerce_shipping']['shipping_service']['#title'] .= l($node_art->title, 'node/' . $art_id) . ' is being exhibited on ' . l($node_exhibition->title, 'node/' . $exhibition_id);
+          }
+        }
+        $form['commerce_shipping']['shipping_service']['#title'] .= '<br />Your order it will not be shipped till exhibition ends. After exhibittion ends';
   
         if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['shipping']) && $price === (float) 0) {
           $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
