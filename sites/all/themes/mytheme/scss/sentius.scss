@@ -1,0 +1,68 @@
+.product-description,
+.artwork .art-image .product-description {
+  text-align: left;
+  margin-top: 50px;
+
+  @media only screen and (min-width: 992px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  a {
+    display: inline;
+  }
+
+  &__left {
+    margin-bottom: 20px;
+
+    @media only screen and (min-width: 992px) {
+      width: 50%;
+      max-width: 400px;
+      padding-right: 15px;
+      margin: 0;
+    }
+  }
+
+  &__right {
+    margin-bottom: 20px;
+    text-align: center;
+
+    @media only screen and (min-width: 992px) {
+      width: 50%;
+      max-width: 400px;
+      padding-left: 15px;
+    }
+
+    .form-item input[name="quantity"] {
+      width: 26px;
+      height: 26px;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .form-submit {
+      max-width: 110px;
+    }
+  }
+
+  &__quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+
+    .form-item {
+      margin: 0 15px;
+    }
+
+    span {
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
+
+  &__item {
+    margin-bottom: 20px;
+  }
+}
