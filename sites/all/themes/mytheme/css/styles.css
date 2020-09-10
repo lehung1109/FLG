@@ -372,8 +372,13 @@ body {
     border: 1px solid #000000;
     height: 40px;
     width: 180px;
+    margin: auto;
     position:relative;
     padding-left:10px;
+}
+
+#webform-client-form-3740 .form-actions input {
+	margin: auto;
 }
  #webform-client-form-3740 .webform-submit{
     -moz-border-bottom-colors: none;
