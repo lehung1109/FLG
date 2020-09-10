@@ -2155,9 +2155,9 @@ div.addressfield-container-inline > div.form-item {
 }
 @media screen and (min-width: 992px) {
 	.addressfield-container-inline.locality-block {
-		display: flex;
+		/* display: flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: space-between; */
 	}
 	.addressfield-container-inline.locality-block  div {
 		width: 30%;
@@ -2183,4 +2183,43 @@ input#edit-customer-profile-shipping-commerce-customer-profile-copy {
 }
 .artwork .art-image img {
 	width: 100%;
+}
+.form-item.form-type-radio.form-item-commerce-payment-payment-method {
+	margin-top: 10px;
+}
+.form-item.form-type-radio.form-item-commerce-payment-payment-method input {
+	width: auto;
+	height: auto;
+	margin-right: 10px;
+	display: inline-block;
+	float: left;
+}
+div#edit-checkout-review {
+	text-align: left;
+}
+table.checkout-review {
+	display: inline-block;
+}
+tr.odd.views-row-first td,
+tr.even.views-row-last td,
+tr:nth-child(even) td {
+	padding: 5px 15px;
+}
+.view-content,
+.view-footer,
+tr.pane-data.even.even {
+	margin-bottom: 10px;
+}
+tr.pane-data td div label {
+	float: left;
+}
+input#edit-commerce-payment-payment-details-credit-card-number {
+	width: 240px;
+	height: 20px;
+}
+select#edit-commerce-payment-payment-details-credit-card-exp-month {
+	width: 100px;
+}
+select#edit-commerce-payment-payment-details-credit-card-exp-year {
+	width: 133px;
 }
