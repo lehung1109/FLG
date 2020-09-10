@@ -70,7 +70,7 @@ function flg_commerce_commerce_tax_rate_info_alter(&$tax_rates) {
  *   The tax price array or FALSE if the tax is already applied.
  */
 function flg_commerce_tax_rate_calculate($tax_rate, $line_item_wrapper) {
-  if($line_item_wrapper->getBundle() == 'product') {
+  if($line_item_wrapper->commerce_product->getBundle() == 'product') {
     return array(
       'amount' => '9000',
       'currency_code' => $line_item_wrapper->commerce_unit_price->currency_code->value(),

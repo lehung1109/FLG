@@ -421,6 +421,10 @@ if($context== 'contemporary' || $context== 'aboriginal'){
   $mailToUrl = 'mailto:info@flg.com.au?Subject=Enquiry%20about%20' . $title . '%20' . $year . '%20by%20' . $artist . '&Body=';
   ?>
 
+  <?php
+    $product_id = $node->product_reference['und'][0]['product_id'];
+    $product = commerce_product_load($product_id);
+  ?>
   <div class="product-description">
     <div class="product-description__left">
       <div class="product-description__item">
@@ -470,7 +474,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
     <div class="product-description__right">
       <div class="product-description__item">
-        <a class="link-title"><?php echo commerce_currency_format($node->field_art_price['und'][0]['value'] * 100) . ' AUD'; ?></a>
+        <a class="link-title"><?php echo commerce_currency_format($product->commerce_price['und'][0]['amount']) . ' AUD'; ?></a>
       </div>
 
       <div class="product-description__item">
