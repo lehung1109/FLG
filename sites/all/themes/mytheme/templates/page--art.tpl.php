@@ -359,7 +359,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
   <?php
 
-  $detail = artDetail($node);
+  $detail = artDetail($node, true, true);
   $comma_separated = implode(", ", $detail);
 
   $artImageUri = $node->field_art_image['und'][0]['uri'];
@@ -414,34 +414,81 @@ if($context== 'contemporary' || $context== 'aboriginal'){
     } ?>">
   </a>
 
-  <div class='art-detail center-text'>
-    <?php
-    if(count($node->field_sale_status)){?>
-      <?php if($node->field_sale_status['und'][0]['tid'] == '27'){?>
-        <span class='sold'>Sold</span>
-      <?php }?>
-
-    <?php }?>
-
-    <a class='title' href='<?php echo url('node/' . $node->nid); ?>'><?php echo $node->title; ?></a>
-    <?php echo $comma_separated ?>
-
-
-  </div>
-
   <?php
-
   $title = $node->title;
   $artist = $artistNode->title;
   $artUrl = url('node/' . $node->nid);
   $mailToUrl = 'mailto:info@flg.com.au?Subject=Enquiry%20about%20' . $title . '%20' . $year . '%20by%20' . $artist . '&Body=';
   ?>
 
+  <?php
+    $product_id = $node->product_reference['und'][0]['product_id'];
+    $product = commerce_product_load($product_id);
+  ?>
+  <div class="product-description">
+    <div class="product-description__left">
+      <div class="product-description__item">
+        <?php
+          if(count($node->field_sale_status)):
+            if($node->field_sale_status['und'][0]['tid'] == '27'):
+        ?>
+          <span class='sold'>Sold</span>
+        <?php
+            endif;
+          endif;
+        ?>
+
+        <a class='title' href='<?php echo url('node/' . $node->nid); ?>'><?php echo $node->title; ?></a>
+        <?php echo $comma_separated; ?>
+      </div>
+
+      <!-- show exhibition_message message -->
+      <?php
+        $exhibition_message = '';
+        $results = db_select('field_data_field_art_showcase', 'e')
+        ->condition('field_art_showcase_target_id', $node->nid)
+        ->fields('e', array('entity_id'))
+        ->execute()
+        ->fetchAll(PDO::FETCH_ASSOC);
+        $exhibition_ids = array();
+
+        if(!empty($results)) {
+          foreach ($results as $result) {
+            $node_exhibition = node_load($result['entity_id']);
+  
+            if(!empty($node_exhibition->field_exibition_date['und'][0]['value2']) && time() < (strtotime($node_exhibition->field_exibition_date['und'][0]['value2']) + 86400) || empty($node_exhibition->field_exibition_date['und'][0]['value2'])) {
+              $exhibition_message .= l($node->title, 'node/' . $node->nid) . ' is being exhibited on ' . l($node_exhibition->title, 'node/' . $result['entity_id']);
+            }
+          }
+          $exhibition_message .= '<br />Art Work not be shipped till exhibition ends.';
+          echo '<div class="product-description__item">' . $exhibition_message . '</div>';
+        }
+      ?>
+
+      <?php if(!empty($node->field_short_description)): ?>
+        <div class="product-description__item">
+          <?php echo $node->field_short_description['und'][0]['value']; ?>
+        </div>
+      <?php endif; ?>
+    </div>
+
+    <div class="product-description__right">
+      <div class="product-description__item">
+        <a class="link-title"><?php echo commerce_currency_format($product->commerce_price['und'][0]['amount']) . ' AUD'; ?></a>
+      </div>
+
+      <div class="product-description__item">
+        <?php
+          $product_reference = node_view($node)['product_reference'];
+        ?>
+        <a class="link-title"><?php echo render($product_reference); ?></a>
+      </div>
+    </div>
+  </div>
+
   <div class="links">
 
-  <?php if($node->field_sale_status['und'][0]['tid'] == '32'): ?>
-    <a class="link-title"><?php echo render(node_view($node)['product_reference']); ?></a>
-  <?php else: ?>
+  <?php if($node->field_sale_status['und'][0]['tid'] != '32'): ?>
     <a class="link-title"  href="<?php echo $mailToUrl ?>"><?php echo 'Enquire about work'; ?></a>
   <?php endif; ?>
     <div class="share-add">
