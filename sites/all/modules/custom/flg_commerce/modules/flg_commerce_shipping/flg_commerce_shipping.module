@@ -367,7 +367,7 @@ function flg_commerce_shipping_get_shipping_type($line_items) {
       $node_id = $line_item->data['context']['entity']['entity_id'];
       $node = node_load($node_id);
 
-      if(isset($node->field_shipping_type) && isset($node->field_shipping_type['und'][0]['value'])) {
+      if(!empty($node->field_shipping_type) && !empty($node->field_shipping_type['und'][0]['value'])) {
         return $node->field_shipping_type['und'][0]['value'];
       }
     }
