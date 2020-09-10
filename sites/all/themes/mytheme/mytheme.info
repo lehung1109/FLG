@@ -57,6 +57,7 @@ stylesheets[all][] = css/chosen/chosen.css
 stylesheets[all][] = css/styles.css
 stylesheets[all][] = css/flint.css
 stylesheets[all][] = css/styles-admin.css
+stylesheets[all][] = css/sentius.css
 
 
 

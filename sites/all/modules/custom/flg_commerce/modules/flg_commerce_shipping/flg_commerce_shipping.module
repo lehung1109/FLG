@@ -347,7 +347,7 @@ function flg_commerce_get_referencing_node_id($line_items) {
         foreach ($results as $result) {
           $node_exhibition = node_load($result['entity_id']);
 
-          if(!empty($node_exhibition->field_exibition_date['und'][0]['value2']) && time() < strtotime($node_exhibition->field_exibition_date['und'][0]['value2']) || empty($node_exhibition->field_exibition_date['und'][0]['value2'])) {
+          if(!empty($node_exhibition->field_exibition_date['und'][0]['value2']) && time() < (strtotime($node_exhibition->field_exibition_date['und'][0]['value2']) + 86400) || empty($node_exhibition->field_exibition_date['und'][0]['value2'])) {
             $exhibition_ids[$node_id] = $result['entity_id'];
           }
         }
@@ -390,7 +390,7 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
 
         if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['exhibition'])) {
           $exhibition_ids = $order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['exhibition'];
-          foreach($exhibition_ids as $exhibition_id => $art_id) {
+          foreach($exhibition_ids as $art_id => $exhibition_id) {
             $node_exhibition = node_load($exhibition_id);
             $node_art = node_load($art_id);
             $form['commerce_shipping']['shipping_service']['#title'] .= l($node_art->title, 'node/' . $art_id) . ' is being exhibited on ' . l($node_exhibition->title, 'node/' . $exhibition_id);
