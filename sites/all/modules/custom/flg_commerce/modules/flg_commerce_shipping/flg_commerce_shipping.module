@@ -363,7 +363,7 @@ function flg_commerce_get_referencing_node_id($line_items) {
  */
 function flg_commerce_shipping_get_shipping_type($line_items) {
   foreach ($line_items as $line_item) {
-    if($line_item->type == 'product') {
+    if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
       $node_id = $line_item->data['context']['entity']['entity_id'];
       $node = node_load($node_id);
 
