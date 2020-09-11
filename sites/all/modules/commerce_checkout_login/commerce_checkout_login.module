@@ -313,9 +313,9 @@ function ccl_account_information($order) {
 /**
  * Implements hook_commerce_checkout_router().
  */
-function commerce_checkout_login_commerce_checkout_router($order, $checkout_page) {
-  if($checkout_page['page_id'] === 'account' && user_is_logged_in()) {
-    $order = commerce_order_status_update($order, 'checkout_' . $checkout_page['next_page'], FALSE, TRUE);
-    drupal_goto('checkout/' . $order->order_id . '/' . $checkout_page['next_page']);
-  }
-}
+// function commerce_checkout_login_commerce_checkout_router($order, $checkout_page) {
+//   if($checkout_page['page_id'] === 'account' && user_is_logged_in()) {
+//     $order = commerce_order_status_update($order, 'checkout_' . $checkout_page['next_page'], FALSE, TRUE);
+//     drupal_goto('checkout/' . $order->order_id . '/' . $checkout_page['next_page']);
+//   }
+// }
