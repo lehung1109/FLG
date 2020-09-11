@@ -43,6 +43,28 @@ function flg_payment_cron() {
     foreach($orders as $order) {
       if(time() - $order->created >= 5 * 60) {
         $order_updated = commerce_order_status_update($order, 'payment_expire');
+        $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+        $line_items = $order_wrapper->commerce_line_items->value();
+    
+        // check line item is product
+        foreach ($line_items as $line_item) {
+          if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
+            if (!commerce_ss_product_type_enabled($product->type)) {
+              $product_id = $line_item->commerce_product['und'][0]['product_id'];
+              $product = commerce_product_load($product_id);
+              $wrapper_product = entity_metadata_wrapper('commerce_product', $product);
+
+              // calc total stock for revert
+              $stock_in_order = $line_item->quantity;
+              $current_stock = $wrapper_product->commerce_stock->value();
+              $total_stock = (int) $stock_in_order + (int) $current_stock;
+
+              // save stock for product
+              $wrapper_product->commerce_stock->set($total_stock);
+              $result = $wrapper_product->save();
+            }
+          }
+        }
       }
     }
 
