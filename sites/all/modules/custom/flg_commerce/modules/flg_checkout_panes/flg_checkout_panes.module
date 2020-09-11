@@ -37,7 +37,7 @@ function flg_checkout_panes_account_form_submit($form, &$form_state) {
       'init' => $form_state['values']['account_form']['select']['register']['init'],
       'field_first_name' => $form_state['values']['account_form']['select']['register']['init'],
       'status' => 1,
-      'roles' => array(5 => true)
+      'roles' => array(6 => true)
     )
   );
 
