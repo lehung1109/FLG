@@ -49,7 +49,7 @@ function flg_payment_cron() {
         // check line item is product
         foreach ($line_items as $line_item) {
           if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
-            if (!commerce_ss_product_type_enabled($product->type)) {
+            if (!commerce_ss_product_type_enabled($line_item->type)) {
               $product_id = $line_item->commerce_product['und'][0]['product_id'];
               $product = commerce_product_load($product_id);
               $wrapper_product = entity_metadata_wrapper('commerce_product', $product);
