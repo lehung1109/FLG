@@ -384,6 +384,12 @@ function mytheme_form_alter(&$form, $form_state, $form_id) {
 			$form['art_price']['max']['#attributes']['placeholder'][] = 'max';
 
 
+			$form['commerce_price_amount']['min']['#title']= 'Price Range ($AUD)';
+			$form['commerce_price_amount']['max']['#title']= '';
+			$form['commerce_price_amount']['min']['#attributes']['placeholder'][] = 'min';
+			$form['commerce_price_amount']['max']['#attributes']['placeholder'][] = 'max';
+
+
 //			/form-submit
 
 

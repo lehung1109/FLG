@@ -2564,14 +2564,16 @@ margin-bottom: 20px;
 
 #edit-width-wrapper , 
 #edit-height-wrapper,
-#edit-art-price-wrapper{
+#edit-art-price-wrapper,
+#edit-commerce-price-amount-wrapper{
 	
 	width: 100%;
 	float: left;
 }
 #views-exposed-form-better-search-search-block .form-item.form-item-width-min label, 
 #views-exposed-form-better-search-search-block .form-item.form-item-height-min label, 
-#views-exposed-form-better-search-search-block .form-item.form-item-art-price-min label{
+#views-exposed-form-better-search-search-block .form-item.form-item-art-price-min label, 
+#views-exposed-form-better-search-search-block .form-item.form-item-commerce-price-amount-min label{
 	width: 115px;
 }
 @media print {

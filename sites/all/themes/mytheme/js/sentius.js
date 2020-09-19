@@ -16,5 +16,8 @@
       var $value = $(this).parent().find('input').val();
       $(this).parent().find('input').val(parseInt($value) + 1);
     });
+
+    // remove class collapsed in filter
+    $('.views-exposed-form').find('.collapsed').removeClass('collapsed');
   });
 }(this, this.document, this.jQuery));
