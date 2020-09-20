@@ -25,7 +25,7 @@ function flg_payment_commerce_payment_method_info() {
   );
 
   $payment_methods['labuy'] = array(
-    'title' => t('Labuy'),
+    'title' => t('Layby'),
     'description' => '',
     'active' => TRUE,
   );

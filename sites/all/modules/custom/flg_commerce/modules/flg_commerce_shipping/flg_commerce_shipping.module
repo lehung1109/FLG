@@ -381,6 +381,7 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
   global $user;
   $user_id = $user->uid;
   $order = commerce_cart_order_load($user_id);
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
   try {
     switch ($form_id) {
       case 'commerce_checkout_form_shipping':
@@ -409,8 +410,36 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         break;
   
       case 'commerce_checkout_form_delivery_pick_up':
-        global $user;
+        $commerce_line_items = $order_wrapper->commerce_line_items->value();
         $checkout_page_id = substr($form_id, 23);
+
+        // create installation fee checkbox for user checkbox
+        $form['buttons']['#weight'] = '100';
+        $form['installation_fee'] = array(
+          '#type' => 'fieldset',
+          '#title' => t('Installation Fee'),
+          '#weight' => 99,
+        );
+        $form['buttons']['continue']['#submit'][] = 'flg_commerce_shipping_installation_fee_submit';
+
+        // show option installation fee for each product
+        foreach ($commerce_line_items as $line_item) {
+          $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
+          if($line_item_wrapper->commerce_product->getBundle() == 'product') {
+            $node_id = $line_item->data['context']['entity']['entity_id'];
+            $node = node_load($node_id);
+
+            // get default value
+            $installation_fee = !empty($order->data['installation_fee']) ? $order->data['installation_fee'] : array();
+            $installation_fee_value = in_array($line_item->line_item_id, $installation_fee) ? $line_item->line_item_id : 0;
+            $form['installation_fee']['installation_fee_' . $line_item->line_item_id] = array(
+              '#type' => 'radios',
+              '#title' => t('Installation Fee for ' . $node->title . ': $90 x 1'),
+              '#default_value' => $installation_fee_value,
+              '#options' => array($line_item->line_item_id => '$' . (90 * round($line_item->quantity)) . ' Installation Fee', 0 => '$0 I will install myself'),
+            );
+          }
+        }
 
         if($user->uid === 0) break;
 
@@ -426,11 +455,35 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
           }
         }
         break;
+
+      case 'commerce_checkout_form_account':
+        $form['account_form']['#title'] = t('Login, Register or Guest checkout');
+        break;
+
       default:
         break;
     }
   } catch (\Throwable $th) {
     //throw $th;
   }
+}
 
+function flg_commerce_shipping_installation_fee_submit($form, &$form_state) {
+  global $user;
+  $user_id = $user->uid;
+  $order = commerce_cart_order_load($user_id);
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+  $commerce_line_items = $order_wrapper->commerce_line_items->value();
+  $order->data['installation_fee'] = array();
+
+  // save commerce_line_items for installation fee
+  foreach ($commerce_line_items as &$line_item) {
+    if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
+      if(isset($form_state['values']['installation_fee_' . $line_item->line_item_id])) {
+        $order->data['installation_fee'][] = $form_state['values']['installation_fee_' . $line_item->line_item_id];
+      }
+    }
+  }
+
+  commerce_order_save($order);
 }

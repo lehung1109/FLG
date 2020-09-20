@@ -114,3 +114,24 @@
     }
   }
 }
+
+.page-checkout {
+  .checkout-buttons {
+    text-align: center;
+  }
+
+  .button-operator {
+    margin-top: 2px;
+    display: inline-block;
+  }
+
+  .checkout-cancel,
+  .checkout-back {
+    padding-top: 0;
+    height: auto;
+  }
+
+  ol.inline.commerce-checkout-progress li {
+    padding: 0;
+  }
+}
