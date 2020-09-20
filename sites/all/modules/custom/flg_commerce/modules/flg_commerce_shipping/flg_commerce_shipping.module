@@ -381,7 +381,7 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
   global $user;
   $user_id = $user->uid;
   $order = commerce_cart_order_load($user_id);
-  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+  if(!empty($order)) $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
   try {
     switch ($form_id) {
       case 'commerce_checkout_form_shipping':
