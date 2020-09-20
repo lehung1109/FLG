@@ -74,3 +74,43 @@
 .pane-data-full .form-item:first-child .placeholder {
   display: none;
 }
+
+#views-exposed-form-better-search-search-block .views-exposed-form {
+  .views-exposed-widgets {
+    > div {
+      border-top: 1px solid #F5F2F2;
+      padding-top: 10px;
+    }
+
+    fieldset {
+      padding: 0;
+      margin: 0;
+      border: 0;
+
+      .fieldset-title {
+        font-size: 14px;
+        padding: 0;
+        font-weight: normal;
+        text-transform: uppercase;
+        color: #30A5B9;
+      }
+
+      .fieldset-legend-prefix {
+        display: none;
+      }
+
+      .fieldset-legend {
+        background: none;
+        padding: 0;
+      }
+    }
+
+    #edit-commerce-price-amount-wrapper {
+      border: 0;
+
+      .form-item {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
