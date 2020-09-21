@@ -431,6 +431,10 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['shipping']) && $price === (float) 0) {
           $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
         }
+
+        if(isset($form['commerce_shipping']['shipping_service']['#options']['free_shipping'])) {
+          $form['commerce_shipping']['shipping_service']['#options']['free_shipping'] = 'Free Shipping';
+        }
         break;
   
       case 'commerce_checkout_form_delivery_pick_up':
