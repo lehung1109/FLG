@@ -19,5 +19,10 @@
 
     // remove class collapsed in filter
     $('.views-exposed-form').find('.collapsed').removeClass('collapsed');
+
+    if($('.js-message').length) {
+      let $html = $('.js-message').html();
+      $('.is-message').html($html);
+    }
   });
 }(this, this.document, this.jQuery));
