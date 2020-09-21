@@ -58,7 +58,12 @@ global $base_url;
 		<?php print render($page['header']); ?>
 
 	</header>
-	
+
+  <!-- Add messages -->
+  <div class="js-message element-hidden">
+    <?php print $messages; ?>
+  </div>
+
 			<?php
 			$view = views_get_view('better_search');
 			$view->set_display('search_block');
