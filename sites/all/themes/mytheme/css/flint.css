@@ -2133,16 +2133,16 @@ img{
 }
 
 /* PAGE CHECKOUT ------------------------------------------ */
-.page-checkout form#commerce-checkout-form-checkout .form-item:not(.form-type-checkbox), {
-	/* display: block; */
+.page-checkout .account_form form#commerce-checkout-form-checkout .form-item:not(.form-type-checkbox), {
+	display: block;
 }
-.page-checkout .form-item:not(.form-type-checkbox) label,
-.page-checkout .form-item:not(.form-type-checkbox) input {
-	/* display: block; */
+.page-checkout .account_form .form-item:not(.form-type-checkbox) label,
+.page-checkout .account_form .form-item:not(.form-type-checkbox) input {
+	display: block;
 }
-.page-checkout .form-item:not(.form-type-checkbox) input {
-	/* width: calc(100% - 10px); */
-	/* height: 20px; */
+.page-checkout .account_form .form-item:not(.form-type-checkbox) input {
+	width: calc(100% - 10px);
+	height: 20px;
 }
 .page-checkout .form-item:not(.form-type-checkbox) select {
 	width: 250px;
