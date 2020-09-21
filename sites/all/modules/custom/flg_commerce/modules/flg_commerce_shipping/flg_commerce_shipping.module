@@ -253,6 +253,17 @@ function flg_commerce_shipping_commerce_shipping_service_info()
     ),
   );
 
+  $shipping_services['free_shipping'] = array(
+    'title' => t('Free Shipping'),
+    'description' => t(''),
+    'display_title' => t('Free Shipping'),
+    'shipping_method' => 'flat_rate',
+    'price_component' => 'shipping',
+    'callbacks' => array(
+      'rate' => 'flg_commerce_shipping_free_shipping_rate',
+    ),
+  );
+
   return $shipping_services;
 }
 
@@ -309,6 +320,21 @@ function flg_commerce_shipping_flat_rate_shipping_service_rate($shipping_service
     'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
     'data' => $data,
   );
+}
+
+/**
+ * Free Shipping service callbacks
+ */
+function flg_commerce_shipping_free_shipping_rate($shipping_service, $order) {
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+  if($order_wrapper->commerce_order_total->amount->value() >= 1000000) {
+    return array(
+      'amount' => '0000',
+      'currency_code' => $order_wrapper->commerce_order_total->currency_code->value(),
+      'data' => array(),
+    );
+  }
 }
 
 /**
@@ -404,8 +430,6 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
   
         if(isset($order->shipping_rates['flat_rate_shipping_service']->commerce_unit_price['und'][0]['data']['shipping']) && $price === (float) 0) {
           $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
-        } elseif($price === (float) 0) {
-          $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = t('Free Shipping');
         }
         break;
   
