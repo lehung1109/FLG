@@ -221,6 +221,11 @@ function mytheme_form_alter(&$form, $form_state, $form_id) {
 				if(isset($_GET['category'][0])){ array_push($result, taxonomy_term_load($_GET['category'][0])->name); };
 				if(isset($_GET['category'][1])){ array_push($result, taxonomy_term_load($_GET['category'][1])->name); };
 			};
+			if(isset($_GET['type'])){
+				if(isset($_GET['type'][0])){ array_push($result, node_type_load($_GET['type'][0])->name); };
+				if(isset($_GET['type'][1])){ array_push($result, node_type_load($_GET['type'][1])->name); };
+				if(isset($_GET['type'][2])){ array_push($result, node_type_load($_GET['type'][2])->name); };
+			};
 			if(isset($_GET['medium']) && $_GET['medium'] != 'All'){
 				foreach($_GET['medium'] as $object) {
 					array_push($result, taxonomy_term_load($object)->name);
