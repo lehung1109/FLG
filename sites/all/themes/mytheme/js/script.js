@@ -409,8 +409,9 @@ function loadTaxo(){
 		(jQuery)('#block-block-2 .text-blue').append('&nbsp;');
 		
 		(jQuery)('#block-block-2 .text-blue').click(function(){
-			(jQuery)('#edit-sale-status-wrapper').toggle();
-			(jQuery)('#edit-category-wrapper').toggle();
+			(jQuery)('#edit-commerce-price-amount-wrapper').toggle();
+			(jQuery)('#edit-width-wrapper').toggle();
+			(jQuery)('#edit-height-wrapper').toggle();
 			(jQuery)(this).toggleClass('showplus');
 			
 		});	
