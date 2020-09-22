@@ -86,13 +86,14 @@
   .views-exposed-widgets {
     > div {
       border-top: 1px solid #F5F2F2;
-      padding-top: 10px;
+      padding: 10px 0;
     }
 
     fieldset {
       padding: 0;
       margin: 0;
       border: 0;
+      height: auto;
 
       .fieldset-title {
         font-size: 14px;
@@ -107,16 +108,20 @@
       }
 
       .fieldset-legend {
-        background: none;
-        padding: 0;
+        // background: none;
+        // padding: 0;
       }
+    }
+
+    #edit-category-wrapper {
+      margin-bottom: 0;
     }
 
     #edit-commerce-price-amount-wrapper {
       border: 0;
 
       .form-item {
-        margin-bottom: 10px;
+        margin-bottom: 0;
       }
     }
   }
