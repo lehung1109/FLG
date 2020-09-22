@@ -54,6 +54,7 @@ function flg_commerce_enable() {
  */
 function flg_commerce_commerce_tax_rate_info_alter(&$tax_rates) {
   $tax_rates['installation_fee']['calculation_callback'] = 'flg_commerce_tax_rate_calculate';
+  $tax_rates['gst']['calculation_callback'] = 'flg_commerce_gst_calculate';
 }
 
 
@@ -88,5 +89,47 @@ function flg_commerce_tax_rate_calculate($tax_rate, $line_item_wrapper) {
     }
   } else {
     return FALSE;
+  }
+}
+
+/**
+ * Calculates a gst price array for the tax on the unit price of a line item.
+ *
+ * @param $tax_rate
+ *   The tax rate array for the tax to calculate.
+ * @param $line_item_wrapper
+ *   An entity_metadata_wrapper() for the line item whose unit price should be
+ *     used in the tax calculation.
+ *
+ * @return
+ *   The tax price array or FALSE if the tax is already applied.
+ */
+function flg_commerce_gst_calculate($tax_rate, $line_item_wrapper) {
+  global $user;
+  $user_id = $user->uid;
+  $order = commerce_cart_order_load($user_id);
+  $line_item_id = $line_item_wrapper->line_item_id->value();
+  $order_data = $order->data;
+
+  if($line_item_wrapper->type->value() == 'product') {
+    $node_product_id = $line_item_wrapper->value()->data['context']['entity']['entity_id'];
+    $node_product = node_load($node_product_id);
+    $node_artist_id = $node_product->field_artist['und'][0]['nid'];
+
+    if($node_artist_id) {
+      $node_artist = node_load($node_artist_id);
+
+      if(!empty($node_artist->field_shipping_type['und'][0]['value'])) {
+        return FALSE;
+      }
+    }
+
+    return array(
+      'amount' => $line_item_wrapper->commerce_unit_price->amount->value() * .1,
+      'currency_code' => $line_item_wrapper->commerce_unit_price->currency_code->value(),
+      'data' => array(
+        'tax_rate' => $tax_rate,
+      ),
+    );
   }
 }
