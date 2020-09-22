@@ -463,7 +463,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
           // only append if has exhibition
           if(!empty($exhibition_message)) {
-            $exhibition_message .= '<br />Art work is part of a current exhibition and will not be shipped till exhibition ends.';
+            $exhibition_message .= '<br />Artwork will be shipped at conclusion of exhibition.';
             echo '<div class="product-description__item">' . $exhibition_message . '</div>';
           }
         }
