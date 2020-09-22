@@ -452,7 +452,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
         ->fetchAll(PDO::FETCH_ASSOC);
         $exhibition_ids = array();
 
-        if(!empty($results)) {
+        if(!empty($results) && count($results) > 0 && $node->field_featured_on_exhibition['und'][0]['value'] == 'Yes') {
           foreach ($results as $result) {
             $node_exhibition = node_load($result['entity_id']);
   
@@ -460,8 +460,12 @@ if($context== 'contemporary' || $context== 'aboriginal'){
               $exhibition_message .= l($node->title, 'node/' . $node->nid) . ' is being exhibited on ' . l($node_exhibition->title, 'node/' . $result['entity_id']);
             }
           }
-          $exhibition_message .= '<br />Art Work not be shipped till exhibition ends.';
-          echo '<div class="product-description__item">' . $exhibition_message . '</div>';
+
+          // only append if has exhibition
+          if(!empty($exhibition_message)) {
+            $exhibition_message .= '<br />Art work is part of a current exhibition and will not be shipped till exhibition ends.';
+            echo '<div class="product-description__item">' . $exhibition_message . '</div>';
+          }
         }
       ?>
 

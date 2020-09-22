@@ -67,6 +67,8 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
       <h1><a href="/search" ?>SEARCH ART</a> - <span class="title"><?php echo $node->title ?></span> <?php echo $year ?> by <a href="<?php echo url('node/' . $artistNode->nid); ?>/contemporary"><?php echo $artistNode->title ?></a></h1>
     </div>
 
+    <div class="is-message"></div>
+
     <div class="right-follow">
       <?php
 
@@ -135,13 +137,12 @@ $nextArgumentUrl = 'search?nodeId=' . $nodeIdArray[$nextIndex] . '&' . $queryStr
       ?>
 
       <div class="search-cta">
-        <a href="<?php echo $mailToUrl ?>"><?php if($node->field_sale_status['und'][0]['tid'] == '32') 
-  echo render(node_view($node)['product_reference']); else echo 'Enquire about this artwork'; ?></a>
-        <div class="share-add">
-
-          <a class="link-title share-control">Share</a>
-
-        </div>
+        <?php if($node->field_sale_status['und'][0]['tid'] == '32'): ?>
+          <span><?php echo render(node_view($node)['product_reference']); ?></span>
+        <?php else: ?>
+          <a href="<?php echo $mailToUrl ?>"><?php echo 'Enquire about this artwork'; ?></a>
+        <?php endif; ?>
+        <div class="share-add"> <a class="link-title share-control">Share</a> </div>
         <?php if (!empty($associatedExhibitionUrl)) { ?>
           <a href="<?php echo $associatedExhibitionUrl ?>">View Current Exhibition</a>
         <?php } ?>
