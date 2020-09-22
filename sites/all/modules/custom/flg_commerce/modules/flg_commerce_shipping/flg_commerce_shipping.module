@@ -432,8 +432,10 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
           $form['commerce_shipping']['shipping_service']['#options']['flat_rate_shipping_service'] = variable_get('shipping_quote');
         }
 
+        // only show free shipping and hidden shipping method other
         if(isset($form['commerce_shipping']['shipping_service']['#options']['free_shipping'])) {
-          $form['commerce_shipping']['shipping_service']['#options']['free_shipping'] = 'Free Shipping';
+          $form['commerce_shipping']['shipping_service']['#options'] = array('free_shipping' => 'Free Shipping');
+          $form['commerce_shipping']['shipping_service']['#default_value'] = 'free_shipping';
         }
         break;
   
