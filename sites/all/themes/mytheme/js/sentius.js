@@ -16,5 +16,10 @@
       var $value = $(this).parent().find('input').val();
       $(this).parent().find('input').val(parseInt($value) + 1);
     });
+
+    if($('.js-message').length) {
+      let $html = $('.js-message').html();
+      $('.is-message').html($html);
+    }
   });
 }(this, this.document, this.jQuery));
