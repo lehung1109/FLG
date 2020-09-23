@@ -126,8 +126,12 @@ function flg_commerce_gst_calculate($tax_rate, $line_item_wrapper) {
 
     // set line item price
     $base_price = $line_item_wrapper->commerce_unit_price->amount->value();
-    $line_item_wrapper->commerce_unit_price->amount->set(round($base_price * .9));
-    $line_item_wrapper->value()->commerce_unit_price['und'][0]['data']['components'][0]['price']['amount'] = round($base_price * .9);
+    // $line_item_wrapper->commerce_unit_price->amount->set(round($base_price * .9));
+    $line_item_wrapper->value()->commerce_unit_price['und'][0]['data']['components'][0]['price']['amount'] = $base_price * .9;
+    $line_item_wrapper->value()->commerce_total['und'][0]['data']['components'][0]['price']['amount'] = $base_price * .9;
+    $line_item_wrapper->commerce_total->amount->set(round($base_price * .9));
+    // kint($line_item_wrapper->commerce_total->value());
+    // kint($line_item_wrapper);
 
     return array(
       'amount' => round($base_price * .1),
