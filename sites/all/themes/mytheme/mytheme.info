@@ -79,6 +79,7 @@ stylesheets[all][] = css/sentius.css
 
 scripts[] = css/chosen/chosen.jquery.min.js
 scripts[] = js/fancybox/jquery.fancybox.js
+scripts[] = js/slick.min.js
 scripts[] = js/script.js
 scripts[] = nicescroll/jquery.nicescroll.min.js
 scripts[] = js/jquery.scrollTo-1.4.3.1.js

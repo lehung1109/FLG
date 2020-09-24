@@ -1,3 +1,4 @@
+@import 'slick';
 .product-description,
 .artwork .art-image .product-description {
   text-align: left;
@@ -133,5 +134,23 @@
 
   ol.inline.commerce-checkout-progress li {
     padding: 0;
+  }
+}
+
+.artwork .art-image {
+  a {
+    line-height: 0;
+  }
+
+  &__arrow {
+    margin: 0;
+
+    a {
+      color: #30A5B9;
+      display: inline-block !important;
+      margin-top: 0;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
   }
 }
