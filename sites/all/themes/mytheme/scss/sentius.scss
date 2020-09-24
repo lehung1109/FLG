@@ -1,3 +1,4 @@
+@import 'slick';
 .product-description,
 .artwork .art-image .product-description {
   text-align: left;
@@ -187,5 +188,22 @@
 #edit-height-wrapper {
   @media only screen and (max-width: 1069px) {
     display: none;
+  }
+}
+.artwork .art-image {
+  a {
+    line-height: 0;
+  }
+
+  &__arrow {
+    margin: 0;
+
+    a {
+      color: #30A5B9;
+      display: inline-block !important;
+      margin-top: 0;
+      margin-bottom: 0;
+      cursor: pointer;
+    }
   }
 }

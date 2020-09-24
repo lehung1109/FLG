@@ -356,64 +356,67 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
 
 <div class="art-image">
+  <div class="art-image__slide js-slick">
+    <?php
+      foreach ($node->field_art_image['und'] as $art_image):
+        $detail = artDetail($node, true, true);
+        $comma_separated = implode(", ", $detail);
 
-  <?php
+        $artImageUri = $art_image['uri'];
 
-  $detail = artDetail($node, true, true);
-  $comma_separated = implode(", ", $detail);
+        $imageClass = 'horizontal';
+        $bigImage = image_style_url('big-image',$artImageUri );
 
-  $artImageUri = $node->field_art_image['und'][0]['uri'];
+        $bigArtImageUri = $node->field_art_in_situ_large_popup['und'][0]['uri'];
 
-  $imageClass = 'horizontal';
-  $bigImage = image_style_url('big-image',$artImageUri );
+        $width = $art_image['width'];
+        $height = $art_image['height'];
+        $ratio = $width/$height; // 5000/1000 = 5
+        $ratioStr = ($ratio > 1) ? 'landscape': 'portrait'; // > 1 = landscape, < 1 = portrait
 
-  $bigArtImageUri = $node->field_art_in_situ_large_popup['und'][0]['uri'];
+        $orientation = $node->field_orientation['und'][0]['tid'];
+    ?>
+      <a class="<?php echo $imageClass ?> view-full-size" target="_blank" href="<?php echo file_create_url($artImageUri); ?>" title="<?php echo $node->title; ?>" data-width="<?php echo $width ?>" data-height="<?php echo $height ?>">
+        <img src="<?php echo file_create_url($artImageUri); ?>" alt="<?php echo $node->title ?>" style="<?php
 
-  $width = $node->field_art_image['und'][0]['width'];
-  $height = $node->field_art_image['und'][0]['height'];
-  $ratio = $width/$height; // 5000/1000 = 5
-  $ratioStr = ($ratio > 1) ? 'landscape': 'portrait'; // > 1 = landscape, < 1 = portrait
+        $restrictBy = null; // We will set the instruction here for what we do
 
+        $orientation = $node->field_orientation['und'][0]['tid'];
 
-  $orientation = $node->field_orientation['und'][0]['tid'];
+        switch($orientation) {
+          case 17:
+            $restrictBy = 'height';
 
+            break;
 
-  ?>
-  <a class="<?php echo $imageClass ?> view-full-size" target="_blank" href="<?php echo file_create_url($artImageUri); ?>" title="<?php echo $node->title; ?>" data-width="<?php echo $width ?>" data-height="<?php echo $height ?>">
-    <img src="<?php echo file_create_url($artImageUri); ?>" alt="<?php echo $node->title ?>" style="<?php
+          case 18:
+            $restrictBy = 'height';
 
-    $restrictBy = null; // We will set the instruction here for what we do
+            break;
 
-    $orientation = $node->field_orientation['und'][0]['tid'];
+          case 16:
+            $restrictBy = 'width';
 
-    switch($orientation) {
-      case 17:
-        $restrictBy = 'height';
+            break;
+        }
 
-        break;
+        // Scale accordingly
+        switch($restrictBy) {
+          case 'width':
+            ?> width:100%;<?php
+            break;
+          case 'height':
+            ?> width:auto; height:600px;<?php
+            break;
+        } ?>">
+      </a>
+    <?php endforeach; ?>
+  </div>
 
-      case 18:
-        $restrictBy = 'height';
-
-        break;
-
-      case 16:
-        $restrictBy = 'width';
-
-        break;
-    }
-
-    // Scale accordingly
-    switch($restrictBy) {
-      case 'width':
-        ?> width:100%;<?php
-        break;
-      case 'height':
-        ?> width:auto; height:600px;<?php
-        break;
-    } ?>">
-  </a>
-
+  <?php if(is_array($node->field_art_image['und']) && count($node->field_art_image['und']) > 1): ?>
+    <div class="art-image__arrow controls">
+    </div>
+  <?php endif; ?>
   <?php
   $title = $node->title;
   $artist = $artistNode->title;
