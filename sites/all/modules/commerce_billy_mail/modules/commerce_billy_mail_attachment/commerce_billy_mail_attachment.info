@@ -1,0 +1,13 @@
+name = Commerce Billy Mail Attachment
+description = Add extra attachments to the Commerce Billy e-mail
+core = 7.x
+package = Commerce (contrib)
+dependencies[] = commerce_billy_mail
+
+configure = admin/commerce/config/billy-invoice/attachment
+
+; Information added by Drupal.org packaging script on 2019-08-19
+version = "7.x-1.0-beta8"
+core = "7.x"
+project = "commerce_billy_mail"
+datestamp = "1566230899"
