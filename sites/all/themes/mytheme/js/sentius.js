@@ -24,7 +24,7 @@
       $('.is-message').html($html);
     }
 
-    $('.views-exposed-form').find('.collapsed').removeClass('collapsed');
+    // $('.views-exposed-form').find('.collapsed').removeClass('collapsed');
 
     // slide on product page
     var $js_slick = $('.js-slick');
