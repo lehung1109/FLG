@@ -212,3 +212,9 @@
     }
   }
 }
+
+.page-search #content {
+  @media only screen and (min-width: 1070px) {
+    margin-left: 290px !important;
+  }
+}
