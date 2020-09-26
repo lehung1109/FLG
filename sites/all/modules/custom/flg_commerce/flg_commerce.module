@@ -119,7 +119,7 @@ function flg_commerce_gst_calculate($tax_rate, $line_item_wrapper) {
     if($node_artist_id) {
       $node_artist = node_load($node_artist_id);
 
-      if(!empty($node_artist->field_shipping_type['und'][0]['value'])) {
+      if(empty($node_artist->field_shipping_type['und'][0]['value'])) {
         return FALSE;
       }
     }
