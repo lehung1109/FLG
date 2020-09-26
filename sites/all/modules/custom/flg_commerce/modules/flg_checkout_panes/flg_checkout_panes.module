@@ -17,7 +17,23 @@ function flg_checkout_panes_form_alter(&$form, &$form_state, $form_id) {
     case 'commerce_checkout_form_account':
       $form['account_form']['select']['register']['continue']['#submit'][] = 'flg_checkout_panes_account_form_submit';
       break;
-    
+    case 'commerce_checkout_form_review':
+      // $form['commerce_payment']['payment_method']['paypal_wpp|commerce_payment_paypal_wpp'] = array(
+      //   '#description' => 'description for yep',
+      // );
+      // $form['commerce_payment']['payment_method']['commerce_payment_example|commerce_payment_commerce_payment_example'] = array(
+      //   '#description' => 'description for yep',
+      // );
+      // $form['commerce_payment']['payment_method']['direct_deposit|commerce_payment_direct_deposit'] = array(
+      //   '#description' => 'description for yep',
+      // );
+      $form['commerce_payment']['payment_method']['art_money|commerce_payment_art_money'] = array(
+        '#description' => 'Art Money provides Buy Now, Pay Later services for FLG, allowing our clients to manage payments over 10 months in 10 interest-free instalments, rather than paying the full amount upfront. Further information can be found on the <a href="https://www.artmoney.com/au/how-it-works" target="_blank">Art Money website.</a>',
+      );
+      $form['commerce_payment']['payment_method']['labuy|commerce_payment_labuy'] = array(
+        '#description' => 'We are delighted to offer a layby program which allows you to acquire your favourite artwork and pay it off over 3 months. At the end of the layby period you may either collect from us directly or we can assist in arranging freight with one of our trusted arts couriers. Email info@flg.com.au for more information on our layby opportunities.',
+      );
+      break;
     default:
       # code...
       break;
