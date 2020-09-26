@@ -488,6 +488,7 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
 
       case 'commerce_checkout_form_account':
         $form['account_form']['#title'] = t('Login, Register or Guest checkout');
+        $form['account_form']['select']['register']['mail']['#description'] = 'All e-mails from the system will be sent to this address. The e-mail address is not made public and will only be used if you wish to receive a new password or wish to receive certain news as part of our mailing list or notifications by e-mail. By registering, you are accepting to join our mailing list.';
         break;
 
       default:
