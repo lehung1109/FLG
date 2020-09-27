@@ -498,9 +498,7 @@ if($context== 'contemporary' || $context== 'aboriginal'){
 
   <div class="links">
 
-  <?php if($node->field_sale_status['und'][0]['tid'] != '32'): ?>
     <a class="link-title"  href="<?php echo $mailToUrl ?>"><?php echo 'Enquire about work'; ?></a>
-  <?php endif; ?>
     <div class="share-add">
 
       <a class="link-title share-control" >Share</a>
