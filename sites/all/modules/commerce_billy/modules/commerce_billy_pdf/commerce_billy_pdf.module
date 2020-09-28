@@ -335,6 +335,7 @@ function commerce_billy_pdf_wkhtmltopdf($html, $filename, $as_file = FALSE) {
  * output or to create a file.
  */
 function commerce_billy_pdf_prepare_dompdf($html, $filename) {
+  // var_dump($html);die;
   $path = libraries_get_path('dompdf');
   if (!empty($path)) {
     // dompdf needs write access to its font directory.
@@ -351,13 +352,13 @@ function commerce_billy_pdf_prepare_dompdf($html, $filename) {
     // Support for Dompdf 0.7.0 and newer, using PHP 5.3 namespaces.
     if (file_exists(DRUPAL_ROOT . '/' . $path . '/autoload.inc.php')) {
       require_once DRUPAL_ROOT . '/' . $path . '/autoload.inc.php';
-      $dompdf = new \Dompdf\Dompdf();
+      $dompdf = new \Dompdf\Dompdf(array('isRemoteEnabled' => true));
     }
     // Support for Dompdf 0.6.*, using custom autoloader.
     else {
       require_once DRUPAL_ROOT . '/' . $path . '/dompdf_config.inc.php';
       spl_autoload_register('DOMPDF_autoload');
-      $dompdf = new DOMPDF();
+      $dompdf = new DOMPDF(array('isRemoteEnabled' => true));
     }
 
     $dompdf->set_paper('a4', 'portrait');
