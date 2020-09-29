@@ -443,7 +443,17 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         $commerce_line_items = $order_wrapper->commerce_line_items->value();
         $checkout_page_id = substr($form_id, 23);
 
+        // ajax postcode for calc installation fee
+        $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['locality_block']['postal_code']['#ajax'] = array(
+          'callback' => 'flg_commerce_shipping_postal_code_callback',
+          'wrapper' => 'js-replace_post_code',
+          'method' => 'replace',
+          'effect' => 'fade',
+        );
+
         // create installation fee checkbox for user checkbox
+        $form['replace_post_code']['#markup'] = '<div id="js-replace_post_code"></div>';
+        $form['replace_post_code']['#weight'] = '98';
         $form['buttons']['#weight'] = '100';
         $form['installation_fee'] = array(
           '#type' => 'fieldset',
@@ -455,7 +465,7 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         // show option installation fee for each product
         foreach ($commerce_line_items as $line_item) {
           $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
-          if($line_item_wrapper->commerce_product->getBundle() == 'product') {
+          if($line_item_wrapper->getBundle() == 'product' && $line_item_wrapper->commerce_product->getBundle() == 'product') {
             $node_id = $line_item->data['context']['entity']['entity_id'];
             $node = node_load($node_id);
 
@@ -518,3 +528,52 @@ function flg_commerce_shipping_installation_fee_submit($form, &$form_state) {
 
   commerce_order_save($order);
 }
+
+/**
+ * Callback element needs only select the portion of the form to be updated.
+ * Since #ajax['callback'] return can be HTML or a renderable array (or an
+ * array of commands), we can just return a piece of the form.
+ */
+function flg_commerce_shipping_postal_code_callback($form, $form_state) {
+  $postal_code = $form_state['values']['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code'];
+
+  if(is_numeric($postal_code) && $postal_code >= 3000 || $postal_code <= 3207) {
+    global $user;
+    $user_id = $user->uid;
+    $order = commerce_cart_order_load($user_id);
+    if(!empty($order)) $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+    $commerce_line_items = $order_wrapper->commerce_line_items->value();
+  }
+
+  // create installation fee checkbox for user checkbox
+  $form['replace_post_code']['#markup'] = '<div id="js-replace_post_code"></div>';
+  $form['replace_post_code']['#weight'] = '98';
+  $form['buttons']['#weight'] = '100';
+  $form['installation_fee'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Installation Fee'),
+    '#weight' => 99,
+  );
+  $form['buttons']['continue']['#submit'][] = 'flg_commerce_shipping_installation_fee_submit';
+
+  // show option installation fee for each product
+  foreach ($commerce_line_items as $line_item) {
+    $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
+    if($line_item_wrapper->getBundle() == 'product' && $line_item_wrapper->commerce_product->getBundle() == 'product') {
+      $node_id = $line_item->data['context']['entity']['entity_id'];
+      $node = node_load($node_id);
+
+      // get default value
+      $installation_fee = !empty($order->data['installation_fee']) ? $order->data['installation_fee'] : array();
+      $installation_fee_value = in_array($line_item->line_item_id, $installation_fee) ? $line_item->line_item_id : 0;
+      $form['installation_fee']['installation_fee_' . $line_item->line_item_id] = array(
+        '#type' => 'radios',
+        '#title' => t('Installation Fee for ' . $node->title . ': $90 x 1'),
+        '#default_value' => $installation_fee_value,
+        '#options' => array($line_item->line_item_id => '$' . (90 * round($line_item->quantity)) . ' Installation Fee', 0 => '$0 I will install myself'),
+      );
+    }
+  }
+  return $form['installation_fee'];
+}
+
