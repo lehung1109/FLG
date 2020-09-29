@@ -443,6 +443,14 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         $commerce_line_items = $order_wrapper->commerce_line_items->value();
         $checkout_page_id = substr($form_id, 23);
 
+        // ajax postcode for calc installation fee
+        $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['locality_block']['postal_code']['#ajax'] = array(
+          'callback' => 'flg_commerce_shipping_postal_code_callback',
+          'wrapper' => 'edit-installation-fee',
+          'method' => 'replace',
+          'effect' => 'fade',
+        );
+
         // create installation fee checkbox for user checkbox
         $form['buttons']['#weight'] = '100';
         $form['installation_fee'] = array(
@@ -455,7 +463,7 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         // show option installation fee for each product
         foreach ($commerce_line_items as $line_item) {
           $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
-          if($line_item_wrapper->commerce_product->getBundle() == 'product') {
+          if($line_item_wrapper->getBundle() == 'product' && $line_item_wrapper->commerce_product->getBundle() == 'product') {
             $node_id = $line_item->data['context']['entity']['entity_id'];
             $node = node_load($node_id);
 
@@ -483,6 +491,15 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
               $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address'] = $profiles->commerce_customer_address['und'][0];
             }
           }
+        }
+
+        // set init field
+        $postal_code = $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address']['postal_code'];
+
+        if(is_numeric($postal_code) && $postal_code >= 3000 && $postal_code <= 3207) {
+          $form['installation_fee']['#attributes']['class'] = array();
+        } else {
+          $form['installation_fee']['#attributes']['class'] = array('element-hidden');
         }
         break;
 
@@ -518,3 +535,19 @@ function flg_commerce_shipping_installation_fee_submit($form, &$form_state) {
 
   commerce_order_save($order);
 }
+
+/**
+ * Callback element needs only select the portion of the form to be updated.
+ * Since #ajax['callback'] return can be HTML or a renderable array (or an
+ * array of commands), we can just return a piece of the form.
+ */
+function flg_commerce_shipping_postal_code_callback($form, &$form_state) {
+  $postal_code = $form_state['values']['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code'];
+
+  if(is_numeric($postal_code) && $postal_code >= 3000 && $postal_code <= 3207) {
+    $form['installation_fee']['#attributes']['class'] = array();
+  
+    return $form['installation_fee'];
+  }
+}
+
