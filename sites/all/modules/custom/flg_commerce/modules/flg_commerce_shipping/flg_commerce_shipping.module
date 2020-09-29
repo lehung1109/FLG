@@ -446,7 +446,7 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         // ajax postcode for calc installation fee
         $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['locality_block']['postal_code']['#ajax'] = array(
           'callback' => 'flg_commerce_shipping_postal_code_callback',
-          'wrapper' => 'edit-installation-fee',
+          'wrapper' => 'js-edit-installation-fee',
           'method' => 'replace',
           'effect' => 'fade',
         );
@@ -497,10 +497,11 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
         $postal_code = $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address']['postal_code'];
 
         if(is_numeric($postal_code) && $postal_code >= 3000 && $postal_code <= 3207) {
-          $form['installation_fee']['#attributes']['class'] = array();
+          $form['installation_fee']['#prefix'] = '<div id="js-edit-installation-fee">';
         } else {
-          $form['installation_fee']['#attributes']['class'] = array('element-hidden');
+          $form['installation_fee']['#prefix'] = '<div id="js-edit-installation-fee" class="hide-js">';
         }
+        $form['installation_fee']['#suffix'] = '</div>';
         break;
 
       case 'commerce_checkout_form_account':
@@ -545,9 +546,10 @@ function flg_commerce_shipping_postal_code_callback($form, &$form_state) {
   $postal_code = $form_state['values']['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code'];
 
   if(is_numeric($postal_code) && $postal_code >= 3000 && $postal_code <= 3207) {
-    $form['installation_fee']['#attributes']['class'] = array();
-  
-    return $form['installation_fee'];
+    $form['installation_fee']['#prefix'] = '<div id="js-edit-installation-fee">';
+  } else {
+    $form['installation_fee']['#prefix'] = '<div id="js-edit-installation-fee" class="hide-js">';
   }
+  return $form['installation_fee'];
 }
 
