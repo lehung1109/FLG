@@ -524,17 +524,20 @@ function flg_commerce_shipping_installation_fee_submit($form, &$form_state) {
   $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
   $commerce_line_items = $order_wrapper->commerce_line_items->value();
   $order->data['installation_fee'] = array();
+  $postal_code = $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address']['postal_code'];
 
   // save commerce_line_items for installation fee
-  foreach ($commerce_line_items as &$line_item) {
-    if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
-      if(isset($form_state['values']['installation_fee_' . $line_item->line_item_id])) {
-        $order->data['installation_fee'][] = $form_state['values']['installation_fee_' . $line_item->line_item_id];
+  if(is_numeric($postal_code) && $postal_code >= 3000 && $postal_code <= 3207) {
+    foreach ($commerce_line_items as &$line_item) {
+      if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
+        if(isset($form_state['values']['installation_fee_' . $line_item->line_item_id])) {
+          $order->data['installation_fee'][] = $form_state['values']['installation_fee_' . $line_item->line_item_id];
+        }
       }
     }
+  
+    commerce_order_save($order);
   }
-
-  commerce_order_save($order);
 }
 
 /**
