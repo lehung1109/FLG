@@ -5303,3 +5303,46 @@ text-transform: uppercase;
 .hide-js {
   display: none !important;
 }
+
+#edit-cart-contents > div > div > div.view-content > table, #edit-checkout-review > table > tbody > tr:nth-child(2) > td > div > div.view-content > table{
+width: 100%;
+}
+
+#edit-checkout-review > table{
+width: 100%;
+display: inline-table;
+}
+
+
+#edit-buttons{
+padding: 5px;
+}
+#edit-buttons > div{
+padding: 5px;
+}
+
+#account-login-container label, #edit-customer-profile-shipping-commerce-customer-address-und-0 label{
+    width: 100%;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.checkout-help{
+display:none;
+visibility: hidden;
+}
+
+.form-submit {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 #ECEAE9;
+    border-color: -moz-use-text-color -moz-use-text-color #B6C0C6 #B6C0C6;
+    border-image: none;
+    border-style: none none solid solid;
+    border-width: medium medium 1px 1px;
+    padding: 10px 54px;
+    text-transform: uppercase;
+width: auto;
+}
