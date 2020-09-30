@@ -479,16 +479,16 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
           }
         }
 
-        if($user->uid === 0) break;
-
-        foreach (commerce_checkout_panes(array('enabled' => TRUE, 'page' => $checkout_page_id)) as $pane_id => $checkout_pane) {
-          if($pane_id == 'customer_profile_shipping') {
-            $field = field_info_field('commerce_customer_shipping');
-            $profiles = commerce_customer_profile_load_multiple(array(), array('type' => 'shipping', 'uid' => $user->uid, 'status' => TRUE));
-  
-            if($profiles) {
-              $profiles = array_pop($profiles);
-              $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address'] = $profiles->commerce_customer_address['und'][0];
+        if($user->uid) {
+          foreach (commerce_checkout_panes(array('enabled' => TRUE, 'page' => $checkout_page_id)) as $pane_id => $checkout_pane) {
+            if($pane_id == 'customer_profile_shipping') {
+              $field = field_info_field('commerce_customer_shipping');
+              $profiles = commerce_customer_profile_load_multiple(array(), array('type' => 'shipping', 'uid' => $user->uid, 'status' => TRUE));
+    
+              if($profiles) {
+                $profiles = array_pop($profiles);
+                $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address'] = $profiles->commerce_customer_address['und'][0];
+              }
             }
           }
         }
