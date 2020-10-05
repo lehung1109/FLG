@@ -5332,7 +5332,7 @@ display:none;
 visibility: hidden;
 }
 
-.form-submit {
+.page-checkout .form-submit {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
     -moz-border-right-colors: none;
