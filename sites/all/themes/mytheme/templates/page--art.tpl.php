@@ -486,12 +486,14 @@ if($context== 'contemporary' || $context== 'aboriginal'){
           <a class="link-title"><?php echo commerce_currency_format($product->commerce_price['und'][0]['amount']) . ' AUD'; ?></a>
         </div>
 
-        <div class="product-description__item">
-          <?php
-            $product_reference = node_view($node)['product_reference'];
-          ?>
-          <a class="link-title"><?php echo render($product_reference); ?></a>
-        </div>
+        <?php if($node->field_sale_status['und'][0]['tid'] != '29'): ?>
+          <div class="product-description__item">
+            <?php
+              $product_reference = node_view($node)['product_reference'];
+            ?>
+            <a class="link-title"><?php echo render($product_reference); ?></a>
+          </div>
+        <?php endif; ?>
       </div>
     <?php endif; ?>
   </div>
