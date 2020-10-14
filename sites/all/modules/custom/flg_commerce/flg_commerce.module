@@ -158,3 +158,207 @@ function flg_commerce_gst_calculate($tax_rate, $line_item_wrapper) {
     }
   }
 }
+
+/**
+ * Implements hook_token_info().
+ */
+function flg_commerce_token_info() {
+  // Site tokens.
+  $info['tokens']['site']['logo'] = array(
+    'name' => t('Site logo'),
+    'description' => t('The image showing the site logo.'),
+  );
+
+  $info['tokens']['site']['logo-url'] = array(
+    'name' => t('Site logo URL'),
+    'description' => t('URL to the image showing the site logo.'),
+  );
+
+  $info['tokens']['commerce-order']['products-info'] = array(
+    'name' => t('Product Info'),
+    'description' => t('Product Info'),
+  );
+
+  $info['tokens']['commerce-order']['customer-billing-info'] = array(
+    'name' => t('Billing Info'),
+    'description' => t('Billing Info'),
+  );
+
+  $info['tokens']['commerce-order']['customer-shipping-info'] = array(
+    'name' => t('Shipping Info'),
+    'description' => t('Shipping Info'),
+  );
+
+  $info['tokens']['commerce-order']['payment-short-description'] = array(
+    'name' => t('Short Description'),
+    'description' => t('Short Description'),
+  );
+
+   return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function flg_commerce_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+
+  if ($type == 'site') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'logo':
+          // Use a logo; but only if we have one to use.
+          $replacements[$original] = '';
+          if ($uri = theme_get_setting('logo')) {
+            $replacements[$original] = theme('image', array('path' => $uri));
+          }
+          break;
+
+        case 'logo-url':
+          $replacements[$original] = '';
+          if ($uri = theme_get_setting('logo')) {
+            $replacements[$original] = $uri;
+          }
+        break;
+      }
+
+      // [site:logo-url:*] chained tokens.
+      if ($url_tokens = token_find_with_prefix($tokens, 'logo-url')) {
+        $uri = theme_get_setting('logo');
+        $replacements += token_generate('url', $url_tokens, array('path' => $uri), $options);
+      }
+    }
+  } elseif ($type == 'commerce-order') {
+    try {
+      $order = $data['commerce-order'];
+
+      foreach ($tokens as $name => $original) {
+        switch ($name) {
+          case 'products-info':
+            $replacements[$original] = '';
+            $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+            $line_items = $order_wrapper->commerce_line_items->value();
+
+            foreach ($line_items as $line_item) {
+              if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
+                for($i =0; $i < (int) $line_item->quantity; $i++) {
+                  $product_id = $line_item->commerce_product['und'][0]['product_id'];
+                  $product = commerce_product_load($product_id);
+                  $node_product_id = $line_item->data['context']['entity']['entity_id'];
+                  $node_product = node_load($node_product_id);
+                  $node_artist_id = $product->field_artist['und'][0]['nid'];
+                  $node_artist = node_load($node_artist_id);
+  
+                  $detail = flg_commerce_art_detail($node_product, true, true);
+                  $description = implode("<br /> ", $detail);
+                  $filepath = $node_product->field_art_image['und'][0]['uri'];
+                  $node_product_image = theme('image_style', array('style_name' => 'search-thumb', 'path' => $filepath));
+                  $replacements[$original] .= '<div class="product-item"><div class="product-left">' . $node_product_image . '</div>';
+                  $replacements[$original] .= '<div class="product-right">' . $node_artist->title . '<br>' . $description . '</div></div>';
+                }
+              }
+            }
+          break;
+          case 'customer-billing-info':
+            $replacements[$original] = 'Billing address:<br/>';
+            try {
+              $profile_id = $order->commerce_customer_billing['und'][0]['profile_id'];
+              $replacements[$original] .= flg_commerce_address_info($profile_id, $order);
+            } catch (\Throwable $th) {
+            }
+          break;
+          case 'customer-shipping-info':
+            $replacements[$original] = 'Shipping address:<br/>';
+            try {
+              $profile_id = $order->commerce_customer_shipping['und'][0]['profile_id'];
+              $replacements[$original] .= flg_commerce_address_info($profile_id, $order);
+            } catch (\Throwable $th) {
+            }
+          break;
+        }
+      }
+    } catch (\Throwable $th) {
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * callback art description
+ */
+function flg_commerce_art_detail($artNode, $cm = true,$hidePrice = false) {
+  $detailArray = array();
+  //year
+  if(count($artNode->field_year)) {
+    $year = format_date(strtotime($artNode->field_year['und'][0]['value']), 'year');
+    $year = $node->title . ' ' . $year;
+    array_push($detailArray, $year);
+  }
+  //medium
+  $medium = $artNode->field_art_type['und'][0]['value'];
+  array_push($detailArray, $medium);
+
+  //dimensions
+  $width = $artNode->field_width['und'][0]['value'];
+  $height = $artNode->field_height['und'][0]['value'];
+  $depth = $artNode->field_depth['und'][0]['value'];
+
+  if($cm){
+    $size =   $height . 'cm x ' . $width . 'cm';
+  }else{
+    //$size = round((0.393700787 * $height),2) . 'cm x ' . round((0.393700787 * $width), 2) . 'cm';
+    $size =   $height . 'cm x ' . $width . 'cm';
+  }
+  
+  if(isset($depth)) {
+    $size .= ' ' . $depth;
+  }
+  array_push($detailArray, $size);
+  if($hidePrice == false){
+    //price
+    if(count($artNode->field_art_price )){
+      if(count($artNode->field_sale_status) == 0) {
+        $price = '$' . number_format($artNode->field_art_price['und'][0]['value']) . ' AUD';
+        array_push($detailArray, $price);
+      } else {
+        if($artNode->field_sale_status['und'][0]['tid'] == '27') {
+          $price = 'Sold';
+          array_push($detailArray, $price);
+        }
+        if($artNode->field_sale_status['und'][0]['tid'] == '29') {
+          $price = 'NFS';
+          array_push($detailArray, $price);
+        }
+        if($artNode->field_sale_status['und'][0]['tid'] == '28') {
+          $price = 'POA';
+          array_push($detailArray, $price);
+        }
+        if($artNode->field_sale_status['und'][0]['tid'] == '32') {
+          $price = '$' . number_format($artNode->field_art_price['und'][0]['value']) . ' AUD';
+          array_push($detailArray, $price);
+        }
+      }
+    }
+  }
+  return $detailArray;
+}
+
+/**
+ * callback flg_commerce_address_info
+ */
+function flg_commerce_address_info($profile_id, $order) {
+  $customer_shipping_profile_data = commerce_customer_profile_load($profile_id);
+  $info = '';
+
+  if($customer_shipping_profile_data) {
+    $customer_address = $customer_shipping_profile_data->commerce_customer_address['und'][0];
+    $info .= $customer_address['name_line'] . '<br>';
+    $info .= $customer_address['thoroughfare'] . ' ' . $customer_address['premise'] . '<br>';
+    $info .= $customer_address['locality'] . ' ' . $customer_address['postal_code'] . '<br>';
+    $info .= $customer_address['administrative_area'] . '<br>';
+    $info .= $order->mail . '<br>';
+
+    return $info;
+  }
+}
