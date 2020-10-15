@@ -241,22 +241,41 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
 
             foreach ($line_items as $line_item) {
               if($line_item->type == 'product' || $line_item->type == 'book' || $line_item->type == 'limited_edition') {
-                for($i =0; $i < (int) $line_item->quantity; $i++) {
-                  $product_id = $line_item->commerce_product['und'][0]['product_id'];
-                  $product = commerce_product_load($product_id);
-                  $node_product_id = $line_item->data['context']['entity']['entity_id'];
-                  $node_product = node_load($node_product_id);
-                  $node_artist_id = $node_product->field_artist['und'][0]['nid'];
-                  $node_artist = node_load($node_artist_id);
-  
-                  $detail = flg_commerce_art_detail($node_product, true, true);
-                  $description = implode("<br /> ", $detail);
-                  $filepath = $node_product->field_art_image['und'][0]['uri'];
-                  $node_product_image = theme('image_style', array('style_name' => 'search-thumb', 'path' => $filepath));
-                  $replacements[$original] .= '<table><body><tr><td style="padding-right:15px">' . $node_product_image . '</td><td>' . $node_artist->title . '<br/>' . $description . '</td></tr></body></table>';
-                }
+                $product_id = $line_item->commerce_product['und'][0]['product_id'];
+                $product = commerce_product_load($product_id);
+                $node_product_id = $line_item->data['context']['entity']['entity_id'];
+                $node_product = node_load($node_product_id);
+                $node_artist_id = $node_product->field_artist['und'][0]['nid'];
+                $node_artist = node_load($node_artist_id);
+                $product_price = (int) $line_item->commerce_total['und'][0]['data']['components'][0]['price']['amount'];
+
+                $detail = flg_commerce_art_detail($node_product, true, true);
+                $description = implode("<br /> ", $detail);
+                $filepath = $node_product->field_art_image['und'][0]['uri'];
+                $node_product_image = theme('image_style', array('style_name' => 'search-thumb', 'path' => $filepath));
+                $replacements[$original] .= '<table><body><tr><td style="padding-right:15px">' . $node_product_image . '</td><td>' . $node_artist->title . '<br/>' . $description . '</td></tr></body></table>';
+                $replacements[$original] .= 'ART PRICE: ' . commerce_currency_format($product_price, 'AUD') . '<br />';
               }
             }
+
+            $order_total = $order_wrapper->commerce_order_total->value();
+            $base_price = '';
+            $tax_price = '';
+            $shipping_price = '';
+
+            foreach ( $order_total['data']['components'] as $data) {
+              if($data['name'] == 'base_price') {
+                $base_price = commerce_currency_format($data['price']['amount'], 'AUD');
+              } elseif ($data['name'] == 'tax|gst') {
+                $tax_price = commerce_currency_format($data['price']['amount'], 'AUD');
+              } elseif ($data['name'] == 'shipping') {
+                $shipping_price = commerce_currency_format($data['price']['amount'], 'AUD');
+              }
+            }
+
+            $replacements[$original] .= !empty($tax_price) ? 'GST ' . $tax_price : '' ;
+            $replacements[$original] .= !empty($shipping_price) ? 'DELIVERY ' . $shipping_price : '' ;
+            $replacements[$original] .= 'TOTAL ' . $order_total['amount'] . ' AUD';
           break;
           case 'customer-billing-info':
             $replacements[$original] = 'Billing address:<br/>';
