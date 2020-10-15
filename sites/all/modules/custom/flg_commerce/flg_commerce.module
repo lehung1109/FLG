@@ -266,11 +266,11 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
 
             foreach ( $order_total['data']['components'] as $data) {
               if($data['name'] == 'base_price') {
-                $base_price = commerce_currency_format($data['price']['amount'], 'AUD');
+                $base_price = commerce_currency_format((int) $data['price']['amount'], 'AUD');
               } elseif ($data['name'] == 'tax|gst') {
-                $tax_price = commerce_currency_format($data['price']['amount'], 'AUD');
+                $tax_price = commerce_currency_format((int) $data['price']['amount'], 'AUD');
               } elseif ($data['name'] == 'shipping') {
-                $shipping_price = commerce_currency_format($data['price']['amount'], 'AUD');
+                $shipping_price = commerce_currency_format((int) $data['price']['amount'], 'AUD');
               }
             }
 
