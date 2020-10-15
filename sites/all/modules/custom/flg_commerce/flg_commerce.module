@@ -253,7 +253,7 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
                   $description = implode("<br /> ", $detail);
                   $filepath = $node_product->field_art_image['und'][0]['uri'];
                   $node_product_image = theme('image_style', array('style_name' => 'search-thumb', 'path' => $filepath));
-                  $replacements[$original] .= '<table><body><tr><td style="padding-right:15px">' . $node_product_image . '</td><td>' . $node_artist->title . '<br/>' . $description . '</td></tr></body></table>';
+                  $replacements[$original] .= '<div><div style="float:left;margin-right:50px">' . $node_product_image . '</div><div style="float:left">' . $node_artist->title . '<br/>' . $description . '</div></div>';
                 }
               }
             }
