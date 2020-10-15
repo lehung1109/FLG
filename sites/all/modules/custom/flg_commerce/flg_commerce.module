@@ -254,8 +254,8 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
                 $filepath = $node_product->field_art_image['und'][0]['uri'];
                 $node_product_image = theme('image_style', array('style_name' => 'search-thumb', 'path' => $filepath));
                 $replacements[$original] .= '<div style="display: block; width: 100%; overflow: hidden; margin-bottom: 10px;">';
-                $replacements[$original] .= '<div style="float:left;margin-right:15px">' . $node_product_image . '</div>';
-                $replacements[$original] .= '<div style="float:left;font-size: 10px;"><span style="text-transform: uppercase;">' . $node_artist->title . '</span><br/>' . $description . '<br/>';
+                $replacements[$original] .= '<div style="float:left;margin-right:15px;">' . $node_product_image . '</div>';
+                $replacements[$original] .= '<div><span style="text-transform: uppercase;">' . $node_artist->title . '</span><br/>' . $description . '<br/>';
                 $replacements[$original] .= 'QUANTITY ' . (int) $line_item->quantity . '<br />';
                 $replacements[$original] .= 'ARTWORK PRICE ' . commerce_currency_format($product_price, '') . '<br />';
               }
