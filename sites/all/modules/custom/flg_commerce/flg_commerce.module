@@ -246,7 +246,7 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
                   $product = commerce_product_load($product_id);
                   $node_product_id = $line_item->data['context']['entity']['entity_id'];
                   $node_product = node_load($node_product_id);
-                  $node_artist_id = $product->field_artist['und'][0]['nid'];
+                  $node_artist_id = $node_product->field_artist['und'][0]['nid'];
                   $node_artist = node_load($node_artist_id);
   
                   $detail = flg_commerce_art_detail($node_product, true, true);
