@@ -278,7 +278,7 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
 
             $replacements[$original] .= !empty($tax_price) ? 'GST ' . $tax_price . '<br />': '' ;
             $replacements[$original] .= !empty($shipping_price) ? 'DELIVERY ' . $shipping_price  . '<br />': '';
-            $replacements[$original] .= 'TOTAL $' . $order_total['amount'] . ' AUD </div></div>';
+            $replacements[$original] .= 'TOTAL $' . commerce_currency_format((int) $order_total['amount'], 'AUD') . ' AUD </div></div>';
           break;
           case 'customer-billing-info':
             $replacements[$original] = 'Billing address:<br/>';
