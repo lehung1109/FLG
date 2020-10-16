@@ -253,11 +253,11 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
                 $description = implode("<br /> ", $detail);
                 $filepath = $node_product->field_art_image['und'][0]['uri'];
                 $node_product_image = theme('image_style', array('style_name' => 'search-thumb', 'path' => $filepath));
-                $replacements[$original] .= '<div style="display: block; width: 100%; overflow: hidden; margin-bottom: 10px;">';
-                $replacements[$original] .= '<div style="float:left;margin-right:15px;">' . $node_product_image . '</div>';
-                $replacements[$original] .= '<div><span style="text-transform: uppercase;">' . $node_artist->title . '</span><br/>' . $description . '<br/>';
+                $replacements[$original] .= '<div style="width: 100%; overflow:hidden; margin-bottom:10px;">';
+                $replacements[$original] .= '<div style="float:left; margin-right:15px;">' . $node_product_image . '</div>';
+                $replacements[$original] .= '<div style="overflow:hidden;"><span style="text-transform: uppercase;">' . $node_artist->title . '</span><br/>' . $description . '<br/>';
                 $replacements[$original] .= 'QUANTITY ' . (int) $line_item->quantity . '<br />';
-                $replacements[$original] .= 'ARTWORK PRICE ' . commerce_currency_format($product_price, '') . '<br />';
+                $replacements[$original] .= 'ARTWORK PRICE ' . commerce_currency_format($product_price, '') . ' </div></div>';
               }
             }
 
@@ -278,7 +278,7 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
 
             $replacements[$original] .= !empty($tax_price) ? 'GST ' . $tax_price . '<br />': '' ;
             $replacements[$original] .= !empty($shipping_price) ? 'DELIVERY ' . $shipping_price  . '<br />': '';
-            $replacements[$original] .= 'TOTAL $' . commerce_currency_format((int) $order_total['amount'], 'AUD') . ' AUD </div></div>';
+            $replacements[$original] .= 'TOTAL $' . commerce_currency_format((int) $order_total['amount'], 'AUD') . ' AUD';
           break;
           case 'customer-billing-info':
             $replacements[$original] = 'Billing address:<br/>';
