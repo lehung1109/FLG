@@ -194,6 +194,11 @@ function flg_commerce_token_info() {
     'description' => t('Short Description'),
   );
 
+  $info['tokens']['commerce-order']['view-order'] = array(
+    'name' => t('Url view order'),
+    'description' => t('.'),
+  );
+
    return $info;
 }
 
@@ -295,6 +300,10 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
               $replacements[$original] .= flg_commerce_address_info($profile_id, $order);
             } catch (\Throwable $th) {
             }
+          break;
+          case 'view-order':
+            $url = 'member-login';
+            $replacements[$original] = url($url, array('absolute' => TRUE)) . '?destination=user/' . $order->uid . '/orders' . '/' . $order->order_number;
           break;
         }
       }
