@@ -2219,7 +2219,7 @@ img{
 	margin-bottom: 10px;
 }
 .page-checkout tr.pane-data td div label {
-	float: left;
+	/* float: left; */
 }
 .page-checkout input#edit-commerce-payment-payment-details-credit-card-number {
 	width: 240px;
