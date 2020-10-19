@@ -524,7 +524,8 @@ function flg_commerce_shipping_installation_fee_submit($form, &$form_state) {
   $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
   $commerce_line_items = $order_wrapper->commerce_line_items->value();
   $order->data['installation_fee'] = array();
-  $postal_code = $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address']['postal_code'];
+  // $postal_code = $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address']['postal_code'];
+  $postal_code = $form_state['values']['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code'];
 
   // save commerce_line_items for installation fee
   if(is_numeric($postal_code) && $postal_code >= 3000 && $postal_code <= 3207) {
@@ -535,9 +536,11 @@ function flg_commerce_shipping_installation_fee_submit($form, &$form_state) {
         }
       }
     }
-  
-    commerce_order_save($order);
+  } else {
+    $order->data['installation_fee'] = array();
   }
+
+  commerce_order_save($order);
 }
 
 /**
