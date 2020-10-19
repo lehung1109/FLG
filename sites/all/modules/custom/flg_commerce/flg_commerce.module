@@ -195,7 +195,12 @@ function flg_commerce_token_info() {
     'description' => t('.'),
   );
 
-   return $info;
+  $info['tokens']['commerce-order']['payment-method-information'] = array(
+    'name' => t('Payment method information'),
+    'description' => t('Payment method information')
+  );
+
+  return $info;
 }
 
 /**
@@ -301,12 +306,28 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
             $url = 'member-login';
             $replacements[$original] = url($url, array('absolute' => TRUE)) . '?destination=user/' . $order->uid . '/orders' . '/' . $order->order_number;
           break;
+
+          case 'payment-method-information':
+            $payment_method_information = '';
+            $payment_method = commerce_payment_method_instance_load($order->data['payment_method']);
+            if (!empty($payment_method) && !empty($payment_method['method_id'])) {
+              $method_id = $payment_method['method_id'];
+              $payment_method_title = commerce_payment_method_get_title('display_title', $method_id);
+              if ($method_id = 'art_money') {
+                $payment_method_information = '<p>Payment method: <span>'. t('You have opted to pay by @payment_method_title. We will contact you for payment.', array('@payment_method_title' => $payment_method_title)) . '</span><p>';
+              }elseif($method_id == 'labuy') {
+                $payment_method_information = '<p>Payment method: <span>'. t('You need completed @payment_method_title payment in 48 hours.', array('@payment_method_title' => $payment_method_title)) . '</span><p>';
+              }elseif($method_id == 'direct_deposit') {
+                $payment_method_information = '<p>Payment method: <span>'. t('You have opted to pay by @payment_method_title. Payment is required in 48 hours. We will contact you for payment.', array('@payment_method_title' => $payment_method_title)) . '</span><p>';
+              }
+              $replacements[$original] = $payment_method_information;
+            }
+            break;
         }
       }
     } catch (\Throwable $th) {
     }
   }
-
   return $replacements;
 }
 
@@ -395,3 +416,28 @@ function flg_commerce_address_info($profile_id, $order) {
 function flg_commerce_commerce_price_formatted_components_alter(&$components, $price, $entity) {
   $components['base_price']['price']['amount'] = $components['commerce_price_formatted_amount']['price']['amount'] - round( (int) $components['tax|installation_fee']['price']['amount'] / 0.9) - (int) $components['shipping']['price']['amount'];
 }
+/**
+ * Implements template_preprocess_mimemail_message().
+ * Add logo and contact info for some email.
+ */
+function flg_commerce_preprocess_mimemail_message(&$variables) {
+  $module = $variables['module'];
+  $key = $variables['key'];
+  $keys_allowed = array(
+    'commerce-billy-send-order-invoice',
+    'rules-checkout-completed-email',
+  );
+  if (in_array($key, $keys_allowed)) {
+    $theme = mailsystem_get_mail_theme();
+    $themepath = drupal_get_path('theme', $theme);
+    $logo_url = theme_get_setting('logo', $theme);
+    $header = '<p style="text-align:center;max-width: 470px;">'.theme('image', array('path' => $uri)).'</p>';
+    $footer = '<p style="max-width: 320px;">If you have any questions please do not hesitate to<br/> contact us on info@flg.com.au or call <span style="display:inline-block"> 61 3 96543332</span></p>
+<p style="font-size: 11px;font-weight: bold;text-align: center;margin-top: 50px;max-width: 470px;">Level 1 The Nicholas Building, comer Flinders Lane & 37 Swanston St MELBOURNE 3000<br/>Established 1989 &nbsp;&nbsp; WWW.FLG.COM.AU  &nbsp;&nbsp;  INFO@FLG.COM.AU &nbsp; <span style="display:inline-block">+  61 3 96543332</span></p>';
+    $variables['body'] = $header . $variables['body'] . $footer;
+  }
+}
+
+
+
+
