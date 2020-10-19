@@ -19,7 +19,7 @@ function flg_payment_commerce_payment_method_info() {
   );
 
   $payment_methods['art_money'] = array(
-    'title' => t('Art money'),
+    'title' => t('Art Money'),
     'description' => '',
     'active' => TRUE,
   );
