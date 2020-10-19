@@ -424,6 +424,7 @@ function flg_commerce_preprocess_mimemail_message(&$variables) {
   $keys_allowed = array(
     'commerce-billy-send-order-invoice',
     'rules-checkout-completed-email',
+    'rules-update-commerce-order-expired-mail',
   );
   if (in_array($key, $keys_allowed)) {
     $theme = mailsystem_get_mail_theme();
