@@ -343,7 +343,7 @@ function flg_commerce_shipping_free_shipping_rate($shipping_service, $order) {
 function flg_commerce_shipping_get_price($locality, $postcode) {
   $result = db_select('postcode_shipping', 'p')
   ->fields('p')
-  ->condition('local', $locality,'=')
+  // ->condition('local', $locality,'=')
   ->condition('postcode', $postcode,'=')
   ->execute()
   ->fetchAll(PDO::FETCH_ASSOC);
