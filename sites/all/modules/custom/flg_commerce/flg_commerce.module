@@ -416,7 +416,9 @@ function flg_commerce_address_info($profile_id, $order) {
  * hook hook_commerce_price_formatted_components_alter
  */
 function flg_commerce_commerce_price_formatted_components_alter(&$components, $price, $entity) {
-  $components['base_price']['price']['amount'] = $components['commerce_price_formatted_amount']['price']['amount'] - round( (int) $components['tax|installation_fee']['price']['amount'] / 0.9) - (int) $components['shipping']['price']['amount'];
+  if(!empty($components['base_price'])) {
+    $components['base_price']['price']['amount'] = $components['commerce_price_formatted_amount']['price']['amount'] - round( (int) $components['tax|installation_fee']['price']['amount'] / 0.9) - (int) $components['shipping']['price']['amount'];
+  }
 }
 /**
  * Implements template_preprocess_mimemail_message().
