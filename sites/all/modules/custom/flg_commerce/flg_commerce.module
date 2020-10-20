@@ -426,12 +426,13 @@ function flg_commerce_preprocess_mimemail_message(&$variables) {
   $keys_allowed = array(
     'commerce-billy-send-order-invoice',
     'rules-checkout-completed-email',
+    'rules-update-commerce-order-expired-mail',
   );
   if (in_array($key, $keys_allowed)) {
     $theme = mailsystem_get_mail_theme();
     $themepath = drupal_get_path('theme', $theme);
-    $logo_url = theme_get_setting('logo', $theme);
-    $header = '<p style="text-align:center;max-width: 470px;">'.theme('image', array('path' => $uri)).'</p>';
+    $logo_uri = theme_get_setting('logo', $theme);
+    $header = '<p style="text-align:center;max-width: 470px;">'.theme('image', array('path' => $logo_uri)).'</p>';
     $footer = '<p style="max-width: 320px;">If you have any questions please do not hesitate to<br/> contact us on info@flg.com.au or call <span style="display:inline-block"> 61 3 96543332</span></p>
 <p style="font-size: 11px;font-weight: bold;text-align: center;margin-top: 50px;max-width: 470px;">Level 1 The Nicholas Building, comer Flinders Lane & 37 Swanston St MELBOURNE 3000<br/>Established 1989 &nbsp;&nbsp; WWW.FLG.COM.AU  &nbsp;&nbsp;  INFO@FLG.COM.AU &nbsp; <span style="display:inline-block">+  61 3 96543332</span></p>';
     $variables['body'] = $header . $variables['body'] . $footer;
