@@ -319,6 +319,8 @@ function flg_commerce_tokens($type, $tokens, array $data = array(), array $optio
                 $payment_method_information = '<p>Payment method: <span>'. t('You need completed @payment_method_title payment in 48 hours.', array('@payment_method_title' => $payment_method_title)) . '</span><p>';
               }elseif($method_id == 'direct_deposit') {
                 $payment_method_information = '<p>Payment method: <span>'. t('You have opted to pay by @payment_method_title. Payment is required in 48 hours. We will contact you for payment.', array('@payment_method_title' => $payment_method_title)) . '</span><p>';
+              }else {
+                $payment_method_information = '<p>Payment method: <span>'. $payment_method_title . '</span><p>';
               }
               $replacements[$original] = $payment_method_information;
             }
