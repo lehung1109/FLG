@@ -451,6 +451,11 @@ function flg_commerce_shipping_form_alter(&$form, &$form_state, $form_id) {
           'effect' => 'fade',
         );
 
+        if(!empty($form['customer_profile_shipping']['commerce_customer_address']['und'][0]['phone_block'])) {
+          $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['phone_block']['phone_number']['phone_number']['#required'] = TRUE;
+          $form['customer_profile_billing']['commerce_customer_address']['und'][0]['phone_block']['phone_number']['phone_number']['#required'] = TRUE;
+        }
+
         // create installation fee checkbox for user checkbox
         $form['buttons']['#weight'] = '100';
         $form['installation_fee'] = array(
