@@ -132,7 +132,11 @@ function flg_commerce_gst_calculate($tax_rate, $line_item_wrapper) {
           $line_item_wrapper->value()->commerce_total['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
           $line_item_wrapper->commerce_total->amount->set(round($base_price  - $gst_price));
         } else {
-          $gst_price = 0;
+          $gst_price = $base_price * .1;
+
+          $line_item_wrapper->value()->commerce_unit_price['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
+          $line_item_wrapper->value()->commerce_total['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
+          $line_item_wrapper->commerce_total->amount->set(round($base_price  - $gst_price));
         }
       } else {
         $gst_price = 0;
