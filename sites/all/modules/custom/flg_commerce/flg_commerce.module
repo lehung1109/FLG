@@ -125,19 +125,19 @@ function flg_commerce_gst_calculate($tax_rate, $line_item_wrapper) {
       $node_artist = node_load($node_artist_id);
 
       if(empty($node_artist->field_shipping_type['und'][0]['value'])) {
-        if(!empty($node_product->field_gst['und'][0]['amount'])) {
-          $gst_price =  $node_product->field_gst['und'][0]['amount'];
+        // if(!empty($node_product->field_gst['und'][0]['amount'])) {
+        //   $gst_price =  $node_product->field_gst['und'][0]['amount'];
 
-          $line_item_wrapper->value()->commerce_unit_price['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
-          $line_item_wrapper->value()->commerce_total['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
-          $line_item_wrapper->commerce_total->amount->set(round($base_price  - $gst_price));
-        } else {
+        //   $line_item_wrapper->value()->commerce_unit_price['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
+        //   $line_item_wrapper->value()->commerce_total['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
+        //   $line_item_wrapper->commerce_total->amount->set(round($base_price  - $gst_price));
+        // } else {
           $gst_price = $base_price * .1;
 
           $line_item_wrapper->value()->commerce_unit_price['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
           $line_item_wrapper->value()->commerce_total['und'][0]['data']['components'][0]['price']['amount'] = round($base_price  - $gst_price);
           $line_item_wrapper->commerce_total->amount->set(round($base_price  - $gst_price));
-        }
+        // }
       } else {
         $gst_price = 0;
       }
